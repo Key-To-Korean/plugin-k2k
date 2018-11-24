@@ -36,6 +36,9 @@ enable me to better organize the grammar points I'm studying. It includes the fo
 
 I'm looking into adding "subtitle" support that would let me put the Title in Korean and the subtitle in English. But we'll use this for a while and see how I'm actually putting it to use and what kinds of things I feel are still needed before laying out a roadmap for future development.
 
+1. ReactJS Archive (index) page (filterable)
+2. Gutenberg block for (something?) sentences, or usage, or notes, or something?
+
 ### Translations
 
 * English (EN) - default

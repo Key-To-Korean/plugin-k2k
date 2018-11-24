@@ -34,6 +34,12 @@ function jkl_grammar_setup() {
   // trigger function for CPT
   jkl_grammar_setup_cpt();
 
+  // add page template
+  // jkl_grammar_page_template();
+  // jkl_grammar_redirect_page_template();
+
+  include_once( plugin_dir_url( __FILE__ ) . 'functions.php' );
+
   // clear permalinks after registered CPT
   flush_rewrite_rules();
 }
@@ -186,7 +192,7 @@ function jkl_grammar_taxonomies() {
       'hierarchical'      => true,
       'labels'            => $labels,
       'show_ui'           => true,
-      'show_admin_column' => true,
+      'show_admin_column' => false,
       'show_in_rest'      => true,
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'part-of-speech' ),
@@ -216,7 +222,7 @@ function jkl_grammar_taxonomies() {
       'hierarchical'      => true,
       'labels'            => $labels,
       'show_ui'           => true,
-      'show_admin_column' => true,
+      'show_admin_column' => false,
       'show_in_rest'      => true,
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'expression' ),
@@ -243,7 +249,7 @@ function jkl_grammar_taxonomies() {
       'hierarchical'      => true,
       'labels'            => $labels,
       'show_ui'           => true,
-      'show_admin_column' => true,
+      'show_admin_column' => false,
       'show_in_rest'      => true,
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'usage' ),
@@ -259,3 +265,28 @@ function jkl_grammar_taxonomies() {
 }
 // hook into the init action and call jkl_grammar_taxonomies when it fires
 add_action( 'init', 'jkl_grammar_taxonomies', 0 );
+
+/**
+ * Include Single Grammar page template
+ */
+function jkl_grammar_single( $template_path ) {
+  if ( get_post_type() == 'grammar' ) {
+    if ( is_single() ) {
+      // checks if the file exists in the theme first,
+      // otherwise serve the file from the plugin
+      if ( $theme_file = locate_template( array ( 'single-grammar.php' ) ) ) {
+        $template_path = $theme_file;
+      } else {
+        $template_path = plugin_dir_path( __FILE__ ) . 'single-grammar.php';
+      }
+    } elseif ( is_archive() ) {
+      if ( $theme_file = locate_template( array( 'archive-grammar.php' ) ) ) {
+        $template_path = $theme_file;
+      } else {
+        $template_path = plugin_dir_path( __FILE__ ) . 'archive-grammar.php';
+      }
+    }
+  }
+  return $template_path;
+}
+add_filter( 'template_include', 'jkl_grammar_single', 1 );
