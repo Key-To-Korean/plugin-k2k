@@ -1,40 +1,52 @@
-<?php get_header(); ?>
+<?php 
+/**
+ * The template for displaying Grammar archive pages
+ */
+get_header(); ?>
 
-<section id="primary">
-  <div id="content" role="main">
+<div id="primary" class="content-area">
+  <main id="main" class="site-main" role="main">
 
     <?php if ( have_posts() ) : ?>
 
     <header class="page-header">
       <h1 class="page-title">Grammar Index</h1>
-    </header>
+      <?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>
+    </header><!-- .page-header -->
+
+    <ul class="grammar-list">
 
     <!-- Start the Loop -->
     <?php while ( have_posts() ) : the_post(); ?>
 
-      <p><a href="<?php the_permalink(); ?>"><?php the_title(); ?></a></p>
+      <li class="grammar-post">
+        <?php the_title( sprintf( '<span class=""><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></span>' ); ?>
+        <?php if ( the_subtitle() ) : ?>
+          <span class="entry-subtitle">
+          <?php the_subtitle(); ?>
+          </span>
+        <?php endif; ?>
+      </li>
 
     <?php endwhile; ?>
 
-    <!-- Display Post navigation -->
-    <?php 
-    global $wp_query;
-    if ( isset( $wp_query->max_num_pages ) && $wp_query->max_num_pages > 1 ) {
+    </ul><!-- .grammar-list -->
+
+    <?php
+    // Previous/next page navigation.
+			the_posts_pagination( array(
+				'prev_text'          => __( 'Previous page', 'jkl-grammar' ),
+				'next_text'          => __( 'Next page', 'jkl-grammar' ),
+				'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'jkl-grammar' ) . ' </span>',
+			) );
+		// If no content, include the "No posts found" template.
+		else :
+			get_template_part( 'template-parts/content', 'none' );
+		endif;
     ?>
-      <nav id="<?php echo $nav_id; ?>">
-        <div class="nav-previous">
-          <?php next_posts_link( '<span class="meta-nav">&larr;</span> Previous grammar' ); ?>
-        </div>
-        <div class="nav-next">
-          <?php previous_posts_link( 'Next grammar <span class="meta-nav">&rarr;</span>' ); ?>
-        </div>
-      </nav>
-    <?php 
-    }
 
-    endif; ?>
+  </main><!-- .site-main -->
+</div><!-- .content-area -->
 
-  </div>
-</section>
-
+<?php get_sidebar(); ?>
 <?php get_footer(); ?>

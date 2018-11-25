@@ -34,12 +34,6 @@ function jkl_grammar_setup() {
   // trigger function for CPT
   jkl_grammar_setup_cpt();
 
-  // add page template
-  // jkl_grammar_page_template();
-  // jkl_grammar_redirect_page_template();
-
-  include_once( plugin_dir_url( __FILE__ ) . 'functions.php' );
-
   // clear permalinks after registered CPT
   flush_rewrite_rules();
 }
@@ -113,7 +107,7 @@ add_action( 'init', 'jkl_grammar_setup_cpt' );
  * @see register_post_type() for registering custom post types.
  */
 function jkl_grammar_taxonomies() {
-  // Add new taxonomy, make it hierarchical (like categories)
+  // LEVEL taxonomy, make it hierarchical (like categories)
   $labels = array(
       'name'              => _x( 'Level', 'taxonomy general name', 'jkl-grammar' ),
       'singular_name'     => _x( 'Level', 'taxonomy singular name', 'jkl-grammar' ),
@@ -133,6 +127,7 @@ function jkl_grammar_taxonomies() {
       'labels'            => $labels,
       'show_ui'           => true,
       'show_admin_column' => true,
+      'show_in_quick_edit'=> true,
       'show_in_rest'      => true,
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'level' ),
@@ -143,7 +138,7 @@ function jkl_grammar_taxonomies() {
   unset( $args );
   unset( $labels );
 
-  // Add new taxonomy, make it hierarchical (like categories)
+  // BOOK taxonomy, make it hierarchical (like categories)
   $labels = array(
       'name'              => _x( 'Book', 'taxonomy general name', 'jkl-grammar' ),
       'singular_name'     => _x( 'Book', 'taxonomy singular name', 'jkl-grammar' ),
@@ -163,6 +158,7 @@ function jkl_grammar_taxonomies() {
       'labels'            => $labels,
       'show_ui'           => true,
       'show_admin_column' => true,
+      'show_in_quick_edit'=> true,
       'show_in_rest'      => true,
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'book' ),
@@ -173,11 +169,12 @@ function jkl_grammar_taxonomies() {
   unset( $args );
   unset( $labels );
 
-  // Add new taxonomy, make it hierarchical (like categories)
+  // PARTS OF SPEECH taxonomy, make it hierarchical (like categories)
   $labels = array(
       'name'              => _x( 'Part of Speech', 'taxonomy general name', 'jkl-grammar' ),
       'singular_name'     => _x( 'Part of Speech', 'taxonomy singular name', 'jkl-grammar' ),
       'search_items'      => __( 'Search Parts of Speech', 'jkl-grammar' ),
+      'popular_items'              => __( 'Popular Parts of Speech', 'jkl-grammar' ),
       'all_items'         => __( 'All Parts of Speech', 'jkl-grammar' ),
       'parent_item'       => __( 'Parent Part of Speech', 'jkl-grammar' ),
       'parent_item_colon' => __( 'Parent Part of Speech:', 'jkl-grammar' ),
@@ -185,15 +182,20 @@ function jkl_grammar_taxonomies() {
       'update_item'       => __( 'Update Part of Speech', 'jkl-grammar' ),
       'add_new_item'      => __( 'Add New Part of Speech', 'jkl-grammar' ),
       'new_item_name'     => __( 'New Part of Speech Name', 'jkl-grammar' ),
+      'separate_items_with_commas' => __( 'Separate Parts of Speech with commas', 'jkl-grammar' ),
+      'add_or_remove_items'        => __( 'Add or remove Parts of Speech', 'jkl-grammar' ),
+      'choose_from_most_used'      => __( 'Choose from the most used Parts of Speech', 'jkl-grammar' ),
+      'not_found'                  => __( 'No Parts of Speech found.', 'jkl-grammar' ),
       'menu_name'         => __( 'Parts of Speech', 'jkl-grammar' ),
   );
 
   $args = array(
-      'hierarchical'      => true,
+      'hierarchical'      => false,
       'labels'            => $labels,
       'show_ui'           => true,
       'show_admin_column' => false,
       'show_in_rest'      => true,
+      'update_count_callback' => '_update_post_term_count',
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'part-of-speech' ),
   );
@@ -203,11 +205,12 @@ function jkl_grammar_taxonomies() {
   unset( $args );
   unset( $labels );
 
-  // Add new taxonomy, make it hierarchical (like categories)
+  // EXPRESSION taxonomy, make it hierarchical (like categories)
   $labels = array(
       'name'              => _x( 'Expression', 'taxonomy general name', 'jkl-grammar' ),
       'singular_name'     => _x( 'Expression', 'taxonomy singular name', 'jkl-grammar' ),
       'search_items'      => __( 'Search Expression', 'jkl-grammar' ),
+      'popular_items'              => __( 'Popular Expressions', 'jkl-grammar' ),
       'all_items'         => __( 'All Expression', 'jkl-grammar' ),
       'parent_item'       => __( 'Parent Expression', 'jkl-grammar' ),
       'parent_item_colon' => __( 'Parent Expression:', 'jkl-grammar' ),
@@ -215,26 +218,32 @@ function jkl_grammar_taxonomies() {
       'update_item'       => __( 'Update Expression', 'jkl-grammar' ),
       'add_new_item'      => __( 'Add New Expression', 'jkl-grammar' ),
       'new_item_name'     => __( 'New Expression Name', 'jkl-grammar' ),
+      'separate_items_with_commas' => __( 'Separate Expressions with commas', 'jkl-grammar' ),
+      'add_or_remove_items'        => __( 'Add or remove Expressions', 'jkl-grammar' ),
+      'choose_from_most_used'      => __( 'Choose from the most used Expressions', 'jkl-grammar' ),
+      'not_found'                  => __( 'No Expressions found.', 'jkl-grammar' ),
       'menu_name'         => __( 'Expressions', 'jkl-grammar' ),
   );
 
   $args = array(
-      'hierarchical'      => true,
+      'hierarchical'      => false,
       'labels'            => $labels,
       'show_ui'           => true,
       'show_admin_column' => false,
       'show_in_rest'      => true,
+      'update_count_callback' => '_update_post_term_count',
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'expression' ),
   );
 
   register_taxonomy( 'expression', array( 'grammar' ), $args );
 
-  // Add new taxonomy, make it hierarchical (like categories)
+  // USAGE taxonomy, make it hierarchical (like categories)
   $labels = array(
       'name'              => _x( 'Usage', 'taxonomy general name', 'jkl-grammar' ),
       'singular_name'     => _x( 'Usage', 'taxonomy singular name', 'jkl-grammar' ),
       'search_items'      => __( 'Search Usage', 'jkl-grammar' ),
+      'popular_items'              => __( 'Popular Usages', 'jkl-grammar' ),
       'all_items'         => __( 'All Usage', 'jkl-grammar' ),
       'parent_item'       => __( 'Parent Usage', 'jkl-grammar' ),
       'parent_item_colon' => __( 'Parent Usage:', 'jkl-grammar' ),
@@ -242,15 +251,20 @@ function jkl_grammar_taxonomies() {
       'update_item'       => __( 'Update Usage', 'jkl-grammar' ),
       'add_new_item'      => __( 'Add New Usage', 'jkl-grammar' ),
       'new_item_name'     => __( 'New Usage Name', 'jkl-grammar' ),
+      'separate_items_with_commas' => __( 'Separate Usages with commas', 'jkl-grammar' ),
+      'add_or_remove_items'        => __( 'Add or remove Usages', 'jkl-grammar' ),
+      'choose_from_most_used'      => __( 'Choose from the most used Usages', 'jkl-grammar' ),
+      'not_found'                  => __( 'No Usages found.', 'jkl-grammar' ),
       'menu_name'         => __( 'Usage', 'jkl-grammar' ),
   );
 
   $args = array(
-      'hierarchical'      => true,
+      'hierarchical'      => false,
       'labels'            => $labels,
       'show_ui'           => true,
       'show_admin_column' => false,
       'show_in_rest'      => true,
+      'update_count_callback' => '_update_post_term_count',
       'query_var'         => true,
       'rewrite'           => array( 'slug' => 'usage' ),
   );
@@ -265,6 +279,38 @@ function jkl_grammar_taxonomies() {
 }
 // hook into the init action and call jkl_grammar_taxonomies when it fires
 add_action( 'init', 'jkl_grammar_taxonomies', 0 );
+
+/**
+ * Add WP-Subtitle support
+ * @link https://github.com/benhuson/wp-subtitle/wiki/Add-support-for-a-custom-post-type
+ * @source https://wordpress.org/plugins/wp-subtitle/
+ */
+function jkl_grammar_add_subtitles() {
+	add_post_type_support( 'grammar', 'wps_subtitle' );
+}
+add_action( 'init', 'jkl_grammar_add_subtitles' );
+
+/**
+ * Change WP-Subtitle title
+ */
+function jkl_grammar_subtitle_title( $title, $post_type ) {
+	if ( 'grammar' == $post_type ) {
+		$title = __( 'Translation (subtitle)', 'jkl-grammar' );
+	}
+	return $title;
+}
+add_filter( 'wps_meta_box_title', 'jkl_grammar_subtitle_title', 10, 2 );
+
+/**
+ * Add WP-Subtitle description
+ */
+function jkl_grammar_subtitle_description( $description, $post ) {
+	if ( 'grammar' == get_post_type ( $post ) ) {
+		return '<p>' . __( 'Used for grammar translation.', 'jkl-grammar' ) . '</p>';
+	}
+	return $description;
+}
+add_filter( 'wps_subtitle_field_description', 'jkl_grammar_subtitle_description', 10, 2 );
 
 /**
  * Include Single Grammar page template
@@ -290,3 +336,43 @@ function jkl_grammar_single( $template_path ) {
   return $template_path;
 }
 add_filter( 'template_include', 'jkl_grammar_single', 1 );
+
+/**
+ * Create filters for custom categories on the CPT admin list page
+ * @link https://generatewp.com/filtering-posts-by-taxonomies-in-the-dashboard/
+ */
+function jkl_grammar_filters( $post_type, $which ) {
+
+	// Apply this only on a specific post type
+	if ( 'grammar' !== $post_type )
+		return;
+
+	// A list of taxonomy slugs to filter by
+	$taxonomies = array( 'level', 'book', 'expression', 'usage' );
+
+	foreach ( $taxonomies as $taxonomy_slug ) {
+
+		// Retrieve taxonomy data
+		$taxonomy_obj = get_taxonomy( $taxonomy_slug );
+		$taxonomy_name = $taxonomy_obj->labels->name;
+
+		// Retrieve taxonomy terms
+		$terms = get_terms( $taxonomy_slug );
+
+		// Display filter HTML
+		echo "<select name='{$taxonomy_slug}' id='{$taxonomy_slug}' class='postform'>";
+		echo '<option value="">' . sprintf( esc_html__( 'Show All %ss', 'jkl-grammar' ), $taxonomy_name ) . '</option>';
+		foreach ( $terms as $term ) {
+			printf(
+				'<option value="%1$s" %2$s>%3$s (%4$s)</option>',
+				$term->slug,
+				( ( isset( $_GET[$taxonomy_slug] ) && ( $_GET[$taxonomy_slug] == $term->slug ) ) ? ' selected="selected"' : '' ),
+				$term->name,
+				$term->count
+			);
+		}
+		echo '</select>';
+	}
+
+}
+add_action( 'restrict_manage_posts', 'jkl_grammar_filters' , 10, 2);
