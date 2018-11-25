@@ -14,6 +14,10 @@ get_header(); ?>
       <?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>
     </header><!-- .page-header -->
 
+    <!-- Add ReactJS -->
+    <div id="grammar_root"></div>
+    <!-- End ReactJS -->
+
     <ul class="grammar-list">
 
     <!-- Start the Loop -->

@@ -376,3 +376,15 @@ function jkl_grammar_filters( $post_type, $which ) {
 
 }
 add_action( 'restrict_manage_posts', 'jkl_grammar_filters' , 10, 2);
+
+/**
+ * Enqueue ReactJS and other scripts
+ */
+function jkl_grammar_scripts() {
+  if ( 'grammar' === get_post_type() && is_archive() ) {
+    wp_enqueue_script( 'jkl-grammar-react', 'https://unpkg.com/react@16/umd/react.development.js', array(), '20181126', true );
+    wp_enqueue_script( 'jkl-grammar-react-dom', 'https://unpkg.com/react-dom@16/umd/react-dom.development.js', array(), '20181126', true );
+    wp_enqueue_script( 'jkl-grammar-components', plugins_url( 'js/GrammarArchives.js', __FILE__ ), array(), '20181126', true );
+  }
+}
+add_action( 'wp_enqueue_scripts', 'jkl_grammar_scripts' );
