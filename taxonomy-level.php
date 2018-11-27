@@ -11,7 +11,7 @@ get_header(); ?>
 <div id="primary" class="content-area">
   <main id="main" class="site-main" role="main">
 
-    <?php if ( have_posts() ) : $this_tax = $wp_query->get_queried_object(); ?>
+    <?php if ( have_posts() ) : ?>
 
     <header class="page-header">
       <h1 class="page-title">Grammar Index</h1>
@@ -40,55 +40,54 @@ get_header(); ?>
         'taxonomy' => 'usage',
         'hide_empty' => false
       ) );
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'post_tag',
-        'hide_empty' => false
-      ) );
 
       $output = '';
       if ( ! empty($taxonomies) ) :
-        $output .= '<div style="margin-top: 1rem;">';
         foreach( $taxonomies as $taxonomy ) :
-          $output .= '<p style="margin-bottom: 0;"><strong>' . ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( $taxonomy[0]->taxonomy ) ) ) . '</strong>: ';
+          $output .= '<p><strong><a href="' . $taxonomy[0]->taxonomy . '">' . ucwords( $taxonomy[0]->taxonomy ) . '</a></strong>: ';
           if ( ! empty ($taxonomy ) ) :
-            $home_url = get_home_url();
-
             $output .= '<select onchange="if (this.value) window.location.href=this.value">';
-            $output.= '<optgroup label="'. ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( $taxonomy[0]->taxonomy ) ) ) .'">';
+            $output.= '<optgroup label="'. esc_attr( ucwords( $taxonomy[0]->taxonomy) ) .'">';
             foreach ( $taxonomy as $key => $category ) :
               if ( $key == 0 ) {
-                $output .= '<option value="' . $home_url . '/grammar/">Select</option>'; 
+                $output .= '<option value="/grammar">Every</option>'; 
               }
-              $tax = $category->taxonomy;
-              if ( $tax == 'post_tag' ) {
-                $tax = 'tag';
-              }
-              $output.= '<option value="' . $home_url . '/' . esc_attr( $tax ) . '/' . esc_attr( $category->slug ) .'/">
+              $output.= '<option value="'. '/grammar/' . esc_attr( $category->taxonomy ) . '/' . esc_attr( $category->slug ) .'">
                 '. esc_html( $category->name ) . ' (' . esc_attr( $category->count) . ')' .'</option>';
             endforeach;
             $output .= '</optgroup>';
             $output.='</select></p>';
           endif;
         endforeach;
-        $output .= '</div>';
       endif;
       echo $output;
+      
+      // if ( ! empty($taxonomies) ) :
+      //   $output = '<select>';
+      //   foreach ( $taxonomies as $category ) {
+      //     if( $category->parent == 0 ) {
+      //       $output.= '<optgroup label="'. esc_attr( $category->name ) .'">';
+      //       foreach( $taxonomies as $subcategory ) {
+      //         if($subcategory->parent == $category->term_id) {
+      //         $output.= '<option value="'. esc_attr( $subcategory->term_id ) .'">
+      //           '. esc_html( $subcategory->name ) .'</option>';
+      //         }
+      //       }
+      //       $output.='</optgroup>';
+      //     }
+      //   }
+      //   $output.='</select>';
+      //   echo $output;
+      // endif;
       ?>
     
     </header><!-- .page-header -->
 
     <!-- Add ReactJS -->
-    <!-- <div id="grammar_root"></div> -->
+    <div id="grammar_root"></div>
     <!-- End ReactJS -->
 
-    <?php if ( ! empty( $this_tax->taxonomy ) ) : ?>
-      <h2 class="page-title"><?php echo ucwords( $this_tax->taxonomy ) . ': ' . ucwords( $this_tax->slug ); ?></h2>
-    <?php else : ?>
-      <h2 class="page-title">All Grammar</h2>
-    <?php endif; ?>
-
-    <div class="entry-content">
-    <ul class="grammar-list" style="margin: 1rem 0 3.5rem;">
+    <ul class="grammar-list">
 
     <!-- Start the Loop -->
     <?php while ( have_posts() ) : the_post(); ?>
@@ -105,7 +104,6 @@ get_header(); ?>
     <?php endwhile; ?>
 
     </ul><!-- .grammar-list -->
-    </div>
 
     <?php
     // Previous/next page navigation.
@@ -123,7 +121,7 @@ get_header(); ?>
   </main><!-- .site-main -->
 </div><!-- .content-area -->
 
-<?php get_sidebar(); ?>
+<?php // get_sidebar(); ?>
 
 <!-- .wrap for TwentySeventeen -->
 </div><!-- .wrap -->

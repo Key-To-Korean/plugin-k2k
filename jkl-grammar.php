@@ -238,6 +238,9 @@ function jkl_grammar_taxonomies() {
 
   register_taxonomy( 'expression', array( 'grammar' ), $args );
 
+  unset( $args );
+  unset( $labels );
+
   // USAGE taxonomy, make it hierarchical (like categories)
   $labels = array(
       'name'              => _x( 'Usage', 'taxonomy general name', 'jkl-grammar' ),
@@ -266,13 +269,10 @@ function jkl_grammar_taxonomies() {
       'show_in_rest'      => true,
       'update_count_callback' => '_update_post_term_count',
       'query_var'         => true,
-      'rewrite'           => array( 'slug' => 'usage' ),
+      'rewrite'           => array( 'slug' => 'grammar/usage' ),
   );
 
   register_taxonomy( 'usage', array( 'grammar' ), $args );
-
-  unset( $args );
-  unset( $labels );
 
   unset( $args );
   unset( $labels );
@@ -325,7 +325,7 @@ function jkl_grammar_single( $template_path ) {
       } else {
         $template_path = plugin_dir_path( __FILE__ ) . 'single-grammar.php';
       }
-    } elseif ( is_archive() || is_tax( 'level' ) ) {
+    } elseif ( is_archive() ) {
       if ( $theme_file = locate_template( array( 'archive-grammar.php' ) ) ) {
         $template_path = $theme_file;
       } else {
@@ -336,6 +336,17 @@ function jkl_grammar_single( $template_path ) {
   return $template_path;
 }
 add_filter( 'template_include', 'jkl_grammar_single', 1 );
+
+/**
+ * Custom Taxonomy page
+ */
+function jkl_grammar_custom_taxonomy_pages( $tax_template ) {
+  // if ( is_tax( 'level' ) ) {
+    $tax_template = dirname( __FILE__ ) . '/taxonomy-level.php';
+  // }
+  return $tax_template;
+}
+// add_filter( 'taxonomy_template', 'jkl_grammar_custom_taxonomy_pages' );
 
 /**
  * Create filters for custom categories on the CPT admin list page
@@ -379,6 +390,7 @@ add_action( 'restrict_manage_posts', 'jkl_grammar_filters' , 10, 2);
 
 /**
  * Enqueue ReactJS and other scripts
+ * @link https://reactjs.org/docs/add-react-to-a-website.html
  */
 function jkl_grammar_scripts() {
   if ( 'grammar' === get_post_type() && is_archive() ) {

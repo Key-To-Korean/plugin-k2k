@@ -13,7 +13,7 @@ get_header(); ?>
 <div id="primary" class="content-area">
   <main id="main" class="site-main" role="main">
     <!-- Cycle through the posts -->
-    <?php while ( have_posts() ) : the_post(); ?>
+    <?php while ( have_posts() ) : the_post(); $this_tax = $wp_query->get_queried_object(); ?>
 
       <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -31,6 +31,19 @@ get_header(); ?>
         </div>
 
         <div class="entry-content">
+
+          <div id="nav-above" class="navigation" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 1rem;">
+            <div class="nav-previous">
+                <?php previous_post_link( '<span class="meta-nav"> %link </span>', _x( '&#9668; Previous', 'Previous post link', 'category') , TRUE, '', $this_tax->taxonomy ); ?>
+            </div>
+            <div class="nav-index">
+              <span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>">Grammar Index</a></span>
+            </div>
+            <div class="nav-previous">
+                <?php next_post_link( '<span class="meta-nav"> %link </span>', _x( 'Next &#9658;', 'Next post link', 'category') , TRUE, '', $this_tax->taxonomy ); ?>
+            </div>
+          </div><!-- #nav-above -->
+
         <?php
           /* translators: %s: Name of current post */
           the_content( sprintf(
@@ -69,6 +82,10 @@ get_header(); ?>
             <strong>Usage</strong>
             <div class="grammar-usage tagcloud">
               <?php echo get_the_term_list( $post->ID, 'usage', '<p>', ' ', '</p>' ); ?>
+            </div>
+            <strong>Tags</strong>
+            <div class="grammar-tags tagcloud">
+              <?php echo get_the_tag_list( '<p>', ' ', '</p>' ); ?>
             </div>
           <div><!-- .entry-meta -->
           <?php
