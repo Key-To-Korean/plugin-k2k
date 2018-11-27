@@ -6,6 +6,10 @@
  */
 get_header(); ?>
 
+<!-- .wrap for TwentySeventeen -->
+<div class="wrap">
+<!-- .wrap for TwentySeventeen -->
+
 <div id="primary" class="content-area">
   <main id="main" class="site-main" role="main">
     <!-- Cycle through the posts -->
@@ -16,7 +20,9 @@ get_header(); ?>
         <header class="entry-header">
           <!-- Display Title and Subtitle -->
           <h2 class="entry-title"><?php the_title(); ?></h2>
-          <h3 class="entry-title subtitle"><?php the_subtitle(); ?></h3>
+          <?php if ( function_exists( 'the_subtitle' ) ) : ?>
+            <h3 class="entry-title subtitle"><?php the_subtitle(); ?></h3>
+          <?php endif; ?>
         </header><!-- .entry-header -->
 
         <!-- Display Featured Image -->
@@ -106,4 +112,9 @@ get_header(); ?>
 </div>
 
 <?php get_sidebar(); ?>
+
+<!-- .wrap for TwentySeventeen -->
+</div>
+<!-- .wrap for TwentySeventeen -->
+
 <?php get_footer(); ?>

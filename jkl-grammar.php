@@ -313,7 +313,7 @@ function jkl_grammar_subtitle_description( $description, $post ) {
 add_filter( 'wps_subtitle_field_description', 'jkl_grammar_subtitle_description', 10, 2 );
 
 /**
- * Include Single Grammar page template
+ * Include Template paths
  */
 function jkl_grammar_single( $template_path ) {
   if ( get_post_type() == 'grammar' ) {
@@ -325,13 +325,13 @@ function jkl_grammar_single( $template_path ) {
       } else {
         $template_path = plugin_dir_path( __FILE__ ) . 'single-grammar.php';
       }
-    } elseif ( is_archive() ) {
+    } elseif ( is_archive() || is_tax( 'level' ) ) {
       if ( $theme_file = locate_template( array( 'archive-grammar.php' ) ) ) {
         $template_path = $theme_file;
       } else {
         $template_path = plugin_dir_path( __FILE__ ) . 'archive-grammar.php';
       }
-    }
+    } 
   }
   return $template_path;
 }

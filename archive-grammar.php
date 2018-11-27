@@ -4,6 +4,10 @@
  */
 get_header(); ?>
 
+<!-- .wrap for TwentySeventeen -->
+<div class="wrap">
+<!-- .wrap for TwentySeventeen -->
+
 <div id="primary" class="content-area">
   <main id="main" class="site-main" role="main">
 
@@ -12,6 +16,77 @@ get_header(); ?>
     <header class="page-header">
       <h1 class="page-title">Grammar Index</h1>
       <?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>
+
+      <!-- Sortable / Filterable Terms Lists -->
+      <?php
+      $taxonomies = [];
+      $taxonomies[] = get_terms( array(
+        'taxonomy' => 'level',
+        'hide_empty' => false
+      ) );
+      $taxonomies[] = get_terms( array(
+        'taxonomy' => 'book',
+        'hide_empty' => false
+      ) );
+      $taxonomies[] = get_terms( array(
+        'taxonomy' => 'part-of-speech',
+        'hide_empty' => false
+      ) );
+      $taxonomies[] = get_terms( array(
+        'taxonomy' => 'expression',
+        'hide_empty' => false
+      ) );
+      $taxonomies[] = get_terms( array(
+        'taxonomy' => 'usage',
+        'hide_empty' => false
+      ) );
+
+      $output = '';
+      if ( ! empty($taxonomies) ) :
+        foreach( $taxonomies as $taxonomy ) :
+          $output .= '<p><strong><a href="' . $taxonomy[0]->taxonomy . '">' . ucwords( $taxonomy[0]->taxonomy ) . '</a></strong></p>';
+          // echo '<pre>';
+          // var_dump( $taxonomy );
+          // echo '</pre>';
+          if ( ! empty ($taxonomy ) ) :
+            $output .= '<select>';
+            foreach ( $taxonomy as $category ) :
+              if ( $category->parent == 0 ) {
+                $output.= '<optgroup label="'. esc_attr( $category->name ) .'">';
+                foreach( $taxonomies as $subcategory ) {
+                  if($subcategory->parent == $category->term_id) {
+                  $output.= '<option value="'. esc_attr( $subcategory->term_id ) .'">
+                    '. esc_html( $subcategory->name ) .'</option>';
+                  }
+                }
+                $output.='</optgroup>';
+              }
+            endforeach;
+            $output.='</select>';
+          endif;
+        endforeach;
+      endif;
+      echo $output;
+      
+      // if ( ! empty($taxonomies) ) :
+      //   $output = '<select>';
+      //   foreach ( $taxonomies as $category ) {
+      //     if( $category->parent == 0 ) {
+      //       $output.= '<optgroup label="'. esc_attr( $category->name ) .'">';
+      //       foreach( $taxonomies as $subcategory ) {
+      //         if($subcategory->parent == $category->term_id) {
+      //         $output.= '<option value="'. esc_attr( $subcategory->term_id ) .'">
+      //           '. esc_html( $subcategory->name ) .'</option>';
+      //         }
+      //       }
+      //       $output.='</optgroup>';
+      //     }
+      //   }
+      //   $output.='</select>';
+      //   echo $output;
+      // endif;
+      ?>
+    
     </header><!-- .page-header -->
 
     <!-- Add ReactJS -->
@@ -25,7 +100,7 @@ get_header(); ?>
 
       <li class="grammar-post">
         <?php the_title( sprintf( '<span class=""><a href="%s" rel="bookmark">', esc_url( get_permalink() ) ), '</a></span>' ); ?>
-        <?php if ( the_subtitle() ) : ?>
+        <?php if ( function_exists( 'the_subtitle' ) ) : ?>
           <span class="entry-subtitle">
           <?php the_subtitle(); ?>
           </span>
@@ -52,5 +127,10 @@ get_header(); ?>
   </main><!-- .site-main -->
 </div><!-- .content-area -->
 
-<?php get_sidebar(); ?>
+<?php // get_sidebar(); ?>
+
+<!-- .wrap for TwentySeventeen -->
+</div><!-- .wrap -->
+<!-- .wrap for TwentySeventeen -->
+
 <?php get_footer(); ?>
