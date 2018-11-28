@@ -5,81 +5,20 @@
 get_header(); ?>
 
 <!-- .wrap for TwentySeventeen -->
-<div class="wrap">
+<!-- <div class="wrap"> -->
 <!-- .wrap for TwentySeventeen -->
 
-<div id="primary" class="content-area">
+<div id="primary" class="content-area large-9 medium-12 columns">
   <main id="main" class="site-main" role="main">
 
     <?php if ( have_posts() ) : $this_tax = $wp_query->get_queried_object(); ?>
 
     <header class="page-header">
       <h1 class="page-title">
-        <a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>"><?php _e( 'Grammar Index', 'jkl-grammar' ); ?></a>
+        <?php _e( 'Grammar Index', 'jkl-grammar' ); ?>
       </h1>
-      <?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>
-
-      <!-- Sortable / Filterable Terms Lists -->
-      <?php
-      $taxonomies = [];
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'level',
-        'hide_empty' => false
-      ) );
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'book',
-        'hide_empty' => false
-      ) );
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'part-of-speech',
-        'hide_empty' => false
-      ) );
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'expression',
-        'hide_empty' => false
-      ) );
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'usage',
-        'hide_empty' => false
-      ) );
-      $taxonomies[] = get_terms( array(
-        'taxonomy' => 'post_tag',
-        'hide_empty' => false
-      ) );
-
-      $output = '';
-      if ( ! empty($taxonomies) ) :
-        $output .= '<div style="margin-top: 1rem;">';
-        foreach( $taxonomies as $taxonomy ) :
-          $output .= '<p style="margin-bottom: 0;"><strong>' . ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( $taxonomy[0]->taxonomy ) ) ) . '</strong>: ';
-          if ( ! empty ($taxonomy ) ) :
-            $output .= '<select onchange="if (this.value) window.location.href=this.value">';
-            $output.= '<optgroup label="'. ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( $taxonomy[0]->taxonomy ) ) ) .'">';
-            foreach ( $taxonomy as $key => $category ) :
-              if ( $key == 0 ) {
-                $output .= '<option value="' . esc_url( get_home_url() ) . '/grammar/">Select</option>'; 
-              }
-              $tax = $category->taxonomy;
-              if ( $tax == 'post_tag' ) {
-                $tax = 'tag';
-              }
-              $output.= '<option value="' . esc_url( get_home_url() ) . '/' . esc_attr( $tax ) . '/' . esc_attr( $category->slug ) .'/">
-                '. esc_html( $category->name ) . ' (' . esc_attr( $category->count) . ')' .'</option>';
-            endforeach;
-            $output .= '</optgroup>';
-            $output.='</select></p>';
-          endif;
-        endforeach;
-        $output .= '</div>';
-      endif;
-      echo $output;
-      ?>
-    
+      <?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>    
     </header><!-- .page-header -->
-
-    <!-- Add ReactJS -->
-    <!-- <div id="grammar_root"></div> -->
-    <!-- End ReactJS -->
 
     <?php if ( ! empty( $this_tax->taxonomy ) ) : ?>
       <h2 class="page-title"><?php echo ucwords( esc_attr( $this_tax->taxonomy ) ) . ': ' . ucwords( esc_attr( $this_tax->slug ) ); ?></h2>
@@ -123,10 +62,11 @@ get_header(); ?>
   </main><!-- .site-main -->
 </div><!-- .content-area -->
 
-<?php get_sidebar(); ?>
+<?php // get_sidebar( 'sidebar-grammar' ); ?>
+<?php load_template( dirname( __FILE__ ) . '/sidebar-grammar.php' ); ?> 
 
 <!-- .wrap for TwentySeventeen -->
-</div><!-- .wrap -->
+<!--</div><!-- .wrap -->
 <!-- .wrap for TwentySeventeen -->
 
 <?php get_footer(); ?>

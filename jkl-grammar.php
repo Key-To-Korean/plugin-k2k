@@ -396,7 +396,21 @@ function jkl_grammar_scripts() {
   if ( 'grammar' === get_post_type() && is_archive() ) {
     wp_enqueue_script( 'jkl-grammar-react', 'https://unpkg.com/react@16/umd/react.development.js', array(), '20181126', true );
     wp_enqueue_script( 'jkl-grammar-react-dom', 'https://unpkg.com/react-dom@16/umd/react-dom.development.js', array(), '20181126', true );
-    wp_enqueue_script( 'jkl-grammar-components', plugins_url( 'js/GrammarArchives.js', __FILE__ ), array(), '20181126', true );
+    wp_enqueue_script( 'jkl-grammar-babel', 'https://unpkg.com/babel-standalone@6/babel.min.js', array(), '20181128', true );
+    wp_enqueue_script( 'jkl-grammar-components', plugins_url( 'js/GrammarArchives.js', __FILE__ ), array( 'jkl-grammar-react', 'jkl-grammar-react-dom', 'jkl-grammar-babel' ), '20181126', true );
   }
 }
 add_action( 'wp_enqueue_scripts', 'jkl_grammar_scripts' );
+
+/**
+ * Change script tag for JSX script
+ * @link https://milandinic.com/2015/12/01/using-react-jsx-in-wordpress/
+ */
+function jkl_grammar_script_type( $tag, $handle, $src ) {
+  // Check that this is output of JSX file
+  if ( 'jkl-grammar-components' == $handle ) {
+    $tag = str_replace( "<script type='text/javascript'", "<script type='text/babel'", $tag );
+  }
+  return $tag;
+}
+add_filter( 'script_loader_tag', 'jkl_grammar_script_type', 10, 3 );

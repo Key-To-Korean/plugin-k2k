@@ -3,23 +3,31 @@
 const e = React.createElement;
 
 class GrammarArchives extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = { liked: false };
+  state = {
+    level: [],
+    book: [],
+    partOfSpeech: [],
+    expression: [],
+    usage: [],
+    tag: []
   }
 
   render() {
-    if (this.state.liked) {
-      return 'You liked this.';
-    }
-
-    return e(
-      'button',
-      { onClick: () => this.setState({ liked: true }) },
-      'Like'
-    );
+    return (
+      <div className='something-fun'>
+        <h1 className='page-title'>Grammar Index</h1>
+        <div className='grammar-filter-box'>
+          <div className='grammar-filter-button button btn'>Filter</div>
+          <p><strong>Level:</strong> <select></select></p>
+          <p><strong>Book:</strong> <select></select></p>
+          <p><strong>Part of Speech:</strong> <select></select></p>
+          <p><strong>Expression:</strong> <select></select></p>
+          <p><strong>Usage:</strong> <select></select></p>
+          <p><strong>Tag:</strong> <select></select></p>
+        </div>
+      </div>
+    )
   }
 }
 
-const domContainer = document.querySelector('#grammar_root');
-ReactDOM.render( e( GrammarArchives ), domContainer );
+ReactDOM.render( <GrammarArchives />, document.getElementById( 'grammar_root' ) );

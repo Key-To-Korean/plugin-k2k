@@ -10,7 +10,7 @@ get_header(); ?>
 <div class="wrap">
 <!-- .wrap for TwentySeventeen -->
 
-<div id="primary" class="content-area">
+<div id="primary" class="content-area large-9 medium-12 columns">
   <main id="main" class="site-main" role="main">
     <!-- Cycle through the posts -->
     <?php while ( have_posts() ) : the_post(); $this_tax = $wp_query->get_queried_object(); ?>
@@ -131,7 +131,7 @@ get_header(); ?>
 <?php get_sidebar(); ?>
 
 <!-- .wrap for TwentySeventeen -->
-</div>
+</div><!-- .wrap -->
 <!-- .wrap for TwentySeventeen -->
 
 <?php get_footer(); ?>
