@@ -8,8 +8,8 @@ Donate link:            https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&host
 Tags:                   custom post type, gutenberg
 Requires at least:      3.5
 Tested up to:           5.0
-Stable tag:             1.0.0
-Version:                1.0.0
+Stable tag:             1.1.0
+Version:                1.1.0
 License:                GPLv2 or later
 License URI:            http://www.gnu.org/licenses/gpl-2.0.html
 
@@ -29,6 +29,15 @@ taxonomies:
 3. Part of Speech (Verb, Noun, etc)
 4. Expression (frustation, excitement, etc)
 5. Usage (formal, written, spoken, etc)
+
+= Tested With =
+
+* TwentySixteen Theme
+* TwentySeventeen Theme 
+
+= Supported Plugins = 
+
+* WP Subtitle - changes metabox title from "Subtitle" to "Translation"
 
 = Planned Upcoming Features = 
 
@@ -86,6 +95,10 @@ Themes and Plugins fully updated in order to avoid problems with this or any oth
 Themees or Plugins. I regularly update my site and test my Plugins and Themes with
 the latest version of WordPress.
 
+= When I select something from the dropdown menus on the archive page, I get a 404 error. =
+Please navigate to your WordPress Dashboard, go to `Settings -> Permalinks` and click the "Save"
+button. You just need to "flush" the permalink rewrite rules in this way.
+
 = Can you ADD / REMOVE / CHANGE features of the plugin? =
 Sure, I'm always open to suggestions. Let me know what you're looking for. Feel
 free to open a GitHub Issue on the [plugin repository](https://github.com/jekkilekki/plugin-jkl-grammar/issues)
@@ -95,6 +108,7 @@ to let me know the specific features or problems you're having.
 
 1. Gutenberg editor screen
 2. Classic editor screen
+3. Archive Page
 
 == Other Notes ==
 
@@ -117,6 +131,11 @@ program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fi
 Floor, Boston, MA 02110-1301 USA
 
 == Changelog ==
+
+= 1.1.0 (Nov 28, 2018) =
+* Added custom single template
+* Added custom archive template
+* On archive template, added select dropdowns to view Grammar Posts contained in any taxonomy
 
 = 1.0.0 (Nov 24, 2018) =
 * Initial release

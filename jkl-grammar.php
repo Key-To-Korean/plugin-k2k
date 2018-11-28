@@ -3,7 +3,7 @@
  * Plugin Name: JKL Grammar
  * Plugin URI: https://github.com/jekkilekki/plugin-jkl-grammar
  * Description: Custom Post Type to handle Grammar Points
- * Version: 1.0.0
+ * Version: 1.1.0
  * Author: jekkilekki
  * Author URI: https://aaron.kr
  * License: GPL2

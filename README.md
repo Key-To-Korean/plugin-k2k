@@ -2,7 +2,7 @@
 
 # JKL Grammar
 
-`Version 1.0.0`
+`Version 1.1.0`
 
 * [Plugin Page](https://github.com/jekkilekki/plugin-jkl-grammar)
 * [Author Page](https://aaron.kr/)
@@ -22,15 +22,28 @@ enable me to better organize the grammar points I'm studying. It includes the fo
 4. Expression (frustation, excitement, etc)
 5. Usage (formal, written, spoken, etc)
 
+__Tested with__
+
+* [TwentySixteen Theme](https://wordpress.org/themes/twentysixteen/) 
+* [TwentySeventeen Theme](https://wordpress.org/themes/twentyseventeen/)
+
+__Supported plugins__
+
+* [WP Subtitle](https://wordpress.org/plugins/wp-subtitle/) - Changes metabox name from "Subtitle" to "Translation"
+
 ### Screenshots
 
 1. Gutenberg editor screen
 
-![screenshot-1](https://cloud.githubusercontent.com/assets/6644259/18836673/fc17f5a8-843b-11e6-89ea-2822f9e9b33a.png)
+![screenshot-1](https://github.com/jekkilekki/plugin-jkl-grammar/blob/master/assets/screenshot-1.png?raw=true)
 
 2. Classic editor screen
 
-![screenshot-2](https://cloud.githubusercontent.com/assets/6644259/18836684/033f859e-843c-11e6-8346-a9d1f5357ec6.png)
+![screenshot-2](https://github.com/jekkilekki/plugin-jkl-grammar/blob/master/assets/screenshot-2.png?raw=true)
+
+3. Archive Page
+
+![screenshot-3](https://github.com/jekkilekki/plugin-jkl-grammar/blob/master/assets/screenshot-3.png?raw=true)
 
 ### Planned Upcoming Features 
 
@@ -51,6 +64,26 @@ editor.
 If you have created your own language pack, or have an update of an existing one, 
 you can send your [gettext .po or .mo file] to me so that I can bundle it in the
 plugin.
+
+### FAQs
+
+#### Tips
+
+As a general rule, it is always best to keep your WordPress installation and all 
+Themes and Plugins fully updated in order to avoid problems with this or any other 
+Themees or Plugins. I regularly update my site and test my Plugins and Themes with
+the latest version of WordPress.
+
+#### When I select something from the dropdown menus on the archive page, I get a 404 error.
+
+Please navigate to your WordPress Dashboard, go to `Settings -> Permalinks` and click the "Save"
+button. You just need to "flush" the permalink rewrite rules in this way.
+
+#### Can you ADD / REMOVE / CHANGE features of the plugin?
+
+Sure, I'm always open to suggestions. Let me know what you're looking for. Feel
+free to open a GitHub Issue on the [plugin repository](https://github.com/jekkilekki/plugin-jkl-grammar/issues)
+to let me know the specific features or problems you're having.
 
 ### Contact Me 
 
@@ -73,6 +106,11 @@ program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fi
 Floor, Boston, MA 02110-1301 USA
 
 ## Changelog
+
+### 1.1.0 (Nov 28, 2018)
+* Added custom single template
+* Added custom archive template
+* On archive template, added select dropdowns to view Grammar Posts contained in any taxonomy
 
 ### 1.0.0 (Nov 24, 2018)
 * Initial release

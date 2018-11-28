@@ -34,13 +34,13 @@ get_header(); ?>
 
           <div id="nav-above" class="navigation" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 1rem;">
             <div class="nav-previous">
-                <?php previous_post_link( '<span class="meta-nav"> %link </span>', _x( '&#9668; Previous', 'Previous post link', 'category') , TRUE, '', $this_tax->taxonomy ); ?>
+                <?php previous_post_link( '<span class="meta-nav"> %link </span>', _x( '&#9668; Previous', 'Previous post link', 'category') , TRUE, '', esc_attr( $this_tax->taxonomy ) ); ?>
             </div>
             <div class="nav-index">
-              <span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>">Grammar Index</a></span>
+              <span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>"><?php _e( 'Grammar Index', 'jkl-grammar' ); ?></a></span>
             </div>
             <div class="nav-previous">
-                <?php next_post_link( '<span class="meta-nav"> %link </span>', _x( 'Next &#9658;', 'Next post link', 'category') , TRUE, '', $this_tax->taxonomy ); ?>
+                <?php next_post_link( '<span class="meta-nav"> %link </span>', _x( 'Next &#9658;', 'Next post link', 'category') , TRUE, '', esc_attr( $this_tax->taxonomy ) ); ?>
             </div>
           </div><!-- #nav-above -->
 
@@ -63,27 +63,27 @@ get_header(); ?>
 
         <footer class="entry-footer">
           <div class="entry-meta grammar-meta">
-            <strong>Level</strong>
+            <strong><?php _e( 'Level', 'jkl-grammar' ); ?></strong>
             <div class="grammar-level">
               <?php echo get_the_term_list( $post->ID, 'level', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong>Book</strong>
+            <strong><?php _e( 'Book', 'jkl-grammar' ); ?></strong>
             <div class="grammar-book">
               <?php echo get_the_term_list( $post->ID, 'book', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong>Expressing</strong>
+            <strong><?php _e( 'Expressing', 'jkl-grammar' ); ?></strong>
             <div class="grammar-expression tagcloud">
               <?php echo get_the_term_list( $post->ID, 'expression', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong>Parts of Speech</strong>
+            <strong><?php _e( 'Parts of Speech', 'jkl-grammar' ); ?></strong>
             <div class="grammar-part tagcloud">
               <?php echo get_the_term_list( $post->ID, 'part-of-speech', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong>Usage</strong>
+            <strong><?php _e( 'Usage', 'jkl-grammar' ); ?></strong>
             <div class="grammar-usage tagcloud">
               <?php echo get_the_term_list( $post->ID, 'usage', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong>Tags</strong>
+            <strong><?php _e( 'Tags', 'jkl-grammar' ); ?></strong>
             <div class="grammar-tags tagcloud">
               <?php echo get_the_tag_list( '<p>', ' ', '</p>' ); ?>
             </div>

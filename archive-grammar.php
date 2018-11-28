@@ -14,7 +14,9 @@ get_header(); ?>
     <?php if ( have_posts() ) : $this_tax = $wp_query->get_queried_object(); ?>
 
     <header class="page-header">
-      <h1 class="page-title">Grammar Index</h1>
+      <h1 class="page-title">
+        <a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>"><?php _e( 'Grammar Index', 'jkl-grammar' ); ?></a>
+      </h1>
       <?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>
 
       <!-- Sortable / Filterable Terms Lists -->
@@ -51,19 +53,17 @@ get_header(); ?>
         foreach( $taxonomies as $taxonomy ) :
           $output .= '<p style="margin-bottom: 0;"><strong>' . ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( $taxonomy[0]->taxonomy ) ) ) . '</strong>: ';
           if ( ! empty ($taxonomy ) ) :
-            $home_url = get_home_url();
-
             $output .= '<select onchange="if (this.value) window.location.href=this.value">';
             $output.= '<optgroup label="'. ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( $taxonomy[0]->taxonomy ) ) ) .'">';
             foreach ( $taxonomy as $key => $category ) :
               if ( $key == 0 ) {
-                $output .= '<option value="' . $home_url . '/grammar/">Select</option>'; 
+                $output .= '<option value="' . esc_url( get_home_url() ) . '/grammar/">Select</option>'; 
               }
               $tax = $category->taxonomy;
               if ( $tax == 'post_tag' ) {
                 $tax = 'tag';
               }
-              $output.= '<option value="' . $home_url . '/' . esc_attr( $tax ) . '/' . esc_attr( $category->slug ) .'/">
+              $output.= '<option value="' . esc_url( get_home_url() ) . '/' . esc_attr( $tax ) . '/' . esc_attr( $category->slug ) .'/">
                 '. esc_html( $category->name ) . ' (' . esc_attr( $category->count) . ')' .'</option>';
             endforeach;
             $output .= '</optgroup>';
@@ -82,9 +82,9 @@ get_header(); ?>
     <!-- End ReactJS -->
 
     <?php if ( ! empty( $this_tax->taxonomy ) ) : ?>
-      <h2 class="page-title"><?php echo ucwords( $this_tax->taxonomy ) . ': ' . ucwords( $this_tax->slug ); ?></h2>
+      <h2 class="page-title"><?php echo ucwords( esc_attr( $this_tax->taxonomy ) ) . ': ' . ucwords( esc_attr( $this_tax->slug ) ); ?></h2>
     <?php else : ?>
-      <h2 class="page-title">All Grammar</h2>
+      <h2 class="page-title"><?php _e( 'All Grammar', 'jkl-grammar' ); ?></h2>
     <?php endif; ?>
 
     <div class="entry-content">
