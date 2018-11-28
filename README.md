@@ -1,4 +1,4 @@
-![banner-1544x500](https://cloud.githubusercontent.com/assets/6644259/18836652/ee31ee80-843b-11e6-8d29-a5a5871ec79e.jpg)
+![banner-1544x500](https://github.com/jekkilekki/plugin-jkl-grammar/blob/master/assets/banner-1544x500.png?raw=true)
 
 # JKL Grammar
 
