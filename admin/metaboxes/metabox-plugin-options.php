@@ -12,18 +12,49 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action( 'cmb2_admin_init', 'k2k_register_theme_options_metabox' );
+add_action( 'admin_init', 'k2k_add_admin_menu_separator' );
+/**
+ * Create a Separator for the Admin Menu.
+ *
+ * @param int $position The location of the menu separator.
+ *
+ * @link https://tommcfarlin.com/add-a-separator-to-the-wordpress-menu/
+ */
+function k2k_add_admin_menu_separator( $position ) {
+
+	global $menu;
+
+	// phpcs:ignore
+	$menu[ $position ] = array(
+		0 => '',
+		1 => 'read',
+		2 => 'separator' . $position,
+		3 => '',
+		4 => 'wp-menu-separator',
+	);
+
+}
+
+add_action( 'admin_menu', 'k2k_set_admin_menu_separator' );
+/**
+ * Set the Separator before our plugin options.
+ */
+function k2k_set_admin_menu_separator() {
+	do_action( 'admin_init', K2K_MENU_POSITION - 1 );
+}
+
+add_action( 'cmb2_admin_init', 'k2k_register_plugin_options_metabox' );
 /**
  * Hook in and register a metabox to handle a theme options page and adds a menu item.
  */
-function k2k_register_theme_options_metabox() {
+function k2k_register_plugin_options_metabox() {
 
 	/**
 	 * Registers options page menu item and form.
 	 */
 	$k2k_options = new_cmb2_box(
 		array(
-			'id'           => 'k2k_theme_options_page',
+			'id'           => 'k2k_plugin_options_page',
 			'title'        => esc_html__( 'K2K Plugin Options', 'k2k' ),
 			'object_types' => array( 'options-page' ),
 
@@ -32,12 +63,12 @@ function k2k_register_theme_options_metabox() {
 			* Several of these parameters are passed along to add_menu_page()/add_submenu_page().
 			*/
 
-			'option_key'   => 'k2k_theme_options', // The option key and admin menu page slug.
-			'icon_url'     => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( plugin_dir_path( __FILE__ ) . '../../assets/korean-pattern-lg.svg' ) ), // Menu icon. Only applicable if 'parent_slug' is left empty.
+			'option_key'   => 'k2k_options', // The option key and admin menu page slug.
+			'icon_url'     => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( plugin_dir_path( __FILE__ ) . '../../assets/korean-pattern-sm.svg' ) ), // Menu icon. Only applicable if 'parent_slug' is left empty.
 			'menu_title'   => esc_html__( 'K2K Options', 'k2k' ), // Falls back to 'title' (above).
 			// 'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
 			// 'capability'      => 'manage_options', // Cap required to view options-page.
-			// 'position'        => 1, // Menu position. Only applicable if 'parent_slug' is left empty.
+			'position'     => K2K_MENU_POSITION, // Menu position. Only applicable if 'parent_slug' is left empty.
 			// 'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
 			// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
 			// 'save_button'     => esc_html__( 'Save Theme Options', 'cmb2' ), // The text for the options-page save button. Defaults to 'Save'.
@@ -67,11 +98,11 @@ function k2k_register_theme_options_metabox() {
 }
 
 /**
- * Callback to define the optionss-saved message.
+ * Callback to define the options-saved message.
  *
  * @param CMB2  $cmb The CMB2 object.
  * @param array $args {
- *     An array of message arguments
+ *     An array of message arguments.
  *
  *     @type bool   $is_options_page Whether current page is this options page.
  *     @type bool   $should_notify   Whether options were saved and we should be notified.

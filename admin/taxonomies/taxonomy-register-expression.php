@@ -51,7 +51,7 @@ function k2k_register_taxonomy_exp() {
 		'rewrite'               => array( 'slug' => 'expression' ),
 	);
 
-	register_taxonomy( 'k2k-expression', array( 'k2k' ), $args );
+	register_taxonomy( 'k2k-expression', array( 'k2k-grammar', 'k2k-phrases' ), $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_exp' );

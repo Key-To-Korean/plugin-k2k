@@ -22,11 +22,11 @@ function k2k_register_metabox() {
 
 	$prefix = 'k2k_';
 
-	$K2K_metabox = new_cmb2_box(
+	$k2k_metabox = new_cmb2_box(
 		array(
 			'id'           => $prefix . 'metabox',
 			'title'        => esc_html__( 'Grammar Meta', 'k2k' ),
-			'object_types' => array( 'k2k' ),
+			'object_types' => array( 'k2k-grammar' ),
 			'closed'       => true,
 			'tabs'         => array(
 				array(
@@ -68,7 +68,7 @@ function k2k_register_metabox() {
 	/**
 	 * Info - Translation (Subtitle)
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'   => esc_html__( 'Translation (EN)', 'k2k' ),
 			'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
@@ -83,7 +83,7 @@ function k2k_register_metabox() {
 	 *
 	 * @link https://github.com/CMB2/cmb2-attached-posts
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'    => esc_html__( 'Related Grammar Points', 'k2k' ),
 			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'k2k' ),
@@ -104,10 +104,10 @@ function k2k_register_metabox() {
 	/**
 	 * Conjugations - Past Tense
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name' => esc_html__( 'Past Tense', 'k2k' ),
-			'desc' => esc_html__( 'Leave fields blank if no conjugation.', 'k2k' ),
+			'desc' => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
 			'id'   => $prefix . 'past_tense',
 			'type' => 'text',
 		)
@@ -116,7 +116,7 @@ function k2k_register_metabox() {
 	/**
 	 * Conjugations - Present Tense
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name' => esc_html__( 'Present Tense', 'k2k' ),
 			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
@@ -128,7 +128,7 @@ function k2k_register_metabox() {
 	/**
 	 * Conjugations - Future Tense
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name' => esc_html__( 'Future Tense', 'k2k' ),
 			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
@@ -140,7 +140,7 @@ function k2k_register_metabox() {
 	/**
 	 * Conjugations - Other
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name' => esc_html__( 'Other Tense', 'k2k' ),
 			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
@@ -152,7 +152,7 @@ function k2k_register_metabox() {
 	/**
 	 * Meta - Level Selection
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'     => esc_html__( 'Level', 'k2k' ),
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
@@ -166,7 +166,7 @@ function k2k_register_metabox() {
 	/**
 	 * Meta - Book Selection
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'     => esc_html__( 'Book', 'k2k' ),
 			'id'       => $prefix . 'book',
@@ -178,7 +178,7 @@ function k2k_register_metabox() {
 	/**
 	 * Meta - Expression Type
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'     => esc_html__( 'Expression', 'k2k' ),
 			'id'       => $prefix . 'expression',
@@ -190,7 +190,7 @@ function k2k_register_metabox() {
 	/**
 	 * Meta - Part of Speech
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'     => esc_html__( 'Part of Speech', 'k2k' ),
 			'id'       => $prefix . 'part_of_speech',
@@ -202,7 +202,7 @@ function k2k_register_metabox() {
 	/**
 	 * Meta - Usage Selection
 	 */
-	$K2K_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
 			'name'     => esc_html__( 'Usage', 'k2k' ),
 			'id'       => $prefix . 'usage',

@@ -42,6 +42,8 @@ if ( ! defined( 'ABSPATH' ) ) { // if ( ! defined( 'WPINC' ) ).
 define( 'K2K_VERSION', '1.0.0' );
 define( 'K2K_DOMAIN', 'k2k' );
 define( 'K2K_PATH', plugin_dir_path( __FILE__ ) );
+define( 'K2K_MENU_POSITION', 50 );
+define( 'K2K_TAXES', array( 'category', 'post_tag', 'k2k-expression', 'k2k-book', 'k2k-tenses', 'k2k-usage', 'k2k-level', 'k2k-part-of-speech' ) );
 
 /**
  * Load Text Domain.
@@ -57,30 +59,30 @@ require_once K2K_PATH . 'includes/cmb2-tabs/cmb2-tabs.php';
 require_once K2K_PATH . 'includes/cmb2-attached-posts/cmb2-attached-posts-field.php';
 
 // Include General Metaboxes.
-// require_once K2K_PATH . 'admin/metaboxes/example-functions.php';.
-require_once K2K_PATH . 'admin/metaboxes/metabox-theme-options.php';
-// require_once K2K_PATH . 'admin/metaboxes/metabox-user-profile-extras.php';
-// require_once K2K_PATH . 'admin/metaboxes/metabox-taxonomy-extras.php';
+// require_once K2K_PATH . 'admin/metaboxes/example-functions.php';
+require_once K2K_PATH . 'admin/metaboxes/metabox-plugin-options.php';
+require_once K2K_PATH . 'admin/metaboxes/metabox-user-profile-extras.php';
+require_once K2K_PATH . 'admin/metaboxes/metabox-taxonomy-extras.php';
 
 // Include CPT Metaboxes.
-// require_once K2K_PATH . 'admin/metaboxes/metabox-grammar-register.php';
+require_once K2K_PATH . 'admin/metaboxes/metabox-grammar-register.php';
 // require_once K2K_PATH . 'admin/metaboxes/metabox-vocabulary-register.php';
 // require_once K2K_PATH . 'admin/metaboxes/metabox-phrases-register.php';
 
 // Include Post Type(s).
-// require_once K2K_PATH . 'admin/post-types/post-type-grammar-register.php';
-// require_once K2K_PATH . 'admin/post-types/post-type-vocabulary-register.php';
-// require_once K2K_PATH . 'admin/post-types/post-type-phrases-register.php';
+require_once K2K_PATH . 'admin/post-types/post-type-grammar-register.php';
+require_once K2K_PATH . 'admin/post-types/post-type-vocabulary-register.php';
+require_once K2K_PATH . 'admin/post-types/post-type-phrases-register.php';
 
 // Include Shared Taxonomies.
-// require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
-// require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
-// require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
+require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
+require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
+require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
 
 // Include Grammar Taxonomies.
-// require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-grammar-book.php';
-// require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-grammar-tenses.php';
-// require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-grammar-usage.php';
+require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-grammar-book.php';
+require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-grammar-tenses.php';
+require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-grammar-usage.php';
 
 // Register everything on plugin activation.
 register_activation_hook( __FILE__, 'k2k_register_everything' );
@@ -165,8 +167,9 @@ function k2k_custom_taxonomy_pages( $tax_template ) {
 function k2k_filters( $post_type, $which ) {
 
 	// Apply this only on a specific post type.
-	if ( 'k2k-grammar' !== $post_type )
+	if ( 'k2k-grammar' !== $post_type ) {
 		return;
+	}
 
 	// A list of taxonomy slugs to filter by.
 	$taxonomies = array( 'k2k-level', 'k2k-book', 'k2k-part-of-speech', 'k2k-expression', 'k2k-usage' );
@@ -174,7 +177,10 @@ function k2k_filters( $post_type, $which ) {
 	foreach ( $taxonomies as $taxonomy_slug ) {
 
 		// Retrieve taxonomy data.
-		$taxonomy_obj  = get_taxonomy( $taxonomy_slug );
+		$taxonomy_obj = get_taxonomy( $taxonomy_slug );
+		if ( empty( $taxonomy_obj ) ) {
+			exit;
+		}
 		$taxonomy_name = $taxonomy_obj->labels->name;
 
 		// Retrieve taxonomy terms.

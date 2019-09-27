@@ -46,7 +46,7 @@ function k2k_register_taxonomy_book() {
 		'rewrite'            => array( 'slug' => 'book' ),
 	);
 
-	register_taxonomy( 'k2k-book', array( 'k2k' ), $args );
+	register_taxonomy( 'k2k-book', array( 'k2k-grammar' ), $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_book' );

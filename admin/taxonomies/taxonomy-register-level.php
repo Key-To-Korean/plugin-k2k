@@ -46,7 +46,7 @@ function k2k_register_taxonomy_level() {
 		'rewrite'            => array( 'slug' => 'level' ),
 	);
 
-	register_taxonomy( 'k2k-level', array( 'k2k' ), $args );
+	register_taxonomy( 'k2k-level', array( 'k2k-grammar', 'k2k-vocabulary' ), $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_level' );

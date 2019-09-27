@@ -52,7 +52,7 @@ function k2k_register_taxonomy_usage() {
 		'meta_box_cb'           => false, // Working on removing metabox in the sidebar.
 	);
 
-	register_taxonomy( 'k2k-usage', array( 'k2k' ), $args );
+	register_taxonomy( 'k2k-usage', array( 'k2k-grammar' ), $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_usage' );
