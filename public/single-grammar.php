@@ -37,7 +37,7 @@ get_header(); ?>
                 <?php previous_post_link( '<span class="meta-nav"> %link </span>', _x( '&#9668; Previous', 'Previous post link', 'category') , TRUE, '', esc_attr( $this_tax->taxonomy ) ); ?>
             </div>
             <div class="nav-index">
-              <span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>"><?php _e( 'Grammar Index', 'jkl-grammar' ); ?></a></span>
+              <span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>"><?php _e( 'Grammar Index', 'k2k' ); ?></a></span>
             </div>
             <div class="nav-previous">
                 <?php next_post_link( '<span class="meta-nav"> %link </span>', _x( 'Next &#9658;', 'Next post link', 'category') , TRUE, '', esc_attr( $this_tax->taxonomy ) ); ?>
@@ -47,15 +47,15 @@ get_header(); ?>
         <?php
           /* translators: %s: Name of current post */
           the_content( sprintf(
-            __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'jkl-grammar' ),
+            __( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
             get_the_title()
           ) );
           wp_link_pages( array(
-            'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'jkl-grammar' ) . '</span>',
+            'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'k2k' ) . '</span>',
             'after'       => '</div>',
             'link_before' => '<span>',
             'link_after'  => '</span>',
-            'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'jkl-grammar' ) . ' </span>%',
+            'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'k2k' ) . ' </span>%',
             'separator'   => '<span class="screen-reader-text">, </span>',
           ) );
         ?>
@@ -63,27 +63,27 @@ get_header(); ?>
 
         <footer class="entry-footer">
           <div class="entry-meta grammar-meta">
-            <strong><?php _e( 'Level', 'jkl-grammar' ); ?></strong>
+            <strong><?php _e( 'Level', 'k2k' ); ?></strong>
             <div class="grammar-level">
               <?php echo get_the_term_list( $post->ID, 'level', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong><?php _e( 'Book', 'jkl-grammar' ); ?></strong>
+            <strong><?php _e( 'Book', 'k2k' ); ?></strong>
             <div class="grammar-book">
               <?php echo get_the_term_list( $post->ID, 'book', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong><?php _e( 'Expressing', 'jkl-grammar' ); ?></strong>
+            <strong><?php _e( 'Expressing', 'k2k' ); ?></strong>
             <div class="grammar-expression tagcloud">
               <?php echo get_the_term_list( $post->ID, 'expression', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong><?php _e( 'Parts of Speech', 'jkl-grammar' ); ?></strong>
+            <strong><?php _e( 'Parts of Speech', 'k2k' ); ?></strong>
             <div class="grammar-part tagcloud">
               <?php echo get_the_term_list( $post->ID, 'part-of-speech', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong><?php _e( 'Usage', 'jkl-grammar' ); ?></strong>
+            <strong><?php _e( 'Usage', 'k2k' ); ?></strong>
             <div class="grammar-usage tagcloud">
               <?php echo get_the_term_list( $post->ID, 'usage', '<p>', ' ', '</p>' ); ?>
             </div>
-            <strong><?php _e( 'Tags', 'jkl-grammar' ); ?></strong>
+            <strong><?php _e( 'Tags', 'k2k' ); ?></strong>
             <div class="grammar-tags tagcloud">
               <?php echo get_the_tag_list( '<p>', ' ', '</p>' ); ?>
             </div>
@@ -92,7 +92,7 @@ get_header(); ?>
             edit_post_link(
               sprintf(
                 /* translators: %s: Name of current post */
-                __( 'Edit<span class="screen-reader-text"> "%s"</span>', 'jkl-grammar' ),
+                __( 'Edit<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
                 get_the_title()
               ),
               '<span class="edit-link">',
@@ -110,16 +110,16 @@ get_header(); ?>
 			if ( is_singular( 'attachment' ) ) {
 				// Parent post navigation.
 				the_post_navigation( array(
-					'prev_text' => _x( '<span class="meta-nav">Published in</span><span class="post-title">%title</span>', 'Parent post link', 'jkl-grammar' ),
+					'prev_text' => _x( '<span class="meta-nav">Published in</span><span class="post-title">%title</span>', 'Parent post link', 'k2k' ),
 				) );
 			} elseif ( is_singular( 'post' ) ) {
 				// Previous/next post navigation.
 				the_post_navigation( array(
-					'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Next', 'jkl-grammar' ) . '</span> ' .
-						'<span class="screen-reader-text">' . __( 'Next post:', 'jkl-grammar' ) . '</span> ' .
+					'next_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Next', 'k2k' ) . '</span> ' .
+						'<span class="screen-reader-text">' . __( 'Next post:', 'k2k' ) . '</span> ' .
 						'<span class="post-title">%title</span>',
-					'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Previous', 'jkl-grammar' ) . '</span> ' .
-						'<span class="screen-reader-text">' . __( 'Previous post:', 'jkl-grammar' ) . '</span> ' .
+					'prev_text' => '<span class="meta-nav" aria-hidden="true">' . __( 'Previous', 'k2k' ) . '</span> ' .
+						'<span class="screen-reader-text">' . __( 'Previous post:', 'k2k' ) . '</span> ' .
 						'<span class="post-title">%title</span>',
 				) );
 			}

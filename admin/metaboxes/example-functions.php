@@ -115,7 +115,7 @@ function yourprefix_register_demo_metabox() {
 	$cmb_demo = new_cmb2_box( array(
 		'id'            => $prefix . 'metabox',
 		'title'         => esc_html__( 'Test Metabox', 'cmb2' ),
-		'object_types'  => array( 'page', 'jkl-grammar' ), // Post type
+		'object_types'  => array( 'page', 'k2k' ), // Post type
 		// 'show_on_cb' => 'yourprefix_show_if_front_page', // function should return a bool value
 		// 'context'    => 'normal',
 		// 'priority'   => 'high',

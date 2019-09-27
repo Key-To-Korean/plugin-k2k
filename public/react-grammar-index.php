@@ -1,6 +1,6 @@
 <?php 
 /**
- * JKL Grammar page template (for React app)
+ * K2K page template (for React app)
  *
  * @since    1.0.0
  */ 

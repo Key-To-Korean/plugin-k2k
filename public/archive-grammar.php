@@ -1,10 +1,10 @@
 <?php
 /**
- * JKL Grammar - Archive Template
+ * K2K - Archive Template
  *
  * The template for displaying Grammar archive pages
  *
- * @package JKL Grammar
+ * @package K2K
  */
 
 get_header(); ?>
@@ -23,7 +23,7 @@ get_header(); ?>
 
 		<header class="page-header">
 			<h1 class="page-title">
-				<?php esc_html_e( 'Grammar Index', 'jkl-grammar' ); ?>
+				<?php esc_html_e( 'Grammar Index', 'k2k' ); ?>
 			</h1>
 			<?php the_archive_description( '<div class="taxonomy-description">', '</div>' ); ?>    
 		</header><!-- .page-header -->
@@ -36,7 +36,7 @@ get_header(); ?>
 
 		<?php else : ?>
 
-			<h2 class="page-title"><?php esc_html_e( 'All Grammar', 'jkl-grammar' ); ?></h2>
+			<h2 class="page-title"><?php esc_html_e( 'All Grammar', 'k2k' ); ?></h2>
 
 		<?php endif; ?>
 
@@ -67,9 +67,9 @@ get_header(); ?>
 			// Previous/next page navigation.
 			the_posts_pagination(
 				array(
-					'prev_text'          => __( 'Previous page', 'jkl-grammar' ),
-					'next_text'          => __( 'Next page', 'jkl-grammar' ),
-					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'jkl-grammar' ) . ' </span>',
+					'prev_text'          => __( 'Previous page', 'k2k' ),
+					'next_text'          => __( 'Next page', 'k2k' ),
+					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'k2k' ) . ' </span>',
 				)
 			);
 

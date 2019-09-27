@@ -1,7 +1,7 @@
-=== JKL Grammar ===
+=== K2K ===
 Contributors:           jekkilekki
-Plugin Name:            JKL Grammar
-Plugin URI:             https://github.com/jekkilekki/plugin-jkl-grammar
+Plugin Name:            K2K
+Plugin URI:             https://github.com/jekkilekki/plugin-k2k
 Author:                 Aaron Snowberger
 Author URI:             https://www.aaron.kr/
 Donate link:            https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=567MWDR76KHLU
@@ -62,7 +62,7 @@ plugin.
 = Contact Me = 
 
 If you have questions about, problems with, or suggestions for improving this 
-plugin, please let me know at the [GitHub repository](https://github.com/jekkilekki/jkl-grammar/issues)
+plugin, please let me know at the [GitHub repository](https://github.com/jekkilekki/k2k/issues)
 
 Want updates about my other WordPress plugins, themes, or tutorials? Follow me 
 [@jekkilekki](http://twitter.com/jekkilekki)
@@ -72,20 +72,20 @@ Want updates about my other WordPress plugins, themes, or tutorials? Follow me
 = Automatic installation =
 1. Log into your WordPress admin
 2. Go to `Plugins -> Add New`
-3. Search for `JKL Grammar`
+3. Search for `K2K`
 4. Click `Install Now`
 5. Activate the Plugin
 
 = Manual installation =
 1. Download the Plugin
 2. Extract the contents of the .ZIP file
-3. Upload the contents of the `jkl-grammar` directory to your `/wp-content/plugins` 
+3. Upload the contents of the `k2k` directory to your `/wp-content/plugins` 
 folder of your WordPress installation
 4. Activate the Plugin from the `Plugins` page
 
 = Documentation = 
 Full documentation of the Plugin and its uses can (currently) be found at its 
-[GitHub page](https://github.com/jekkilekki/plugin-jkl-grammar) 
+[GitHub page](https://github.com/jekkilekki/plugin-k2k) 
 
 == Frequently Asked Questions ==
 
@@ -101,7 +101,7 @@ button. You just need to "flush" the permalink rewrite rules in this way.
 
 = Can you ADD / REMOVE / CHANGE features of the plugin? =
 Sure, I'm always open to suggestions. Let me know what you're looking for. Feel
-free to open a GitHub Issue on the [plugin repository](https://github.com/jekkilekki/plugin-jkl-grammar/issues)
+free to open a GitHub Issue on the [plugin repository](https://github.com/jekkilekki/plugin-k2k/issues)
 to let me know the specific features or problems you're having.
 
 == Screenshots ==
@@ -113,16 +113,16 @@ to let me know the specific features or problems you're having.
 == Other Notes ==
 
 = Support = 
-[Click here to visit the Issues for this plugin](https://github.com/jekkilekki/jkl-grammar/issues)
+[Click here to visit the Issues for this plugin](https://github.com/jekkilekki/k2k/issues)
 
 = Acknowledgements = 
 
 = License = 
-JKL Grammar is free software; you can redistribute it and/or modify it under the terms 
+K2K is free software; you can redistribute it and/or modify it under the terms 
 of the GNU General Public License as published by the Free Software Foundation; either 
 version 2 of the License, or (at your option) any later version.
 
-JKL Grammar is distributed in the hope that it will be useful, but WITHOUT ANY 
+K2K is distributed in the hope that it will be useful, but WITHOUT ANY 
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A 
 PARTICULAR PURPOSE. See the GNU General Public License for more details.
 
