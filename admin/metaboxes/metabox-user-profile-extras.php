@@ -35,7 +35,7 @@ function k2k_register_user_profile_metabox() {
 	$cmb_user->add_field(
 		array(
 			'name'     => esc_html__( 'Extra Info', 'k2k' ),
-			'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			// 'desc'     => esc_html__( 'Contains extra user information that will be available on the front end of the site.', 'k2k' ),
 			'id'       => $prefix . 'extra_info',
 			'type'     => 'title',
 			'on_front' => false,
@@ -45,7 +45,7 @@ function k2k_register_user_profile_metabox() {
 	$cmb_user->add_field(
 		array(
 			'name' => esc_html__( 'Full-size "action" image', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
+			'desc' => esc_html__( 'Will display above user Posts on the Author screen.', 'k2k' ),
 			'id'   => $prefix . 'avatar',
 			'type' => 'file',
 		)
@@ -54,7 +54,7 @@ function k2k_register_user_profile_metabox() {
 	$cmb_user->add_field(
 		array(
 			'name' => esc_html__( 'Facebook URL', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
+			// 'desc' => esc_html__( 'Add a link to the user\'s Facebook in their meta data.', 'k2k' ),
 			'id'   => $prefix . 'facebookurl',
 			'type' => 'text_url',
 		)
@@ -63,7 +63,7 @@ function k2k_register_user_profile_metabox() {
 	$cmb_user->add_field(
 		array(
 			'name' => esc_html__( 'Twitter URL', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
+			// 'desc' => esc_html__( 'Add a link to the user\'s Twitter in their meta data.', 'k2k' ),
 			'id'   => $prefix . 'twitterurl',
 			'type' => 'text_url',
 		)
@@ -71,19 +71,10 @@ function k2k_register_user_profile_metabox() {
 
 	$cmb_user->add_field(
 		array(
-			'name' => esc_html__( 'Linkedin URL', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
+			'name' => esc_html__( 'LinkedIn URL', 'k2k' ),
+			// 'desc' => esc_html__( 'Add a link to the user\'s LinkedIn in their meta data.', 'k2k' ),
 			'id'   => $prefix . 'linkedinurl',
 			'type' => 'text_url',
-		)
-	);
-
-	$cmb_user->add_field(
-		array(
-			'name' => esc_html__( 'User Field', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'   => $prefix . 'user_text_field',
-			'type' => 'text',
 		)
 	);
 

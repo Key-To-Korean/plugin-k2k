@@ -32,31 +32,23 @@ function k2k_register_taxonomy_extras_metabox() {
 		)
 	);
 
+	/**
 	$cmb_term->add_field(
 		array(
-			'name'     => esc_html__( 'Extra Info', 'k2k' ),
-			'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'name'     => esc_html__( 'K2K Extra Meta', 'k2k' ),
 			'id'       => $prefix . 'extra_info',
 			'type'     => 'title',
 			'on_front' => false,
 		)
 	);
+	*/
 
 	$cmb_term->add_field(
 		array(
 			'name' => esc_html__( 'Term Image', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
+			'desc' => esc_html__( 'Featured image to show by default for posts with this Term.', 'k2k' ),
 			'id'   => $prefix . 'avatar',
 			'type' => 'file',
-		)
-	);
-
-	$cmb_term->add_field(
-		array(
-			'name' => esc_html__( 'Arbitrary Term Field', 'k2k' ),
-			'desc' => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'   => $prefix . 'term_text_field',
-			'type' => 'text',
 		)
 	);
 

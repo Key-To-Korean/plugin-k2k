@@ -5,6 +5,7 @@
  * @package K2K
  * @license  http://www.opensource.org/licenses/gpl-license.php GPL v2.0 (or later)
  * @link     https://github.com/CMB2/CMB2
+ * @link     https://github.com/CMB2/CMB2-Snippet-Library/blob/master/options-and-settings-pages/theme-options-cmb.php
  */
 
 // Prevent direct file access.
@@ -49,12 +50,14 @@ add_action( 'cmb2_admin_init', 'k2k_register_plugin_options_metabox' );
  */
 function k2k_register_plugin_options_metabox() {
 
+	$prefix = 'k2k_';
+
 	/**
 	 * Registers options page menu item and form.
 	 */
 	$k2k_options = new_cmb2_box(
 		array(
-			'id'           => 'k2k_plugin_options_page',
+			'id'           => $prefix . 'plugin_options_page',
 			'title'        => esc_html__( 'K2K Plugin Options', 'k2k' ),
 			'object_types' => array( 'options-page' ),
 
@@ -64,7 +67,7 @@ function k2k_register_plugin_options_metabox() {
 			*/
 
 			'option_key'   => 'k2k_options', // The option key and admin menu page slug.
-			'icon_url'     => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( plugin_dir_path( __FILE__ ) . '../../assets/korean-pattern-sm.svg' ) ), // Menu icon. Only applicable if 'parent_slug' is left empty.
+			'icon_url'     => 'data:image/svg+xml;base64,' . base64_encode( file_get_contents( plugin_dir_path( __FILE__ ) . '../assets/korean-pattern-sm.svg' ) ), // Menu icon. Only applicable if 'parent_slug' is left empty.
 			'menu_title'   => esc_html__( 'K2K Options', 'k2k' ), // Falls back to 'title' (above).
 			// 'parent_slug'     => 'themes.php', // Make options page a submenu item of the themes menu.
 			// 'capability'      => 'manage_options', // Cap required to view options-page.
@@ -81,17 +84,141 @@ function k2k_register_plugin_options_metabox() {
 	);
 
 	/**
-	 * Options fields ids only need
-	 * to be unique within this box.
-	 * Prefix is not needed.
+	 * Additional Meta data.
 	 */
 	$k2k_options->add_field(
 		array(
-			'name'    => esc_html__( 'Site Background Color', 'k2k' ),
-			'desc'    => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'      => 'bg_color',
-			'type'    => 'colorpicker',
-			'default' => '#ffffff',
+			'name' => esc_html__( 'Additional Meta Data', 'k2k' ),
+			'desc' => esc_html__( 'Enable additional meta data for different things in WordPress.', 'k2k' ),
+			'id'   => $prefix . 'meta_data_title',
+			'type' => 'title',
+		)
+	);
+
+	/*
+	 * Additional user meta data.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'User Profile Meta Data', 'k2k' ),
+			'desc'    => __( 'Enable additional meta information for user profiles.', 'k2k' ),
+			'id'      => $prefix . 'enable_user_meta',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
+	 * Additional taxonomy meta.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Taxonomy Meta Data', 'k2k' ),
+			'desc'    => __( 'Enable additional meta information for taxonomies like Categories, Tags, and Custom Taxonomies.', 'k2k' ),
+			'id'      => $prefix . 'enable_tax_meta',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/**
+	 * Language Learning Post Types.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name' => esc_html__( 'Language Learning Post Types', 'k2k' ),
+			'desc' => esc_html__( 'Enable different types of features for language learning.', 'k2k' ),
+			'id'   => $prefix . 'language_post_types_title',
+			'type' => 'title',
+		)
+	);
+
+	/*
+	 * Vocabulary Post Type.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Vocabulary', 'k2k' ),
+			'desc'    => __( 'Enable Vocabulary Post Type.', 'k2k' ),
+			'id'      => $prefix . 'enable_vocab',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
+	 * Grammar Post Type.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Grammar', 'k2k' ),
+			'desc'    => __( 'Enable Grammar Post Type.', 'k2k' ),
+			'id'      => $prefix . 'enable_grammar',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
+	 * Phrases Post Type.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Phrases', 'k2k' ),
+			'desc'    => __( 'Enable Phrases Post Type.', 'k2k' ),
+			'id'      => $prefix . 'enable_phrases',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
+	 * Reading LWT Post Type.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Reading', 'k2k' ),
+			'desc'    => __( 'Enable Learning With Texts Post Type.', 'k2k' ),
+			'id'      => $prefix . 'enable_reading',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
+	 * Writing Post Type.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Writing', 'k2k' ),
+			'desc'    => __( 'Enable Writing Journal Post Type.', 'k2k' ),
+			'id'      => $prefix . 'enable_writing',
+			'type'    => 'switch',
+			'default' => 0,
 		)
 	);
 
@@ -131,4 +258,36 @@ function k2k_options_page_message_callback( $cmb, $args ) {
 
 		add_settings_error( $args['setting'], $args['code'], $args['message'], $args['type'] );
 	}
+}
+
+/**
+ * Wrapper function around cmb2_get_option
+ *
+ * @since  0.1.0
+ *
+ * @param  string $key     Options array key.
+ * @param  mixed  $default Optional default value.
+ * @return mixed           Option value
+ */
+function k2k_get_option( $key = '', $default = false ) {
+
+	if ( function_exists( 'cmb2_get_option' ) ) {
+
+		// Use cmb2_get_option as it passes through some key filters.
+		return cmb2_get_option( 'k2k_options', $key, $default );
+
+	}
+
+	// Fallback to get_option if CMB2 is not loaded yet.
+	$opts = get_option( 'k2k_options', $default );
+	$val  = $default;
+
+	if ( 'all' === $key ) {
+		$val = $opts;
+	} elseif ( is_array( $opts ) && array_key_exists( $key, $opts ) && false !== $opts[ $key ] ) {
+		$val = $opts[ $key ];
+	}
+
+	return $val;
+
 }
