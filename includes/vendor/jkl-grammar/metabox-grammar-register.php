@@ -12,22 +12,22 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-add_action( 'cmb2_admin_init', 'k2k_register_metabox' );
+add_action( 'cmb2_admin_init', 'k2k_register_metabox_grammar' );
 /**
  * Register a custom metabox for the 'k2k' Post Type.
  *
  * @link https://github.com/CMB2/CMB2/wiki
  */
-function k2k_register_metabox() {
+function k2k_register_metabox_grammar() {
 
-	$prefix = 'k2k_';
+	$prefix = 'k2k_grammar_meta_';
 
 	$k2k_metabox = new_cmb2_box(
 		array(
 			'id'           => $prefix . 'metabox',
 			'title'        => esc_html__( 'Grammar Meta', 'k2k' ),
 			'object_types' => array( 'k2k-grammar' ),
-			'closed'       => true,
+			'closed'       => false,
 			'tabs'         => array(
 				array(
 					'id'     => 'tab-info',

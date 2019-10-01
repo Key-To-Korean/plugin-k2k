@@ -96,7 +96,7 @@ if ( k2k_any_cpt_enabled() ) {
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-vocab/post-type-vocabulary-register.php';
-	// require_once K2K_PATH . 'includes/vendor/jkl-vocab/metabox-vocabulary-register.php';.
+	require_once K2K_PATH . 'includes/vendor/jkl-vocab/metabox-vocabulary-register.php';
 }
 
 /**
