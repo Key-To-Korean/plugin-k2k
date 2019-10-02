@@ -10,7 +10,6 @@ if ( ! defined( 'ABSPATH' ) ) {
 	exit;
 }
 
-
 /**
  * Include Template paths
  *
@@ -18,22 +17,26 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function k2k_single( $template_path ) {
 
-	if ( get_post_type() === 'k2k-grammar' ) {
+	$post_type_here = get_post_type();
+	$post_type_slug = explode( '-', $post_type_here )[1];
+	$k2k_post_types = array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' );
+
+	if ( in_array( $post_type_here, $k2k_post_types, true ) ) {
 
 		if ( is_single() ) {
 
-			$single_template = locate_template( array( 'single-grammar.php' ), false );
+			$single_template = locate_template( array( 'single-' . $post_type_slug . '.php' ), false );
 
 			// checks if the file exists in the theme first,
 			// otherwise serve the file from the plugin.
 			if ( $single_template ) {
 				$template_path = $single_template;
 			} else {
-				$template_path = plugin_dir_path( __FILE__ ) . 'public/page-templates/single-grammar.php';
+				$template_path = plugin_dir_path( __FILE__ ) . 'vendor/jkl-vocab/single-' . $post_type_slug . '.php';
 			}
 		} elseif ( is_archive() ) {
 
-			$archive_template = locate_template( array( 'archive-grammar.php' ), false );
+			$archive_template = locate_template( array( 'archive-.php' ), false );
 
 			if ( $archive_template ) {
 				$template_path = $archive_template;

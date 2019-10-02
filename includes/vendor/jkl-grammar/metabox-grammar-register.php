@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'cmb2_admin_init', 'k2k_register_metabox_grammar' );
 /**
- * Register a custom metabox for the 'k2k' Post Type.
+ * Register a custom metabox for the 'k2k-grammar' Post Type.
  *
  * @link https://github.com/CMB2/CMB2/wiki
  */
@@ -77,7 +77,7 @@ function k2k_register_metabox_grammar() {
 			'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
 			'id'     => $prefix . 'subtitle',
 			'type'   => 'text',
-			'column' => true,
+			'column' => array( 'position' => 2 ),
 		)
 	);
 
@@ -267,7 +267,6 @@ function k2k_register_metabox_grammar() {
 			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'k2k' ),
 			'id'      => $prefix . 'related_grammar',
 			'type'    => 'custom_attached_posts',
-			'column'  => true,
 			'options' => array(
 				'show_thumbnails' => true,
 				'filter_boxes'    => true,

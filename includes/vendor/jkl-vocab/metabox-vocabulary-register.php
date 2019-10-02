@@ -14,7 +14,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 
 add_action( 'cmb2_admin_init', 'k2k_register_metabox_vocabulary' );
 /**
- * Register a custom metabox for the 'k2k' Post Type.
+ * Register a custom metabox for the 'k2k-vocabulary' Post Type.
  *
  * @link https://github.com/CMB2/CMB2/wiki
  */
@@ -28,6 +28,30 @@ function k2k_register_metabox_vocabulary() {
 			'title'        => esc_html__( 'Vocabulary Meta', 'k2k' ),
 			'object_types' => array( 'k2k-vocabulary' ),
 			'closed'       => false,
+			'tabs'         => array(
+				array(
+					'id'     => 'tab-info',
+					'icon'   => 'dashicons-editor-alignleft',
+					'title'  => esc_html__( 'Info', 'k2k' ),
+					'fields' => array(
+						$prefix . 'subtitle',
+						$prefix . 'level',
+						$prefix . 'part_of_speech',
+						$prefix . 'definitions',
+						$prefix . 'sentences',
+					),
+				),
+				array(
+					'id'     => 'tab-related',
+					'icon'   => 'dashicons-editor-quote',
+					'title'  => esc_html__( 'Related Words', 'k2k' ),
+					'fields' => array(
+						$prefix . 'synonyms',
+						$prefix . 'antonyms',
+						$prefix . 'hanja',
+					),
+				),
+			),
 		)
 	);
 
@@ -40,7 +64,7 @@ function k2k_register_metabox_vocabulary() {
 			'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
 			'id'     => $prefix . 'subtitle',
 			'type'   => 'text',
-			'column' => true,
+			'column' => array( 'position' => 2 ),
 		)
 	);
 
@@ -75,7 +99,7 @@ function k2k_register_metabox_vocabulary() {
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'id'             => 'definitions',
+			'id'             => $prefix . 'definitions',
 			'name'           => __( 'Definition(s)', 'k2k' ),
 			'type'           => 'text',
 			'sortable'       => true,
@@ -94,7 +118,6 @@ function k2k_register_metabox_vocabulary() {
 			'name'    => esc_html__( 'Synonyms', 'k2k' ),
 			'id'      => $prefix . 'synonyms',
 			'type'    => 'custom_attached_posts',
-			'column'  => true,
 			'options' => array(
 				'filter_boxes' => true,
 				'query_args'   => array(
@@ -115,7 +138,6 @@ function k2k_register_metabox_vocabulary() {
 			'name'    => esc_html__( 'Antonyms', 'k2k' ),
 			'id'      => $prefix . 'antonyms',
 			'type'    => 'custom_attached_posts',
-			'column'  => true,
 			'options' => array(
 				'filter_boxes' => true,
 				'query_args'   => array(
@@ -136,7 +158,6 @@ function k2k_register_metabox_vocabulary() {
 			'name'    => esc_html__( 'Hanja', 'k2k' ),
 			'id'      => $prefix . 'hanja',
 			'type'    => 'custom_attached_posts',
-			'column'  => true,
 			'options' => array(
 				'filter_boxes' => true,
 				'query_args'   => array(
@@ -153,7 +174,7 @@ function k2k_register_metabox_vocabulary() {
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
 	$sentence_group = $k2k_metabox->add_field(
 		array(
-			'id'          => 'sentences',
+			'id'          => $prefix . 'sentences',
 			'type'        => 'group',
 			'description' => __( 'Example Sentences', 'k2k' ),
 			'options'     => array(
@@ -168,7 +189,7 @@ function k2k_register_metabox_vocabulary() {
 	$k2k_metabox->add_group_field(
 		$sentence_group,
 		array(
-			'id'   => 'sentences_1',
+			'id'   => $prefix . 'sentences_1',
 			'name' => __( 'Original (KO)', 'k2k' ),
 			'type' => 'text',
 		)
@@ -177,7 +198,7 @@ function k2k_register_metabox_vocabulary() {
 	$k2k_metabox->add_group_field(
 		$sentence_group,
 		array(
-			'id'   => 'sentences_2',
+			'id'   => $prefix . 'sentences_2',
 			'name' => __( 'Translation (EN)', 'k2k' ),
 			'type' => 'text',
 		)

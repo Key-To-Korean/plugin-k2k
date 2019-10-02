@@ -91,6 +91,17 @@ function k2k_change_editor_title_grammar( $title, $post ) {
 add_filter( 'enter_title_here', 'k2k_change_editor_title_grammar', 10, 2 );
 
 /**
+ * Change Post List Title Column Name.
+ *
+ * @param array $columns The array of Posts columns.
+ */
+function k2k_change_post_list_column_grammar( $columns ) {
+	$columns['title'] = 'Grammar (KO)';
+	return $columns;
+}
+add_filter( 'manage_k2k-grammar_posts_columns', 'k2k_change_post_list_column_grammar' );
+
+/**
  * Remove Taxonomy Meta boxes from the side menu.
  *
  * @link https://codex.wordpress.org/Function_Reference/remove_meta_box

@@ -70,3 +70,45 @@ function k2k_register_post_type_phrases() {
 
 }
 add_action( 'init', 'k2k_register_post_type_phrases' );
+
+/**
+ * Change Post Editor Title.
+ *
+ * @param string $title The title in the Editor.
+ * @param object $post The Post object.
+ *
+ * @link https://wordpress.stackexchange.com/questions/213979/change-post-title-edit-box
+ */
+function k2k_change_editor_title_phrases( $title, $post ) {
+
+	if ( 'k2k-phrases' === $post->post_type ) {
+		$title = __( 'Phrase (KO)', 'k2k' );
+	}
+
+	return $title;
+
+}
+add_filter( 'enter_title_here', 'k2k_change_editor_title_phrases', 10, 2 );
+
+/**
+ * Change Post List Title Column Name.
+ *
+ * @param array $columns The array of Posts columns.
+ */
+function k2k_change_post_list_column_phrases( $columns ) {
+	$columns['title'] = 'Phrase (KO)';
+	return $columns;
+}
+add_filter( 'manage_k2k-phrases_posts_columns', 'k2k_change_post_list_column_phrases' );
+
+/**
+ * Remove Taxonomy Meta boxes from the side menu.
+ *
+ * @link https://codex.wordpress.org/Function_Reference/remove_meta_box
+ */
+function k2k_remove_taxonomy_meta_boxes_phrases() {
+
+	remove_meta_box( 'tagsdiv-k2k-expression', 'k2k-phrases', 'side' );
+
+}
+add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_phrases' );

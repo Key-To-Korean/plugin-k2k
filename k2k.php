@@ -119,7 +119,7 @@ if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-phrases/post-type-phrases-register.php';
-	// require_once K2K_PATH . 'includes/vendor/jkl-phrases/metabox-phrases-register.php';.
+	require_once K2K_PATH . 'includes/vendor/jkl-phrases/metabox-phrases-register.php';
 }
 
 /**
