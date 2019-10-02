@@ -55,3 +55,69 @@ function k2k_register_taxonomy_ps() {
 
 }
 add_action( 'init', 'k2k_register_taxonomy_ps' );
+
+/**
+ * Add Terms to taxonomy.
+ */
+function k2k_register_new_terms_ps() {
+
+	$taxonomy = 'k2k-part-of-speech';
+	$terms    = array(
+		'0' => array(
+			'name'        => __( 'Noun', 'k2k' ),
+			'slug'        => 'part-of-speech-noun',
+			'description' => __( 'Nouns', 'k2k' ),
+		),
+		'1' => array(
+			'name'        => __( 'Verb', 'k2k' ),
+			'slug'        => 'part-of-speech-verb',
+			'description' => __( 'Verbs', 'k2k' ),
+		),
+		'2' => array(
+			'name'        => __( 'Adjective', 'k2k' ),
+			'slug'        => 'part-of-speech-adjective',
+			'description' => __( 'Adjectives', 'k2k' ),
+		),
+		'3' => array(
+			'name'        => __( 'Adverb', 'k2k' ),
+			'slug'        => 'part-of-speech-adverb',
+			'description' => __( 'Adverbs', 'k2k' ),
+		),
+		'4' => array(
+			'name'        => __( 'Number', 'k2k' ),
+			'slug'        => 'part-of-speech-number',
+			'description' => __( 'Numeral or Unit of Measurement', 'k2k' ),
+		),
+		'5' => array(
+			'name'        => __( 'Noun Special', 'k2k' ),
+			'slug'        => 'part-of-speech-s-noun',
+			'description' => __( 'Places, Names, Pre-nouns, and Pronouns', 'k2k' ),
+		),
+		'6' => array(
+			'name'        => __( 'Other', 'k2k' ),
+			'slug'        => 'part-of-speech-other',
+			'description' => __( 'Exclamations, Articles, Markers, Supplementary Words, and Other', 'k2k' ),
+		),
+	);
+
+	foreach ( $terms as $term ) {
+
+		if ( ! term_exists( $term['slug'], $taxonomy ) ) {
+
+			wp_insert_term(
+				$term['name'], // The term.
+				$taxonomy,     // The taxonomy.
+				array(
+					'description' => $term['description'],
+					'slug'        => $term['slug'],
+				)
+			);
+
+			unset( $term );
+
+		}
+	}
+}
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+	add_action( 'init', 'k2k_register_new_terms_ps' );
+}

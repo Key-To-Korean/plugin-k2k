@@ -22,7 +22,7 @@ function k2k_register_taxonomy_extras_metabox() {
 	/**
 	 * Metabox to add fields to categories and tags
 	 */
-	$cmb_term = new_cmb2_box(
+	$k2k_tax_term = new_cmb2_box(
 		array(
 			'id'           => $prefix . 'edit',
 			'title'        => esc_html__( 'Category Metabox', 'k2k' ), // Doesn't output for term boxes.
@@ -33,7 +33,7 @@ function k2k_register_taxonomy_extras_metabox() {
 	);
 
 	/**
-	$cmb_term->add_field(
+	$k2k_tax_term->add_field(
 		array(
 			'name'     => esc_html__( 'K2K Extra Meta', 'k2k' ),
 			'id'       => $prefix . 'extra_info',
@@ -43,12 +43,21 @@ function k2k_register_taxonomy_extras_metabox() {
 	);
 	*/
 
-	$cmb_term->add_field(
+	$k2k_tax_term->add_field(
 		array(
 			'name' => esc_html__( 'Term Image', 'k2k' ),
 			'desc' => esc_html__( 'Featured image to show by default for posts with this Term.', 'k2k' ),
 			'id'   => $prefix . 'avatar',
 			'type' => 'file',
+		)
+	);
+
+	$k2k_tax_term->add_field(
+		array(
+			'name' => esc_html__( 'Translation (KO)', 'k2k' ),
+			'desc' => esc_html__( 'The translation may be used for the front-end display.', 'k2k' ),
+			'id'   => $prefix . 'term_translation',
+			'type' => 'text',
 		)
 	);
 

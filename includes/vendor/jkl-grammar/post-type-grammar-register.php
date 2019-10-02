@@ -70,3 +70,36 @@ function k2k_register_post_type_grammar() {
 
 }
 add_action( 'init', 'k2k_register_post_type_grammar' );
+
+/**
+ * Change Post Editor Title.
+ *
+ * @param string $title The title in the Editor.
+ * @param object $post The Post object.
+ *
+ * @link https://wordpress.stackexchange.com/questions/213979/change-post-title-edit-box
+ */
+function k2k_change_editor_title_grammar( $title, $post ) {
+
+	if ( 'k2k-grammar' === $post->post_type ) {
+		$title = __( 'Grammar (KO)', 'k2k' );
+	}
+
+	return $title;
+
+}
+add_filter( 'enter_title_here', 'k2k_change_editor_title_grammar', 10, 2 );
+
+/**
+ * Remove Taxonomy Meta boxes from the side menu.
+ *
+ * @link https://codex.wordpress.org/Function_Reference/remove_meta_box
+ */
+function k2k_remove_taxonomy_meta_boxes_grammar() {
+
+	remove_meta_box( 'k2k-leveldiv', 'k2k-grammar', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-tenses', 'k2k-grammar', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-part-of-speech', 'k2k-grammar', 'side' );
+
+}
+add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_grammar' );

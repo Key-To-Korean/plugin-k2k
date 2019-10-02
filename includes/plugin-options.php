@@ -100,7 +100,7 @@ function k2k_register_plugin_options_metabox() {
 	 */
 	$k2k_options->add_field(
 		array(
-			'name'    => __( 'User Profile Meta Data', 'k2k' ),
+			'name'    => __( 'Add User Profile Meta', 'k2k' ),
 			'desc'    => __( 'Enable additional meta information for user profiles.', 'k2k' ),
 			'id'      => $prefix . 'enable_user_meta',
 			'type'    => 'switch',
@@ -117,9 +117,26 @@ function k2k_register_plugin_options_metabox() {
 	 */
 	$k2k_options->add_field(
 		array(
-			'name'    => __( 'Taxonomy Meta Data', 'k2k' ),
+			'name'    => __( 'Add Taxonomy Meta', 'k2k' ),
 			'desc'    => __( 'Enable additional meta information for taxonomies like Categories, Tags, and Custom Taxonomies.', 'k2k' ),
 			'id'      => $prefix . 'enable_tax_meta',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
+	 * Use Default taxonomy terms.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Use Default Taxonomy Terms', 'k2k' ),
+			'desc'    => __( 'Preload default taxonomy terms like Beginner, Intermediate, Advanced, and so on.', 'k2k' ),
+			'id'      => $prefix . 'use_default_terms',
 			'type'    => 'switch',
 			'default' => 0,
 			'label'   => array(

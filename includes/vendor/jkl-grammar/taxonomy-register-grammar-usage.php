@@ -56,3 +56,55 @@ function k2k_register_taxonomy_usage() {
 
 }
 add_action( 'init', 'k2k_register_taxonomy_usage' );
+
+
+/**
+ * Add Terms to taxonomy.
+ */
+function k2k_register_new_terms_usage() {
+
+	$taxonomy = 'k2k-usage';
+	$terms    = array(
+		'0' => array(
+			'name'        => __( 'Formal', 'k2k' ),
+			'slug'        => 'usage-formal',
+			'description' => __( 'Formal Language', 'k2k' ),
+		),
+		'1' => array(
+			'name'        => __( 'Informal', 'k2k' ),
+			'slug'        => 'usage-informal',
+			'description' => __( 'Informal Language', 'k2k' ),
+		),
+		'2' => array(
+			'name'        => __( 'Written', 'k2k' ),
+			'slug'        => 'usage-written',
+			'description' => __( 'Written Language', 'k2k' ),
+		),
+		'3' => array(
+			'name'        => __( 'Spoken', 'k2k' ),
+			'slug'        => 'usage-spoken',
+			'description' => __( 'Spoken Language', 'k2k' ),
+		),
+	);
+
+	foreach ( $terms as $term ) {
+
+		if ( ! term_exists( $term['slug'], $taxonomy ) ) {
+
+			wp_insert_term(
+				$term['name'], // The term.
+				$taxonomy,     // The taxonomy.
+				array(
+					'description' => $term['description'],
+					'slug'        => $term['slug'],
+				)
+			);
+
+			unset( $term );
+
+		}
+	}
+}
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+	add_action( 'init', 'k2k_register_new_terms_usage' );
+}

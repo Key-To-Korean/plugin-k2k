@@ -55,3 +55,59 @@ function k2k_register_taxonomy_tenses() {
 
 }
 add_action( 'init', 'k2k_register_taxonomy_tenses' );
+
+/**
+ * Add Terms to taxonomy.
+ */
+function k2k_register_new_terms_tenses() {
+
+	$taxonomy = 'k2k-tenses';
+	$terms    = array(
+		'0' => array(
+			'name'        => __( 'Past', 'k2k' ),
+			'slug'        => 'tense-past',
+			'description' => __( 'Past Tense', 'k2k' ),
+		),
+		'1' => array(
+			'name'        => __( 'Present', 'k2k' ),
+			'slug'        => 'tense-present',
+			'description' => __( 'Present Tense', 'k2k' ),
+		),
+		'2' => array(
+			'name'        => __( 'Future', 'k2k' ),
+			'slug'        => 'tense-future',
+			'description' => __( 'Future Tense', 'k2k' ),
+		),
+		'3' => array(
+			'name'        => __( 'Future Probable', 'k2k' ),
+			'slug'        => 'tense-future-probable',
+			'description' => __( 'Future - Probable (surmise)', 'k2k' ),
+		),
+		'4' => array(
+			'name'        => __( 'Continuous', 'k2k' ),
+			'slug'        => 'tense-continuous',
+			'description' => __( 'Continuous Tense', 'k2k' ),
+		),
+	);
+
+	foreach ( $terms as $term ) {
+
+		if ( ! term_exists( $term['slug'], $taxonomy ) ) {
+
+			wp_insert_term(
+				$term['name'], // The term.
+				$taxonomy,     // The taxonomy.
+				array(
+					'description' => $term['description'],
+					'slug'        => $term['slug'],
+				)
+			);
+
+			unset( $term );
+
+		}
+	}
+}
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+	add_action( 'init', 'k2k_register_new_terms_tenses' );
+}

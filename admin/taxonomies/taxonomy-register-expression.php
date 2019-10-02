@@ -55,3 +55,49 @@ function k2k_register_taxonomy_exp() {
 
 }
 add_action( 'init', 'k2k_register_taxonomy_exp' );
+
+/**
+ * Add Terms to taxonomy.
+ */
+function k2k_register_new_terms_exp() {
+
+	$taxonomy = 'k2k-expression';
+	$terms    = array(
+		'0' => array(
+			'name'        => __( 'Negation', 'k2k' ),
+			'slug'        => 'expression-negation',
+			'description' => __( 'Negation expressions', 'k2k' ),
+		),
+		'1' => array(
+			'name'        => __( 'Particles', 'k2k' ),
+			'slug'        => 'expression-particles',
+			'description' => __( 'Particles, articles, markers', 'k2k' ),
+		),
+		'2' => array(
+			'name'        => __( 'Listing', 'k2k' ),
+			'slug'        => 'expression-listing',
+			'description' => __( 'Listing expressions', 'k2k' ),
+		),
+	);
+
+	foreach ( $terms as $term ) {
+
+		if ( ! term_exists( $term['slug'], $taxonomy ) ) {
+
+			wp_insert_term(
+				$term['name'], // The term.
+				$taxonomy,     // The taxonomy.
+				array(
+					'description' => $term['description'],
+					'slug'        => $term['slug'],
+				)
+			);
+
+			unset( $term );
+
+		}
+	}
+}
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+	add_action( 'init', 'k2k_register_new_terms_exp' );
+}

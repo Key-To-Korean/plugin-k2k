@@ -65,7 +65,7 @@ function k2k_register_metabox_vocabulary() {
 		array(
 			'name'     => esc_html__( 'Part of Speech', 'k2k' ),
 			'id'       => $prefix . 'part_of_speech',
-			'type'     => 'taxonomy_multicheck_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
+			'type'     => 'taxonomy_radio_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
 			'taxonomy' => 'k2k-part-of-speech', // Taxonomy Slug.
 		)
 	);
@@ -114,6 +114,27 @@ function k2k_register_metabox_vocabulary() {
 		array(
 			'name'    => esc_html__( 'Antonyms', 'k2k' ),
 			'id'      => $prefix . 'antonyms',
+			'type'    => 'custom_attached_posts',
+			'column'  => true,
+			'options' => array(
+				'filter_boxes' => true,
+				'query_args'   => array(
+					'posts_per_page' => 10,
+					'post_type'      => 'k2k-vocabulary',
+				),
+			),
+		)
+	);
+
+	/**
+	 * Info - Hanja
+	 *
+	 * @link https://github.com/CMB2/cmb2-attached-posts
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'    => esc_html__( 'Hanja', 'k2k' ),
+			'id'      => $prefix . 'hanja',
 			'type'    => 'custom_attached_posts',
 			'column'  => true,
 			'options' => array(

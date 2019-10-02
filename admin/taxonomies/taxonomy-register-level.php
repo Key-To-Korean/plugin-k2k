@@ -50,3 +50,49 @@ function k2k_register_taxonomy_level() {
 
 }
 add_action( 'init', 'k2k_register_taxonomy_level' );
+
+/**
+ * Add Terms to taxonomy.
+ */
+function k2k_register_new_terms_level() {
+
+	$taxonomy = 'k2k-level';
+	$terms    = array(
+		'0' => array(
+			'name'        => __( 'Beginner', 'k2k' ),
+			'slug'        => 'level-beginner',
+			'description' => __( 'Beginner Level', 'k2k' ),
+		),
+		'1' => array(
+			'name'        => __( 'Intermediate', 'k2k' ),
+			'slug'        => 'level-intermediate',
+			'description' => __( 'Intermediate Level', 'k2k' ),
+		),
+		'2' => array(
+			'name'        => __( 'Advanced', 'k2k' ),
+			'slug'        => 'level-advanced',
+			'description' => __( 'Advanced Level', 'k2k' ),
+		),
+	);
+
+	foreach ( $terms as $term ) {
+
+		if ( ! term_exists( $term['slug'], $taxonomy ) ) {
+
+			wp_insert_term(
+				$term['name'], // The term.
+				$taxonomy,     // The taxonomy.
+				array(
+					'description' => $term['description'],
+					'slug'        => $term['slug'],
+				)
+			);
+
+			unset( $term );
+
+		}
+	}
+}
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+	add_action( 'init', 'k2k_register_new_terms_level' );
+}

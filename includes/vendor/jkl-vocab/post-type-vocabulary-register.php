@@ -70,3 +70,35 @@ function k2k_register_post_type_vocabulary() {
 
 }
 add_action( 'init', 'k2k_register_post_type_vocabulary' );
+
+/**
+ * Change Post Editor Title.
+ *
+ * @param string $title The title in the Editor.
+ * @param object $post The Post object.
+ *
+ * @link https://wordpress.stackexchange.com/questions/213979/change-post-title-edit-box
+ */
+function k2k_change_editor_title_vocabulary( $title, $post ) {
+
+	if ( 'k2k-vocabulary' === $post->post_type ) {
+		$title = __( 'Vocabulary Word (KO)', 'k2k' );
+	}
+
+	return $title;
+
+}
+add_filter( 'enter_title_here', 'k2k_change_editor_title_vocabulary', 10, 2 );
+
+/**
+ * Remove Taxonomy Meta boxes from the side menu.
+ *
+ * @link https://codex.wordpress.org/Function_Reference/remove_meta_box
+ */
+function k2k_remove_taxonomy_meta_boxes_vocab() {
+
+	remove_meta_box( 'k2k-leveldiv', 'k2k-vocabulary', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-part-of-speech', 'k2k-vocabulary', 'side' );
+
+}
+add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_vocab' );
