@@ -13,7 +13,9 @@ get_header(); ?>
 <div id="primary" class="content-area large-9 medium-12 columns">
   <main id="main" class="site-main" role="main">
     <!-- Cycle through the posts -->
-    <?php while ( have_posts() ) : the_post(); $this_tax = $wp_query->get_queried_object(); ?>
+    <?php while ( have_posts() ) : the_post(); $this_tax = $wp_query->get_queried_object();
+      get_all_the_post_meta( array( 'k2k-book', 'k2k-level', 'k2k-part-of-speech', 'k2k-expression', 'k2k-usage' ) );
+    ?>
 
       <article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
@@ -65,27 +67,27 @@ get_header(); ?>
           <div class="entry-meta grammar-meta">
             <strong><?php _e( 'Level', 'k2k' ); ?></strong>
             <div class="grammar-level">
-              <?php echo get_the_term_list( $post->ID, 'level', '<p>', ' ', '</p>' ); ?>
+              <?php // echo get_the_term_list( $post->ID, 'level', '<p>', ' ', '</p>' ); ?>
             </div>
             <strong><?php _e( 'Book', 'k2k' ); ?></strong>
             <div class="grammar-book">
-              <?php echo get_the_term_list( $post->ID, 'book', '<p>', ' ', '</p>' ); ?>
+              <?php // echo get_the_term_list( $post->ID, 'book', '<p>', ' ', '</p>' ); ?>
             </div>
             <strong><?php _e( 'Expressing', 'k2k' ); ?></strong>
             <div class="grammar-expression tagcloud">
-              <?php echo get_the_term_list( $post->ID, 'expression', '<p>', ' ', '</p>' ); ?>
+              <?php // echo get_the_term_list( $post->ID, 'expression', '<p>', ' ', '</p>' ); ?>
             </div>
             <strong><?php _e( 'Parts of Speech', 'k2k' ); ?></strong>
             <div class="grammar-part tagcloud">
-              <?php echo get_the_term_list( $post->ID, 'part-of-speech', '<p>', ' ', '</p>' ); ?>
+              <?php // echo get_the_term_list( $post->ID, 'part-of-speech', '<p>', ' ', '</p>' ); ?>
             </div>
             <strong><?php _e( 'Usage', 'k2k' ); ?></strong>
             <div class="grammar-usage tagcloud">
-              <?php echo get_the_term_list( $post->ID, 'usage', '<p>', ' ', '</p>' ); ?>
+              <?php // echo get_the_term_list( $post->ID, 'usage', '<p>', ' ', '</p>' ); ?>
             </div>
             <strong><?php _e( 'Tags', 'k2k' ); ?></strong>
             <div class="grammar-tags tagcloud">
-              <?php echo get_the_tag_list( '<p>', ' ', '</p>' ); ?>
+              <?php // echo get_the_tag_list( '<p>', ' ', '</p>' ); ?>
             </div>
           <div><!-- .entry-meta -->
           <?php

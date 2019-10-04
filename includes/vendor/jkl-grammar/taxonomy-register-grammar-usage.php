@@ -38,6 +38,8 @@ function k2k_register_taxonomy_usage() {
 		'choose_from_most_used'      => __( 'Choose from the most used Usages', 'k2k' ),
 		'not_found'                  => __( 'No Usages found.', 'k2k' ),
 		'menu_name'                  => __( 'Usage', 'k2k' ),
+		'view_item'                  => __( 'View Usage', 'k2k' ),
+		'back_to_items'              => __( '← Back to Usages', 'k2k' ),
 	);
 
 	$args = array(

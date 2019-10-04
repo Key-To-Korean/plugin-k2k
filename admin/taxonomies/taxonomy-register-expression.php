@@ -38,6 +38,8 @@ function k2k_register_taxonomy_exp() {
 		'choose_from_most_used'      => __( 'Choose from the most used Expressions', 'k2k' ),
 		'not_found'                  => __( 'No Expressions found.', 'k2k' ),
 		'menu_name'                  => __( 'Expressions', 'k2k' ),
+		'view_item'                  => __( 'View Expression', 'k2k' ),
+		'back_to_items'              => __( '← Back to Expressions', 'k2k' ),
 	);
 
 	$args = array(

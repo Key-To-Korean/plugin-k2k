@@ -54,10 +54,11 @@ function k2k_register_taxonomy_extras_metabox() {
 
 	$k2k_tax_term->add_field(
 		array(
-			'name' => esc_html__( 'Translation (KO)', 'k2k' ),
-			'desc' => esc_html__( 'The translation may be used for the front-end display.', 'k2k' ),
-			'id'   => $prefix . 'term_translation',
-			'type' => 'text',
+			'name'   => esc_html__( 'Translation (KO)', 'k2k' ),
+			'desc'   => esc_html__( 'The translation may be used for the front-end display.', 'k2k' ),
+			'id'     => $prefix . 'term_translation',
+			'type'   => 'text',
+			'column' => array( 'position' => 2 ),
 		)
 	);
 

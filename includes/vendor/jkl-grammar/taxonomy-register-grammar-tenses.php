@@ -38,6 +38,8 @@ function k2k_register_taxonomy_tenses() {
 		'choose_from_most_used'      => __( 'Choose from the most used Tenses', 'k2k' ),
 		'not_found'                  => __( 'No Tenses found.', 'k2k' ),
 		'menu_name'                  => __( 'Tenses', 'k2k' ),
+		'view_item'                  => __( 'View Tense', 'k2k' ),
+		'back_to_items'              => __( '← Back to Tenses', 'k2k' ),
 	);
 
 	$args = array(

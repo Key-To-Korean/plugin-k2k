@@ -52,6 +52,9 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'present_tense',
 						$prefix . 'future_tense',
 						$prefix . 'other_tense',
+						$prefix . 'noun_usage',
+						$prefix . 'verb_usage',
+						$prefix . 'adjective_usage',
 					),
 				),
 				array(
@@ -204,6 +207,72 @@ function k2k_register_metabox_grammar() {
 			'name' => esc_html__( 'Other Tense', 'k2k' ),
 			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
 			'id'   => $prefix . 'other_tense',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Grouping for usage.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$sentence_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'sentences',
+			'type'        => 'group',
+			'description' => __( 'Example Sentences', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Sentence', 'k2k' ),
+				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
+				'remove_button' => __( 'Remove Sentence', 'k2k' ),
+				'sortable'      => true,
+			),
+		)
+	);
+
+	/**
+	 * Conjugations - Noun Usage
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Noun Usage', 'k2k' ),
+			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
+			'id'   => $prefix . 'noun_usage',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Conjugations - Verb Usage
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Verb Usage', 'k2k' ),
+			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
+			'id'   => $prefix . 'verb_usage',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Conjugations - Adjective Usage
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Adjective Usage', 'k2k' ),
+			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
+			'id'   => $prefix . 'adjective_usage',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Conjugations - Other Usage
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Other Usage', 'k2k' ),
+			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
+			'id'   => $prefix . 'other_usage',
 			'type' => 'text',
 		)
 	);

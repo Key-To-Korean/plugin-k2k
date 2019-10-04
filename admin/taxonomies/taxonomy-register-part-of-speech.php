@@ -38,6 +38,8 @@ function k2k_register_taxonomy_ps() {
 		'choose_from_most_used'      => __( 'Choose from the most used Parts of Speech', 'k2k' ),
 		'not_found'                  => __( 'No Parts of Speech found.', 'k2k' ),
 		'menu_name'                  => __( 'Parts of Speech', 'k2k' ),
+		'view_item'                  => __( 'View Part of Speech', 'k2k' ),
+		'back_to_items'              => __( '← Back to Parts of Speech', 'k2k' ),
 	);
 
 	$args = array(

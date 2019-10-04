@@ -33,6 +33,9 @@ function k2k_register_taxonomy_level() {
 		'add_new_item'      => __( 'Add New Level', 'k2k' ),
 		'new_item_name'     => __( 'New Level Name', 'k2k' ),
 		'menu_name'         => __( 'Levels', 'k2k' ),
+		'view_item'         => __( 'View Level', 'k2k' ),
+		'not_found'         => __( 'No Levels found.', 'k2k' ),
+		'back_to_items'     => __( '← Back to Levels', 'k2k' ),
 	);
 
 	$args = array(

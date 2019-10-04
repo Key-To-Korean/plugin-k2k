@@ -33,6 +33,9 @@ function k2k_register_taxonomy_book() {
 		'add_new_item'      => __( 'Add New Book', 'k2k' ),
 		'new_item_name'     => __( 'New Book Name', 'k2k' ),
 		'menu_name'         => __( 'Books', 'k2k' ),
+		'view_item'         => __( 'View Book', 'k2k' ),
+		'not_found'         => __( 'No Books found.', 'k2k' ),
+		'back_to_items'     => __( '← Back to Books', 'k2k' ),
 	);
 
 	$args = array(

@@ -105,6 +105,9 @@ function k2k_register_metabox_vocabulary() {
 			'sortable'       => true,
 			'repeatable'     => true,
 			'repeatable_max' => 10,
+			'text'           => array(
+				'add_row_text' => __( 'Add Definition', 'k2k' ),
+			),
 		)
 	);
 
