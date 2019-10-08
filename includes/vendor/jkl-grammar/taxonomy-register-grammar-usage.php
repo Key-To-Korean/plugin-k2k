@@ -107,6 +107,6 @@ function k2k_register_new_terms_usage() {
 		}
 	}
 }
-if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) && 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
 	add_action( 'init', 'k2k_register_new_terms_usage' );
 }

@@ -44,8 +44,9 @@ function k2k_register_metabox_vocabulary() {
 				array(
 					'id'     => 'tab-related',
 					'icon'   => 'dashicons-editor-quote',
-					'title'  => esc_html__( 'Related Words', 'k2k' ),
+					'title'  => esc_html__( 'Related', 'k2k' ),
 					'fields' => array(
+						$prefix . 'topic',
 						$prefix . 'synonyms',
 						$prefix . 'antonyms',
 						$prefix . 'hanja',
@@ -65,6 +66,20 @@ function k2k_register_metabox_vocabulary() {
 			'id'     => $prefix . 'subtitle',
 			'type'   => 'text',
 			'column' => array( 'position' => 2 ),
+		)
+	);
+
+	/**
+	 * Info - Topic Selection
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Topic', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'topic',
+			'type'     => 'taxonomy_radio_inline',
+			'taxonomy' => 'k2k-topic', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
 		)
 	);
 

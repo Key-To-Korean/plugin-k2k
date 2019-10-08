@@ -45,6 +45,20 @@ function k2k_register_metabox_phrases() {
 	);
 
 	/**
+	 * Info - Topic Selection
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Topic', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'topic',
+			'type'     => 'taxonomy_radio_inline',
+			'taxonomy' => 'k2k-topic', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
+	/**
 	 * Info - Detailed Description
 	 */
 	$k2k_metabox->add_field(
@@ -69,8 +83,8 @@ function k2k_register_metabox_phrases() {
 			'name'     => esc_html__( 'Expression', 'k2k' ),
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
 			'id'       => $prefix . 'expression',
-			'type'     => 'taxonomy_checkbox',
-			'taxonomy' => 'k2k-expressions', // Taxonomy Slug.
+			'type'     => 'taxonomy_multicheck',
+			'taxonomy' => 'k2k-expression', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
 		)
 	);

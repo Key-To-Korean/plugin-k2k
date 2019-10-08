@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function k2k_template( $template_path ) {
 
-	$k2k_post_types = array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' );
+	$k2k_post_types = K2K_POST_TYPES; // defined in k2k.php - the main plugin file.
 	$post_type_here = get_post_type();
 
 	if ( ! $post_type_here || ( ! in_array( $post_type_here, $k2k_post_types, true ) ) ) {

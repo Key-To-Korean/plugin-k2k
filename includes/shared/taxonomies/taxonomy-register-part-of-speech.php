@@ -120,6 +120,9 @@ function k2k_register_new_terms_ps() {
 		}
 	}
 }
-if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) &&
+		// Only register Level terms if Vocab or Grammar are enabled.
+		( 'on' === k2k_get_option( 'k2k_enable_vocab' ) || 'on' === k2k_get_option( 'k2k_enable_grammar' ) )
+) {
 	add_action( 'init', 'k2k_register_new_terms_ps' );
 }

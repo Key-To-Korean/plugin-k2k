@@ -43,7 +43,22 @@ define( 'K2K_VERSION', '1.0.0' );
 define( 'K2K_DOMAIN', 'k2k' );
 define( 'K2K_PATH', plugin_dir_path( __FILE__ ) );
 define( 'K2K_MENU_POSITION', 50 );
-define( 'K2K_TAXES', array( 'category', 'post_tag', 'k2k-expression', 'k2k-book', 'k2k-tenses', 'k2k-usage', 'k2k-level', 'k2k-part-of-speech' ) );
+define( 'K2K_POST_TYPES', array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' ) );
+define(
+	'K2K_TAXES', // Used.
+	array(
+		'category',
+		'post_tag',
+		'k2k-expression',
+		'k2k-book',
+		'k2k-tenses',
+		'k2k-usage',
+		'k2k-level',
+		'k2k-part-of-speech',
+		'k2k-phrase-type',
+		'k2k-topic',
+	)
+);
 
 /**
  * Load Text Domain.
@@ -67,14 +82,14 @@ require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-switch-button/class-cm
  * Conditionally Load files to add additional meta data to WordPress.
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_user_meta' ) ) {
-	require_once K2K_PATH . 'admin/metaboxes/metabox-user-profile-extras.php';
+	require_once K2K_PATH . 'includes/shared/metaboxes/metabox-user-profile-extras.php';
 }
 if ( 'on' === k2k_get_option( 'k2k_enable_tax_meta' ) ) {
-	require_once K2K_PATH . 'admin/metaboxes/metabox-taxonomy-extras.php';
+	require_once K2K_PATH . 'includes/shared/metaboxes/metabox-taxonomy-extras.php';
 }
 
 // CMB2 Full Examples (Theme Options Menu item).
-require_once K2K_PATH . 'admin/metaboxes/example-functions.php';
+require_once K2K_PATH . 'includes/shared/metaboxes/example-functions.php';
 
 /**
  * Conditionally Load Custom Post Types and Taxonomies.
@@ -82,12 +97,14 @@ require_once K2K_PATH . 'admin/metaboxes/example-functions.php';
 if ( k2k_any_cpt_enabled() ) {
 
 	// Include Post Type(s).
-	require_once K2K_PATH . 'admin/post-types/post-type-filters.php';
+	require_once K2K_PATH . 'includes/shared/post-types/post-type-filters.php';
 
 	// Include Shared Taxonomies.
-	require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
-	require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
-	require_once K2K_PATH . 'admin/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
+	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
+	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
+	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
+	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-topic.php';          // Vocabulary, Phrases.
+	require_once K2K_PATH . 'includes/shared/metaboxes/metabox-taxonomy-level-color.php';
 
 }
 
@@ -111,6 +128,8 @@ if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-grammar/taxonomy-register-grammar-book.php';
 	require_once K2K_PATH . 'includes/vendor/jkl-grammar/taxonomy-register-grammar-tenses.php';
 	require_once K2K_PATH . 'includes/vendor/jkl-grammar/taxonomy-register-grammar-usage.php';
+	require_once K2K_PATH . 'includes/vendor/jkl-grammar/metabox-taxonomy-weblinks.php';
+
 
 }
 
@@ -120,6 +139,7 @@ if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
 if ( 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-phrases/post-type-phrases-register.php';
 	require_once K2K_PATH . 'includes/vendor/jkl-phrases/metabox-phrases-register.php';
+	require_once K2K_PATH . 'includes/vendor/jkl-phrases/taxonomy-register-phrase-type.php';
 }
 
 /**

@@ -100,6 +100,9 @@ function k2k_register_new_terms_exp() {
 		}
 	}
 }
-if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) ) {
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) &&
+		// Only register Expression terms if Grammar or Phrases are enabled.
+		( 'on' === k2k_get_option( 'k2k_enable_grammar' ) || 'on' === k2k_get_option( 'k2k_enable_phrases' ) )
+) {
 	add_action( 'init', 'k2k_register_new_terms_exp' );
 }
