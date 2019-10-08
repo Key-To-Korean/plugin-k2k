@@ -27,7 +27,7 @@ function k2k_register_taxonomy_term_color_metabox() {
 			'id'           => $prefix . 'term_color',
 			'title'        => esc_html__( 'Term Color', 'k2k' ), // Doesn't output for term boxes.
 			'object_types' => array( 'term' ), // Tells CMB2 to use term_meta vs post_meta.
-			'taxonomies'   => array( 'k2k-level', 'k2k-part-of-speech' ), // Tells CMB2 which taxonomies should have these fields.
+			'taxonomies'   => array( 'k2k-level', 'k2k-part-of-speech', 'k2k-tenses' ), // Tells CMB2 which taxonomies should have these fields.
 			// 'new_term_section' => true, // Will display in the "Add New Category" section.
 		)
 	);
@@ -44,7 +44,7 @@ function k2k_register_taxonomy_term_color_metabox() {
 				'data-colorpicker' => wp_json_encode(
 					array(
 						// Iris Options set here as values in the 'data-colorpicker' array.
-						'palettes' => array( '#f00', '#0f0', '#00f' ),
+						'palettes' => K2K_COLORS,
 					)
 				),
 			),

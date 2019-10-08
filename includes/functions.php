@@ -89,20 +89,20 @@ function get_all_the_post_meta( $args ) {
 			continue;
 		}
 		$tax_name = $tax_terms[0]->name;
+		$tax_slug = $tax_terms[0]->slug;
 
-		$tax_term[ substr( $taxonomy, 4 ) . '_name' ]        = $tax_name;
-		$tax_term[ substr( $taxonomy, 4 ) . '_translation' ] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
-		$tax_term[ substr( $taxonomy, 4 ) . '_image' ]       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
+		$tax_term['_slug']        = $tax_slug;
+		$tax_term['_name']        = $tax_name;
+		$tax_term['_translation'] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
+		$tax_term['_image']       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
+		$tax_term['_weblink']     = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'weblink', true );
+		$tax_term['_term_color']  = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_color', true );
 
-		$post_meta['post'][ $taxonomy ] = $tax_term;
+		$post_meta['post'][ $taxonomy ] = array_filter( $tax_term ); // Use array_filter() to remove null values.
 
 		unset( $tax_term );
 
 	}
-
-	echo '<pre>';
-	var_dump( $post_meta );
-	echo '</pre>';
 
 	return $post_meta;
 
@@ -114,12 +114,28 @@ function get_all_the_post_meta( $args ) {
  * @link https://reactjs.org/docs/add-react-to-a-website.html
  */
 function k2k_scripts() {
+
+	/* General Purpose Scripts */
 	if ( 'k2k' === get_post_type() && is_archive() ) {
 		wp_enqueue_script( 'k2k-react', 'https://unpkg.com/react@16/umd/react.development.js', array(), '20181126', true );
 		wp_enqueue_script( 'k2k-react-dom', 'https://unpkg.com/react-dom@16/umd/react-dom.development.js', array(), '20181126', true );
 		wp_enqueue_script( 'k2k-babel', 'https://unpkg.com/babel-standalone@6/babel.min.js', array(), '20181128', true );
 		wp_enqueue_script( 'k2k-components', plugins_url( 'js/GrammarArchives.js', __FILE__ ), array( 'k2k-react', 'k2k-react-dom', 'k2k-babel' ), '20181126', true );
 	}
+
+	/* Vocabulary Scripts */
+	if ( 'k2k-vocabulary' === get_post_type() ) {
+		wp_enqueue_style( 'k2k-vocab-style', plugins_url( 'vendor/jkl-vocabulary/css/vocab.css', __FILE__ ), array(), '20191008' );
+		wp_enqueue_script( 'k2k-vocab-script', plugins_url( 'vendor/jkl-vocabulary/js/vocab.js', __FILE__ ), array(), '20191008', true );
+	}
+
+	/* Grammar Scripts */
+
+	/* Phrases Scripts */
+
+	/* Reading Scripts */
+
+	/* Writing Scripts */
 }
 add_action( 'wp_enqueue_scripts', 'k2k_scripts' );
 

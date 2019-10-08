@@ -50,7 +50,7 @@ function k2k_register_taxonomy_topic() {
 		'show_in_rest'          => true,
 		'update_count_callback' => '_update_post_term_count',
 		'query_var'             => true,
-		'rewrite'               => array( 'slug' => 'topics' ),
+		'rewrite'               => array( 'slug' => 'topic' ),
 	);
 
 	register_taxonomy( 'k2k-topic', array( 'k2k-vocabulary', 'k2k-phrases' ), $args );

@@ -53,7 +53,7 @@ function k2k_register_taxonomy_ps() {
 		'rewrite'               => array( 'slug' => 'part-of-speech' ),
 	);
 
-	register_taxonomy( 'k2k-part-of-speech', array( 'k2k-grammar', 'k2k-vocabulary' ), $args );
+	register_taxonomy( 'k2k-part-of-speech', array( 'k2k-vocabulary', 'k2k-grammar' ), $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_ps' );

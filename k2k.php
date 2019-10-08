@@ -43,9 +43,9 @@ define( 'K2K_VERSION', '1.0.0' );
 define( 'K2K_DOMAIN', 'k2k' );
 define( 'K2K_PATH', plugin_dir_path( __FILE__ ) );
 define( 'K2K_MENU_POSITION', 50 );
-define( 'K2K_POST_TYPES', array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' ) );
+define( 'K2K_POST_TYPES', array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' ) ); // Used in functions.php.
 define(
-	'K2K_TAXES', // Used.
+	'K2K_TAXES', // Used in /includes/shared/metaboxes/metabox-taxonomy-extras.php.
 	array(
 		'category',
 		'post_tag',
@@ -57,6 +57,26 @@ define(
 		'k2k-part-of-speech',
 		'k2k-phrase-type',
 		'k2k-topic',
+	)
+);
+define(
+	'K2K_COLORS', // Used in /includes/shared/metaboxes/metabox-taxonomy-term-color.php.
+	array(
+		'#00897b', // Teal dark.
+		'#00bfa5', // Teal.
+		'#ff8f00', // Amber dark.
+		'#ffab00', // Amber.
+		'#e91e63', // Pink dark.
+		'#ff4081', // Pink.
+		'#9c27b0', // Purple dark.
+		'#e040fb', // Purple.
+		'#0277bd', // Blue dark.
+		'#00b0ff', // Blue.
+		'#7b8792', // Grey darkest.
+		'#8795a1', // Grey darker.
+		'#95a4b1', // Grey dark.
+		'#a9bac9', // Grey.
+		'#cf8031', // Gold.
 	)
 );
 
@@ -98,13 +118,14 @@ if ( k2k_any_cpt_enabled() ) {
 
 	// Include Post Type(s).
 	require_once K2K_PATH . 'includes/shared/post-types/post-type-filters.php';
+	require_once K2K_PATH . 'includes/template_tags.php';
 
 	// Include Shared Taxonomies.
 	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
 	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
 	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
 	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-topic.php';          // Vocabulary, Phrases.
-	require_once K2K_PATH . 'includes/shared/metaboxes/metabox-taxonomy-level-color.php';
+	require_once K2K_PATH . 'includes/shared/metaboxes/metabox-taxonomy-term-color.php';
 
 }
 
