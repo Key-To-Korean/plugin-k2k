@@ -138,7 +138,7 @@ get_header(); ?>
 							<h3>Definitions</h3>
 							<ol>
 								<?php
-								$definitions = get_post_meta( get_the_ID(), 'k2k_vocab_meta_definitions' )[0];
+								$definitions = get_post_meta( get_the_ID(), 'k2k_vocab_meta_definitions', true );
 								foreach ( $definitions as $definition ) {
 									echo '<li>' . esc_html( $definition ) . '</li>';
 								}
@@ -158,7 +158,7 @@ get_header(); ?>
 							</div>
 							<ol class="sentences">
 								<?php
-								$sentences = get_post_meta( get_the_ID(), 'k2k_vocab_meta_sentences' )[0];
+								$sentences = get_post_meta( get_the_ID(), 'k2k_vocab_meta_sentences', true );
 								foreach ( $sentences as $sentence ) {
 									echo '<li>';
 									echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';

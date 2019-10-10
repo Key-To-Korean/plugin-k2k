@@ -122,7 +122,7 @@ function get_level_stars() {
  */
 function get_custom_meta( $meta_key ) {
 
-	$meta = get_post_meta( get_the_ID(), $meta_key )[0];
+	$meta = get_post_meta( get_the_ID(), $meta_key, true );
 	return $meta;
 
 }
@@ -132,8 +132,9 @@ function get_custom_meta( $meta_key ) {
  *
  * @param string $type Whether we want a 'button' or 'link' (default).
  * @param string $taxonomy The taxonomy we are querying for a value.
+ * @param bool   $multiple Whether or not to output more than one item.
  */
-function custom_meta_button( $type, $taxonomy ) {
+function custom_meta_button( $type, $taxonomy, $multiple = false ) {
 
 	$meta       = get_all_the_post_meta( array( $taxonomy ) );
 	$classnames = 'button' === $type ? 'btn button' : '';

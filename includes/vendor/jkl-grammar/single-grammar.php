@@ -9,39 +9,25 @@
 
 get_header(); ?>
 
-<!-- .wrap for TwentySeventeen -->
-<div class="wrap">
-<!-- .wrap for TwentySeventeen -->
+	<main id="primary" class="site-main">
 
-<div id="primary" class="content-area large-9 medium-12 columns">
-	<main id="main" class="site-main" role="main">
-		<!-- Cycle through the posts -->
 		<?php
 		while ( have_posts() ) :
 			the_post();
 
+			wp_print_styles( array( 'gaya-content' ) ); // Note: If this was already done it will be skipped.
+			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
+
 			$this_tax = $wp_query->get_queried_object();
-			get_all_the_post_meta( array( 'k2k-book', 'k2k-level', 'k2k-part-of-speech', 'k2k-expression', 'k2k-usage' ) );
+			$meta     = get_all_the_post_meta( array( 'k2k-book', 'k2k-level', 'k2k-part-of-speech', 'k2k-expression', 'k2k-usage' ) );
+
 			?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<header class="entry-header">
-					<!-- Display Title and Subtitle -->
-					<h2 class="entry-title"><?php the_title(); ?></h2>
-					<?php if ( function_exists( 'the_subtitle' ) ) : ?>
-						<h3 class="entry-title subtitle"><?php the_subtitle(); ?></h3>
-					<?php endif; ?>
-				</header><!-- .entry-header -->
 
-				<!-- Display Featured Image -->
-				<div class="post-thumbnail">
-					<?php the_post_thumbnail(); ?>
-				</div>
-
-				<div class="entry-content">
-
-					<div id="nav-above" class="navigation" style="display: grid; grid-template-columns: 1fr 1fr 1fr; grid-gap: 1rem;">
+					<div id="nav-above" class="navigation">
 						<div class="nav-previous">
 								<?php previous_post_link( '<span class="meta-nav"> %link </span>', esc_attr_x( '&#9668; Previous', 'Previous post link', 'category' ), true, '', esc_attr( $this_tax->taxonomy ) ); ?>
 						</div>
@@ -53,28 +39,58 @@ get_header(); ?>
 						</div>
 					</div><!-- #nav-above -->
 
-				<?php
-					the_content(
-						sprintf( /* translators: %s: Name of current post */
-							__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
-							get_the_title()
-						)
-					);
-					wp_link_pages(
-						array(
-							'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'k2k' ) . '</span>',
-							'after'       => '</div>',
-							'link_before' => '<span>',
-							'link_after'  => '</span>',
-							'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'k2k' ) . ' </span>%',
-							'separator'   => '<span class="screen-reader-text">, </span>',
-						)
-					);
-				?>
-				</div><!-- .entry-content --> 
+					<div class="post-cats">
+						<?php
+						get_level_stars();
+						custom_meta_button( 'button', 'k2k-level' );
+						custom_meta_button( 'button', 'k2k-topic' );
+						?>
+					</div>
 
-				<footer class="entry-footer">
+					<?php
+					if ( is_singular() ) :
+						the_title( '<h1 class="entry-title">', '</h1>' );
+					else :
+						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+					endif;
+
+					if ( array_key_exists( 'k2k_grammar_meta_subtitle', $meta['post'] ) ) {
+						echo '<h2 class="post-subtitle translation">' . esc_html( $meta['post']['k2k_grammar_meta_subtitle'][0] ) . '</h2>';
+					}
+
+					// gaya_post_thumbnail();.
+					?>
+
+				</header><!-- .entry-header -->
+
+				<?php
+				/* Ad Above Post */
+				if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
+					/* Print styles for adsense widgets */
+					wp_print_styles( array( 'gaya-adsense' ) ); // Note: If this was already done it will be skipped.
+					dynamic_sidebar( 'widget-ad-pre-post' );
+				endif;
+				?>
+
+				<?php
+				if ( is_singular() ) :
+					?>
 					<div class="entry-meta grammar-meta">
+						<?php
+							echo 'Level: ';
+							custom_meta_button( 'link', 'k2k-level' );
+							echo '<br />Book: ';
+							echo get_the_term_list( $post->ID, 'k2k-book', '<p>', ' ', '</p>' );
+							echo '<br />Expressing: ';
+							echo get_the_term_list( $post->ID, 'k2k-expression', '<p>', ' ', '</p>' );
+							echo '<br />Parts of Speech: ';
+							echo get_the_term_list( $post->ID, 'k2k-part-of-speech', '<p>', ' ', '</p>' );
+							echo '<br />Usage: ';
+							echo get_the_term_list( $post->ID, 'k2k-usage', '<p>', ' ', '</p>' );
+							gaya_edit_post_link();
+
+						/*
+						?>
 						<strong><?php esc_html_e( 'Level', 'k2k' ); ?></strong>
 						<div class="grammar-level">
 							<?php echo get_the_term_list( $post->ID, 'k2k-level', '<p>', ' ', '</p>' ); ?>
@@ -95,11 +111,75 @@ get_header(); ?>
 						<div class="grammar-usage tagcloud">
 							<?php echo get_the_term_list( $post->ID, 'k2k-usage', '<p>', ' ', '</p>' ); ?>
 						</div>
-						<strong><?php esc_html_e( 'Tags', 'k2k' ); ?></strong>
-						<div class="grammar-tags tagcloud">
-							<?php // echo get_the_tag_list( '<p>', ' ', '</p>' );. ?>
+						<?php
+						*/
+						?>
+					</div><!-- .entry-meta -->
+					<?php
+				endif;
+				?>
+
+				<div class="entry-content">
+				<?php
+					the_content(
+						sprintf( /* translators: %s: Name of current post */
+							__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
+							get_the_title()
+						)
+					);
+					wp_link_pages(
+						array(
+							'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'k2k' ) . '</span>',
+							'after'       => '</div>',
+							'link_before' => '<span>',
+							'link_after'  => '</span>',
+							'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'k2k' ) . ' </span>%',
+							'separator'   => '<span class="screen-reader-text">, </span>',
+						)
+					);
+
+				if ( is_singular() ) :
+
+					if ( array_key_exists( 'k2k_grammar_meta_wysiwyg', $meta['post'] ) ) :
+						?>
+
+						<h3>Explanation</h3>
+						<div>
+							<?php echo wp_kses_post( wpautop( get_post_meta( get_the_ID(), 'k2k_grammar_meta_wysiwyg', true ) ) ); ?></p>
 						</div>
-					<div><!-- .entry-meta -->
+
+						<?php
+					endif;
+
+					if ( array_key_exists( 'k2k_grammar_meta_sentences', $meta['post'] ) ) :
+						?>
+
+						<h3>Sentences</h3>
+						<div class="sentence-buttons">
+							<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+							<button class="contract-all" title="Hide all English sentences"><i class="fas fa-caret-up"></i></button>
+						</div>
+						<ol class="sentences">
+							<?php
+							$sentences = get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences', true );
+							foreach ( $sentences as $sentence ) {
+								echo '<li>';
+								echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
+								echo '<p class="ko">' . wp_kses_post( $sentence['k2k_grammar_meta_sentences_1'] ) . '</p>';
+								echo '<p class="en">' . wp_kses_post( $sentence['k2k_grammar_meta_sentences_2'] ) . '</p>';
+								echo '</li>';
+							}
+							?>
+						</ol>
+
+						<?php
+					endif;
+				endif;
+				?>
+
+				</div><!-- .entry-content --> 
+
+				<footer class="entry-footer">
 					<?php
 						edit_post_link(
 							sprintf(
@@ -111,10 +191,14 @@ get_header(); ?>
 							'</span>'
 						);
 					?>
-
+				</footer>
 			</article>
 
 			<?php
+			echo '<pre>';
+			var_dump( $meta );
+			echo '</pre>';
+
 			// If comments are open or we have at least one comment, load up the comment template.
 			if ( comments_open() || get_comments_number() ) {
 				comments_template();

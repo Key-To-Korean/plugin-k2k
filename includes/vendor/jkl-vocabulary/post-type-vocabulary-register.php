@@ -110,6 +110,7 @@ function k2k_remove_taxonomy_meta_boxes_vocab() {
 
 	remove_meta_box( 'k2k-leveldiv', 'k2k-vocabulary', 'side' );
 	remove_meta_box( 'tagsdiv-k2k-part-of-speech', 'k2k-vocabulary', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-topic', 'k2k-vocabulary', 'side' );
 
 }
 add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_vocab' );

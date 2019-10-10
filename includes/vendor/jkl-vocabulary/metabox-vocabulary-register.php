@@ -46,6 +46,7 @@ function k2k_register_metabox_vocabulary() {
 					'icon'   => 'dashicons-editor-quote',
 					'title'  => esc_html__( 'Related', 'k2k' ),
 					'fields' => array(
+						$prefix . 'vocab_group',
 						$prefix . 'topic',
 						$prefix . 'synonyms',
 						$prefix . 'antonyms',
@@ -127,6 +128,20 @@ function k2k_register_metabox_vocabulary() {
 	);
 
 	/**
+	 * Info - Vocab Group
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Vocab Group', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'vocab_group',
+			'type'     => 'taxonomy_select',
+			'taxonomy' => 'k2k-vocab-group', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
+	/**
 	 * Info - Synonyms
 	 *
 	 * @link https://github.com/CMB2/cmb2-attached-posts
@@ -204,7 +219,7 @@ function k2k_register_metabox_vocabulary() {
 		)
 	);
 
-	$k2k_metabox->add_group_field(
+	$sent_ko = $k2k_metabox->add_group_field(
 		$sentence_group,
 		array(
 			'id'              => $prefix . 'sentences_1',
@@ -214,7 +229,7 @@ function k2k_register_metabox_vocabulary() {
 		)
 	);
 
-	$k2k_metabox->add_group_field(
+	$sent_en = $k2k_metabox->add_group_field(
 		$sentence_group,
 		array(
 			'id'              => $prefix . 'sentences_2',
@@ -224,22 +239,24 @@ function k2k_register_metabox_vocabulary() {
 		)
 	);
 
-}
+	if ( ! is_admin() ) {
+		return;
+	}
 
-/**
- * Custom sanitization function for sentences.
- *
- * @param string $value The value to be sanitized and saved.
- * @param array  $field_args The arguments for sanitization.
- * @param string $field The field we are using.
- *
- * @return string The sanitized value - with allowed tags.
- */
-function k2k_sanitize_sentence_callback( $value, $field_args, $field ) {
+	// Create a default Grid.
+	$cmb2_grid = new \Cmb2Grid\Grid\Cmb2Grid( $k2k_metabox );
 
-	/* Custom sanitization - with strip_tags to allow certain tags. */
-	$value = strip_tags( $value, '<b><strong><em><span>' );
+	// Create a grid of Group fields.
+	$cmb2_group_grid = $cmb2_grid->addCmb2GroupGrid( $sentence_group );
+	$row             = $cmb2_group_grid->addRow();
+	$row->addColumns(
+		array(
+			$sent_ko,
+			$sent_en,
+		)
+	);
 
-	return $value;
-
+	// Now setup columns like normal.
+	$row = $cmb2_grid->addRow();
+	// $row->addColumns( array( $cmb2_group_grid ) );.
 }

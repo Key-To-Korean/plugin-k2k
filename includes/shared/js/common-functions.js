@@ -1,6 +1,3 @@
-/**
- * Sentences - Expand / Contract
- */
 const sents = document.querySelectorAll( '.sentences .expand' );
 
 for( var i = 0; i < sents.length; i++ ) {

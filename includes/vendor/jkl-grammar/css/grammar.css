@@ -1,0 +1,11 @@
+/* Archive Pages */
+.archive .entry-title {
+	margin-top: 0;
+}
+
+.entry-header #nav-above {
+	display: grid;
+	text-align: center;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 1rem;
+}

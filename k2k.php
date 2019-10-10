@@ -57,6 +57,7 @@ define(
 		'k2k-part-of-speech',
 		'k2k-phrase-type',
 		'k2k-topic',
+		'k2k-vocab-group',
 	)
 );
 define(
@@ -97,6 +98,7 @@ require_once K2K_PATH . 'includes/vendor/cmb2/init.php';
 require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-tabs/cmb2-tabs.php';
 require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-attached-posts/cmb2-attached-posts-field.php';
 require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-switch-button/class-cmb2-switch-button.php';
+require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-grid/Cmb2GridPlugin.php';
 
 /*
  * Conditionally Load files to add additional meta data to WordPress.
@@ -134,6 +136,7 @@ if ( k2k_any_cpt_enabled() ) {
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/post-type-vocabulary-register.php';
+	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/taxonomy-register-vocab-group.php';
 	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/metabox-vocabulary-register.php';
 }
 

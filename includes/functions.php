@@ -11,6 +11,24 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Custom sanitization function for sentences.
+ *
+ * @param string $value The value to be sanitized and saved.
+ * @param array  $field_args The arguments for sanitization.
+ * @param string $field The field we are using.
+ *
+ * @return string The sanitized value - with allowed tags.
+ */
+function k2k_sanitize_sentence_callback( $value, $field_args, $field ) {
+
+	/* Custom sanitization - with strip_tags to allow certain tags. */
+	$value = strip_tags( $value, '<b><strong><em><span>' );
+
+	return $value;
+
+}
+
+/**
  * Include Template paths
  *
  * @param string $template_path The path to the template.
@@ -83,6 +101,15 @@ function k2k_scripts() {
 		wp_enqueue_script( 'k2k-components', plugins_url( 'js/GrammarArchives.js', __FILE__ ), array( 'k2k-react', 'k2k-react-dom', 'k2k-babel' ), '20181126', true );
 	}
 
+	/* Common Scripts */
+	if ( k2k_any_cpt_enabled() ) {
+		wp_enqueue_style( 'k2k-common-style', plugins_url( 'shared/css/common-styles.css', __FILE__ ), array(), '20191008' );
+
+		if ( is_single() ) { // Still loading on archive pages though...
+			wp_enqueue_script( 'k2k-common-script', plugins_url( 'shared/js/common-functions.js', __FILE__ ), array(), '20191008', true );
+		}
+	}
+
 	/* Vocabulary Scripts */
 	if ( 'k2k-vocabulary' === get_post_type() ) {
 		wp_enqueue_style( 'k2k-vocab-style', plugins_url( 'vendor/jkl-vocabulary/css/vocab.css', __FILE__ ), array(), '20191008' );
@@ -95,9 +122,10 @@ function k2k_scripts() {
 	/* Grammar Scripts */
 	if ( 'k2k-grammar' === get_post_type() ) {
 		wp_enqueue_style( 'k2k-grammar-style', plugins_url( 'vendor/jkl-grammar/css/grammar.css', __FILE__ ), array(), '20191008' );
+		wp_enqueue_style( 'k2k-vocab-style', plugins_url( 'vendor/jkl-vocabulary/css/vocab.css', __FILE__ ), array(), '20191008' );
 
 		if ( is_singular( 'k2k-grammar' ) ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-grammar-script', plugins_url( 'vendor/jkl-grammar/js/grammar.js', __FILE__ ), array(), '20191008', true );
+			wp_enqueue_script( 'k2k-vocab-script', plugins_url( 'vendor/jkl-vocabulary/js/vocab.js', __FILE__ ), array(), '20191008', true );
 		}
 	}
 
