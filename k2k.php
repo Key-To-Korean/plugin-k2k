@@ -118,7 +118,7 @@ if ( k2k_any_cpt_enabled() ) {
 
 	// Include Post Type(s).
 	require_once K2K_PATH . 'includes/shared/post-types/post-type-filters.php';
-	require_once K2K_PATH . 'includes/template_tags.php';
+	require_once K2K_PATH . 'includes/template-tags.php';
 
 	// Include Shared Taxonomies.
 	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.

@@ -194,7 +194,7 @@ function k2k_register_metabox_vocabulary() {
 		array(
 			'id'          => $prefix . 'sentences',
 			'type'        => 'group',
-			'description' => __( 'Example Sentences', 'k2k' ),
+			'description' => __( 'Example Sentences. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Sentence', 'k2k' ),
 				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
@@ -207,19 +207,39 @@ function k2k_register_metabox_vocabulary() {
 	$k2k_metabox->add_group_field(
 		$sentence_group,
 		array(
-			'id'   => $prefix . 'sentences_1',
-			'name' => __( 'Original (KO)', 'k2k' ),
-			'type' => 'text',
+			'id'              => $prefix . 'sentences_1',
+			'name'            => __( 'Original (KO)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
 		)
 	);
 
 	$k2k_metabox->add_group_field(
 		$sentence_group,
 		array(
-			'id'   => $prefix . 'sentences_2',
-			'name' => __( 'Translation (EN)', 'k2k' ),
-			'type' => 'text',
+			'id'              => $prefix . 'sentences_2',
+			'name'            => __( 'Translation (EN)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
 		)
 	);
+
+}
+
+/**
+ * Custom sanitization function for sentences.
+ *
+ * @param string $value The value to be sanitized and saved.
+ * @param array  $field_args The arguments for sanitization.
+ * @param string $field The field we are using.
+ *
+ * @return string The sanitized value - with allowed tags.
+ */
+function k2k_sanitize_sentence_callback( $value, $field_args, $field ) {
+
+	/* Custom sanitization - with strip_tags to allow certain tags. */
+	$value = strip_tags( $value, '<b><strong><em><span>' );
+
+	return $value;
 
 }

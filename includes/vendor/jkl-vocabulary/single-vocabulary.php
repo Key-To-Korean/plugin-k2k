@@ -23,6 +23,9 @@ get_header(); ?>
 			?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+				<?php
+
+				/*
 				<header class="entry-header">
 
 					<div class="post-cats">
@@ -45,7 +48,10 @@ get_header(); ?>
 						echo ')</h2>';
 					}
 					?>
+
 				</header><!-- .entry-header -->
+				*/
+				?>
 
 				<?php
 				/* Ad Above Post */
@@ -76,6 +82,29 @@ get_header(); ?>
 				?>
 
 				<div class="entry-content">
+
+					<div class="post-cats">
+						<?php
+						get_level_stars();
+						custom_meta_button( 'button', 'k2k-level' );
+						custom_meta_button( 'button', 'k2k-topic' );
+						?>
+					</div>
+
+					<?php
+					if ( is_singular() ) :
+						the_title( '<h1 class="entry-title">', '</h1>' );
+					else :
+						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+					endif;
+
+					if ( array_key_exists( 'k2k_vocab_meta_subtitle', $meta['post'] ) ) {
+						echo '<h2 class="post-subtitle translation">' . esc_html( $meta['post']['k2k_vocab_meta_subtitle'][0] ) . ' (';
+						custom_meta_button( 'link', 'k2k-part-of-speech' );
+						echo ')</h2>';
+					}
+					?>
+
 					<?php
 					the_content(
 						sprintf(
@@ -124,17 +153,17 @@ get_header(); ?>
 
 							<h3>Sentences</h3>
 							<div class="sentence-buttons">
-								<button class="expand-all" title="Show all English sentences">+</button>
-								<button class="contract-all" title="Hide all English sentences">-</button>
+								<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+								<button class="contract-all" title="Hide all English sentences"><i class="fas fa-caret-up"></i></button>
 							</div>
 							<ol class="sentences">
 								<?php
 								$sentences = get_post_meta( get_the_ID(), 'k2k_vocab_meta_sentences' )[0];
 								foreach ( $sentences as $sentence ) {
 									echo '<li>';
-									echo '<button class="expand" title="Show English sentence">+</button>';
-									echo '<p class="ko">' . esc_html( $sentence['k2k_vocab_meta_sentences_1'] ) . '</p>';
-									echo '<p class="en">' . esc_html( $sentence['k2k_vocab_meta_sentences_2'] ) . '</p>';
+									echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
+									echo '<p class="ko">' . wp_kses_post( $sentence['k2k_vocab_meta_sentences_1'] ) . '</p>';
+									echo '<p class="en">' . wp_kses_post( $sentence['k2k_vocab_meta_sentences_2'] ) . '</p>';
 									echo '</li>';
 								}
 								?>

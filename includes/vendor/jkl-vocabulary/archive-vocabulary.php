@@ -15,9 +15,9 @@ get_header(); ?>
 	if ( have_posts() ) :
 
 		/* Display the appropriate header when required. */
-		gaya_index_header();
+		k2k_index_header();
 
-		echo '<ul class="category-posts-grid archive-posts-grid">';
+		echo '<ul class="vocabulary-posts-grid archive-posts-grid">';
 
 		/* Start the "Official" Loop */
 		$count = 0;
@@ -36,7 +36,31 @@ get_header(); ?>
 			 * If you want to override this in a child theme, then include a file
 			 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
 			 */
-			get_template_part( 'template-parts/content', 'archive' );
+			?>
+			<li>
+				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
+
+					<?php // gaya_archive_thumbnails();. ?>
+
+					<header class="entry-header">
+						<?php
+							get_level_stars();
+							the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+						?>
+					</header><!-- .entry-header -->
+
+					<!-- <div class="entry-content"> -->
+						<?php
+						/* wprig_fancy_excerpt(); */
+						?>
+					<!-- </div>.entry-content -->
+
+					<footer class="entry-footer">
+
+					</footer><!-- .entry-footer -->
+				</article><!-- #post-<?php the_ID(); ?> -->
+			</li>
+			<?php
 
 			$count++;
 		endwhile;

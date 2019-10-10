@@ -69,46 +69,6 @@ function k2k_custom_taxonomy_pages( $tax_template ) {
 // add_filter( 'taxonomy_template', 'k2k_custom_taxonomy_pages' );.
 
 /**
- * Function to retrieve ALL meta data (post meta and term meta) for a Post.
- *
- * @param array $args A list of taxonomies to retrieve meta data for.
- * @return array All the meta and data associated with the post.
- */
-function get_all_the_post_meta( $args ) {
-
-	// Post Meta.
-	$post_meta['post'] = get_post_meta( get_the_ID() );
-
-	// Term Meta.
-	$term_prefix = 'k2k_taxonomy_';
-
-	foreach ( $args as $taxonomy ) {
-
-		$tax_terms = get_the_terms( get_the_ID(), $taxonomy ); // Translation, Image.
-		if ( ! $tax_terms ) {
-			continue;
-		}
-		$tax_name = $tax_terms[0]->name;
-		$tax_slug = $tax_terms[0]->slug;
-
-		$tax_term['_slug']        = $tax_slug;
-		$tax_term['_name']        = $tax_name;
-		$tax_term['_translation'] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
-		$tax_term['_image']       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
-		$tax_term['_weblink']     = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'weblink', true );
-		$tax_term['_term_color']  = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_color', true );
-
-		$post_meta['post'][ $taxonomy ] = array_filter( $tax_term ); // Use array_filter() to remove null values.
-
-		unset( $tax_term );
-
-	}
-
-	return $post_meta;
-
-}
-
-/**
  * Enqueue ReactJS and other scripts
  *
  * @link https://reactjs.org/docs/add-react-to-a-website.html
@@ -126,16 +86,48 @@ function k2k_scripts() {
 	/* Vocabulary Scripts */
 	if ( 'k2k-vocabulary' === get_post_type() ) {
 		wp_enqueue_style( 'k2k-vocab-style', plugins_url( 'vendor/jkl-vocabulary/css/vocab.css', __FILE__ ), array(), '20191008' );
-		wp_enqueue_script( 'k2k-vocab-script', plugins_url( 'vendor/jkl-vocabulary/js/vocab.js', __FILE__ ), array(), '20191008', true );
+
+		if ( is_singular( 'k2k-vocabulary' ) ) { // Still loading on archive pages though...
+			wp_enqueue_script( 'k2k-vocab-script', plugins_url( 'vendor/jkl-vocabulary/js/vocab.js', __FILE__ ), array(), '20191008', true );
+		}
 	}
 
 	/* Grammar Scripts */
+	if ( 'k2k-grammar' === get_post_type() ) {
+		wp_enqueue_style( 'k2k-grammar-style', plugins_url( 'vendor/jkl-grammar/css/grammar.css', __FILE__ ), array(), '20191008' );
+
+		if ( is_singular( 'k2k-grammar' ) ) { // Still loading on archive pages though...
+			wp_enqueue_script( 'k2k-grammar-script', plugins_url( 'vendor/jkl-grammar/js/grammar.js', __FILE__ ), array(), '20191008', true );
+		}
+	}
 
 	/* Phrases Scripts */
+	if ( 'k2k-phrases' === get_post_type() ) {
+		wp_enqueue_style( 'k2k-phrases-style', plugins_url( 'vendor/jkl-phrases/css/phrases.css', __FILE__ ), array(), '20191008' );
+
+		if ( is_singular( 'k2k-phrases' ) ) { // Still loading on archive pages though...
+			wp_enqueue_script( 'k2k-phrases-script', plugins_url( 'vendor/jkl-phrases/js/phrases.js', __FILE__ ), array(), '20191008', true );
+		}
+	}
 
 	/* Reading Scripts */
+	if ( 'k2k-reading' === get_post_type() ) {
+		wp_enqueue_style( 'k2k-reading-style', plugins_url( 'vendor/jkl-reading/css/reading.css', __FILE__ ), array(), '20191008' );
+
+		if ( is_singular( 'k2k-reading' ) ) { // Still loading on archive pages though...
+			wp_enqueue_script( 'k2k-reading-script', plugins_url( 'vendor/jkl-reading/js/reading.js', __FILE__ ), array(), '20191008', true );
+		}
+	}
 
 	/* Writing Scripts */
+	if ( 'k2k-writing' === get_post_type() ) {
+		wp_enqueue_style( 'k2k-writing-style', plugins_url( 'vendor/jkl-writing/css/writing.css', __FILE__ ), array(), '20191008' );
+
+		if ( is_singular( 'k2k-writing' ) ) { // Still loading on archive pages though...
+			wp_enqueue_script( 'k2k-writing-script', plugins_url( 'vendor/jkl-writing/js/writing.js', __FILE__ ), array(), '20191008', true );
+		}
+	}
+
 }
 add_action( 'wp_enqueue_scripts', 'k2k_scripts' );
 

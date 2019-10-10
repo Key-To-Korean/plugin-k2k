@@ -21,7 +21,7 @@ function expandEl(el) {
   
   eng.className += ' active';
   el.setAttribute( 'title', 'Hide English sentence' );
-  el.innerHTML = '-';
+  el.innerHTML = '<i class="fas fa-caret-up"></i>';
 }
 
 function contractEl(el) {
@@ -29,7 +29,7 @@ function contractEl(el) {
   
   eng.className = 'en';
   el.setAttribute( 'title', 'Show English sentence' );
-  el.innerHTML = '+';
+  el.innerHTML = '<i class="fas fa-caret-down"></i>';
 }
 
 document.querySelector( '.expand-all' ).onclick = function() {
