@@ -47,6 +47,9 @@ function jkl_vocabulary_get_meta_data() {
 
 	$meta = [];
 
+	// Featured Image.
+	$meta['featured_image'] = get_the_post_thumbnail_url( get_the_ID() );
+
 	// Get post meta data.
 	$meta_prefix = 'k2k_vocab_meta_';
 
@@ -77,14 +80,15 @@ function jkl_vocabulary_get_meta_data() {
 	foreach ( $vocab_taxonomies as $taxonomy ) {
 
 		$tax_terms = get_the_terms( get_the_ID(), $taxonomy ); // Translation, Image.
+
+		// If there are no terms saved for this taxonomy, move on to the next one.
 		if ( ! $tax_terms ) {
 			continue;
 		}
-		$tax_name = $tax_terms[0]->name;
-		$tax_slug = $tax_terms[0]->slug;
 
-		$tax_term['_slug']        = $tax_slug;
-		$tax_term['_name']        = $tax_name;
+		$tax_term['_slug']        = $tax_terms[0]->slug;
+		$tax_term['_name']        = $tax_terms[0]->name;
+		$tax_term['_description'] = $tax_terms[0]->description;
 		$tax_term['_translation'] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
 		$tax_term['_image']       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
 		$tax_term['_weblink']     = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'weblink', true );
@@ -96,6 +100,6 @@ function jkl_vocabulary_get_meta_data() {
 
 	}
 
-	return $meta;
+	return array_filter( $meta ); // Use array_filter() to remove null values.
 
 }
