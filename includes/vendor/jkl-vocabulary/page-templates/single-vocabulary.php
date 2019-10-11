@@ -148,22 +148,28 @@ get_header(); ?>
 							<?php
 						endif;
 
+						$jkl_meta = jkl_vocabulary_get_meta_data();
+						echo '<pre>';
+						var_dump( $jkl_meta );
+						echo '</pre>';
+
 						if ( array_key_exists( 'k2k_vocab_meta_sentences', $meta['post'] ) ) :
 							?>
 
 							<h3>Sentences</h3>
 							<div class="sentence-buttons">
 								<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
-								<button class="contract-all" title="Hide all English sentences"><i class="fas fa-caret-up"></i></button>
 							</div>
 							<ol class="sentences">
 								<?php
-								$sentences = get_post_meta( get_the_ID(), 'k2k_vocab_meta_sentences', true );
+								$sentences   = get_post_meta( get_the_ID(), 'k2k_vocab_meta_sentences', true );
+								$pattern     = '/[*_](.*?)[*_]/';
+								$replacement = '<strong>$1</strong>';
 								foreach ( $sentences as $sentence ) {
 									echo '<li>';
 									echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
-									echo '<p class="ko">' . wp_kses_post( $sentence['k2k_vocab_meta_sentences_1'] ) . '</p>';
-									echo '<p class="en">' . wp_kses_post( $sentence['k2k_vocab_meta_sentences_2'] ) . '</p>';
+									echo '<p class="ko">' . wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_vocab_meta_sentences_1'] ) ) . '</p>';
+									echo '<p class="en">' . wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_vocab_meta_sentences_2'] ) ) . '</p>';
 									echo '</li>';
 								}
 								?>

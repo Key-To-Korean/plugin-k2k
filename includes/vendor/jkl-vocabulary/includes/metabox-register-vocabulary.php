@@ -46,11 +46,12 @@ function k2k_register_metabox_vocabulary() {
 					'icon'   => 'dashicons-editor-quote',
 					'title'  => esc_html__( 'Related', 'k2k' ),
 					'fields' => array(
-						$prefix . 'vocab_group',
 						$prefix . 'topic',
-						$prefix . 'synonyms',
-						$prefix . 'antonyms',
-						$prefix . 'hanja',
+						$prefix . 'common_usage',
+						$prefix . 'synonym_group',
+						$prefix . 'antonym_group',
+						$prefix . 'hanja_group',
+						$prefix . 'vocab_group',
 					),
 				),
 			),
@@ -67,20 +68,6 @@ function k2k_register_metabox_vocabulary() {
 			'id'     => $prefix . 'subtitle',
 			'type'   => 'text',
 			'column' => array( 'position' => 2 ),
-		)
-	);
-
-	/**
-	 * Info - Topic Selection
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'     => esc_html__( 'Topic', 'k2k' ),
-			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'       => $prefix . 'topic',
-			'type'     => 'taxonomy_radio_inline',
-			'taxonomy' => 'k2k-topic', // Taxonomy Slug.
-			// 'inline'   => true, // Toggles display to inline.
 		)
 	);
 
@@ -128,80 +115,6 @@ function k2k_register_metabox_vocabulary() {
 	);
 
 	/**
-	 * Info - Vocab Group
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'     => esc_html__( 'Vocab Group', 'k2k' ),
-			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'       => $prefix . 'vocab_group',
-			'type'     => 'taxonomy_select',
-			'taxonomy' => 'k2k-vocab-group', // Taxonomy Slug.
-			// 'inline'   => true, // Toggles display to inline.
-		)
-	);
-
-	/**
-	 * Info - Synonyms
-	 *
-	 * @link https://github.com/CMB2/cmb2-attached-posts
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'    => esc_html__( 'Synonyms', 'k2k' ),
-			'id'      => $prefix . 'synonyms',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'filter_boxes' => true,
-				'query_args'   => array(
-					'posts_per_page' => 10,
-					'post_type'      => 'k2k-vocabulary',
-				),
-			),
-		)
-	);
-
-	/**
-	 * Info - Antonyms
-	 *
-	 * @link https://github.com/CMB2/cmb2-attached-posts
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'    => esc_html__( 'Antonyms', 'k2k' ),
-			'id'      => $prefix . 'antonyms',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'filter_boxes' => true,
-				'query_args'   => array(
-					'posts_per_page' => 10,
-					'post_type'      => 'k2k-vocabulary',
-				),
-			),
-		)
-	);
-
-	/**
-	 * Info - Hanja
-	 *
-	 * @link https://github.com/CMB2/cmb2-attached-posts
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'    => esc_html__( 'Hanja', 'k2k' ),
-			'id'      => $prefix . 'hanja',
-			'type'    => 'custom_attached_posts',
-			'options' => array(
-				'filter_boxes' => true,
-				'query_args'   => array(
-					'posts_per_page' => 10,
-					'post_type'      => 'k2k-vocabulary',
-				),
-			),
-		)
-	);
-
-	/**
 	 * Repeating text field for sentences.
 	 */
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
@@ -209,7 +122,8 @@ function k2k_register_metabox_vocabulary() {
 		array(
 			'id'          => $prefix . 'sentences',
 			'type'        => 'group',
-			'description' => __( 'Example Sentences. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;', 'k2k' ),
+			'name'        => __( 'Example Sentences.', 'k2k' ),
+			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Sentence', 'k2k' ),
 				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
@@ -239,10 +153,185 @@ function k2k_register_metabox_vocabulary() {
 		)
 	);
 
+	/**
+	 * Info - Topic Selection
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Topic', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'topic',
+			'type'     => 'taxonomy_multicheck_inline',
+			'taxonomy' => 'k2k-topic', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
+	/**
+	 * Repeating text field for common usages.
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'id'             => $prefix . 'common_usage',
+			'name'           => __( 'Common Usage', 'k2k' ),
+			'type'           => 'text',
+			'sortable'       => true,
+			'repeatable'     => true,
+			'repeatable_max' => 10,
+			'text'           => array(
+				'add_row_text' => __( 'Add', 'k2k' ),
+			),
+		)
+	);
+
+	/**
+	 * Info - Synonyms
+	 *
+	 * @link https://github.com/CMB2/cmb2-attached-posts
+	 */
+	$synonym_group = $k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'synonym_group',
+			// 'name' => __( 'Synonyms', 'k2k' ),
+			'type' => 'group',
+			'repeatable' => false,
+			'options'     => array(
+				'group_title' => __( 'Synonyms', 'k2k' ),
+				'closed' => true,
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$synonym_group,
+		array(
+			'id'   => $prefix . 'synonyms_unlinked',
+			'name' => __( 'Synonyms (unlinked)', 'k2k' ),
+			'type' => 'text',
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$synonym_group,
+		array(
+			'name'    => esc_html__( 'Synonyms (linked)', 'k2k' ),
+			'id'      => $prefix . 'synonyms_linked',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
+				'filter_boxes' => true,
+				'query_args'   => array(
+					'posts_per_page' => 10,
+					'post_type'      => 'k2k-vocabulary',
+				),
+			),
+		)
+	);
+
+	/**
+	 * Info - Antonyms
+	 *
+	 * @link https://github.com/CMB2/cmb2-attached-posts
+	 */
+	$antonym_group = $k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'antonym_group',
+			// 'name' => __( 'Antonyms', 'k2k' ),
+			'type' => 'group',
+			'repeatable' => false,
+			'options'     => array(
+				'group_title' => __( 'Antonyms', 'k2k' ),
+				'closed' => true,
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$antonym_group,
+		array(
+			'id'   => $prefix . 'antonyms_unlinked',
+			'name' => __( 'Antonyms (unlinked)', 'k2k' ),
+			'type' => 'text',
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$antonym_group,
+		array(
+			'name'    => esc_html__( 'Antonyms (linked)', 'k2k' ),
+			'id'      => $prefix . 'antonyms_linked',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
+				'filter_boxes' => true,
+				'query_args'   => array(
+					'posts_per_page' => 10,
+					'post_type'      => 'k2k-vocabulary',
+				),
+			),
+		)
+	);
+
+	/**
+	 * Info - Hanja
+	 *
+	 * @link https://github.com/CMB2/cmb2-attached-posts
+	 */
+	$hanja_group = $k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'hanja_group',
+			// 'name' => __( 'Hanja', 'k2k' ),
+			'type' => 'group',
+			'repeatable' => false,
+			'options'     => array(
+				'group_title' => __( 'Hanja', 'k2k' ),
+				'closed' => true,
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$hanja_group,
+		array(
+			'id'   => $prefix . 'hanja_unlinked',
+			'name' => __( 'Hanja (unlinked)', 'k2k' ),
+			'type' => 'text',
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$hanja_group,
+		array(
+			'name'    => esc_html__( 'Hanja (linked)', 'k2k' ),
+			'id'      => $prefix . 'hanja_linked',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
+				'filter_boxes' => true,
+				'query_args'   => array(
+					'posts_per_page' => 10,
+					'post_type'      => 'k2k-vocabulary',
+				),
+			),
+		)
+	);
+
+	/**
+	 * Info - Vocab Group
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Vocab Group', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'vocab_group',
+			'type'     => 'taxonomy_multicheck_hierarchical',
+			'taxonomy' => 'k2k-vocab-group', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
 	if ( ! is_admin() ) {
 		return;
 	}
 
+	/**
 	// Create a default Grid.
 	$cmb2_grid = new \Cmb2Grid\Grid\Cmb2Grid( $k2k_metabox );
 
@@ -259,4 +348,5 @@ function k2k_register_metabox_vocabulary() {
 	// Now setup columns like normal.
 	$row = $cmb2_grid->addRow();
 	// $row->addColumns( array( $cmb2_group_grid ) );.
+	*/
 }

@@ -47,7 +47,7 @@ function k2k_template( $template_path ) {
 	if ( is_single() ) {
 
 		$theme_template_single  = locate_template( array( 'single-' . $post_type_slug . '.php' ), false );
-		$plugin_template_single = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/single-' . $post_type_slug . '.php';
+		$plugin_template_single = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/single-' . $post_type_slug . '.php';
 
 		// checks if the file exists in the theme first,
 		// otherwise serve the file from the plugin.
@@ -59,7 +59,7 @@ function k2k_template( $template_path ) {
 	} elseif ( is_archive() ) {
 
 		$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
-		$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/archive-' . $post_type_slug . '.php';
+		$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
 
 		if ( $theme_template_archive ) {
 			$template_path = $theme_template_archive;
@@ -107,15 +107,6 @@ function k2k_scripts() {
 
 		if ( is_single() ) { // Still loading on archive pages though...
 			wp_enqueue_script( 'k2k-common-script', plugins_url( 'shared/js/common-functions.js', __FILE__ ), array(), '20191008', true );
-		}
-	}
-
-	/* Vocabulary Scripts */
-	if ( 'k2k-vocabulary' === get_post_type() ) {
-		wp_enqueue_style( 'k2k-vocab-style', plugins_url( 'vendor/jkl-vocabulary/css/vocab.css', __FILE__ ), array(), '20191008' );
-
-		if ( is_singular( 'k2k-vocabulary' ) ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-vocab-script', plugins_url( 'vendor/jkl-vocabulary/js/vocab.js', __FILE__ ), array(), '20191008', true );
 		}
 	}
 

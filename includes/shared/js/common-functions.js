@@ -20,7 +20,7 @@ function expandEl(el) {
   let eng = el.parentElement.lastElementChild;
   
   eng.className += ' active';
-  el.setAttribute( 'title', 'Hide English sentence' );
+  el.setAttribute( 'title', 'Hide English sentence' ); // @TODO: Make translatable.
   el.innerHTML = '<i class="fas fa-caret-up"></i>';
 }
 
@@ -28,18 +28,29 @@ function contractEl(el) {
   let eng = el.parentElement.lastElementChild;
   
   eng.className = 'en';
-  el.setAttribute( 'title', 'Show English sentence' );
+  el.setAttribute( 'title', 'Show English sentence' ); // @TODO: Make translatable.
   el.innerHTML = '<i class="fas fa-caret-down"></i>';
 }
 
 document.querySelector( '.expand-all' ).onclick = function() {
-  for( var i = 0; i < sents.length; i++ ) {
-    expandEl(sents[i]);
-  }
-}
 
-document.querySelector( '.contract-all' ).onclick = function() {
-  for( var i = 0; i < sents.length; i++ ) {
-    contractEl(sents[i]);
+  if ( this.className === 'expand-all expanded' ) {
+
+    this.className = 'expand-all';
+    this.innerHTML = '<i class="fas fa-caret-down"></i>';
+    this.setAttribute( 'title', 'Show all English sentences.' ); // @TODO: Make translatable.
+
+    for( var i = 0; i < sents.length; i++ ) {
+      contractEl(sents[i]);
+    }
+  } else {
+
+    this.className = 'expand-all expanded';
+    this.innerHTML = '<i class="fas fa-caret-up"></i>';
+    this.setAttribute( 'title', 'Hide all English sentences.' ); // @TODO: Make translatable.
+
+    for( var i = 0; i < sents.length; i++ ) {
+      expandEl(sents[i]);
+    }
   }
 }

@@ -135,9 +135,7 @@ if ( k2k_any_cpt_enabled() ) {
  * Vocabulary Post Type.
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
-	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/post-type-vocabulary-register.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/taxonomy-register-vocab-group.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/metabox-vocabulary-register.php';
+	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/jkl-vocabulary.php';
 }
 
 /**
