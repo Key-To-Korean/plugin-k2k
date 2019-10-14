@@ -48,6 +48,7 @@ function k2k_register_metabox_vocabulary() {
 					'fields' => array(
 						$prefix . 'topic',
 						$prefix . 'common_usage',
+						$prefix . 'related_group',
 						$prefix . 'synonym_group',
 						$prefix . 'antonym_group',
 						$prefix . 'hanja_group',
@@ -184,6 +185,49 @@ function k2k_register_metabox_vocabulary() {
 		)
 	);
 
+		/**
+	 * Info - Related Words
+	 *
+	 * @link https://github.com/CMB2/cmb2-attached-posts
+	 */
+	$related_group = $k2k_metabox->add_field(
+		array(
+			'id'         => $prefix . 'related_group',
+			// 'name' => __( 'Related', 'k2k' ),
+			'type'       => 'group',
+			'repeatable' => false,
+			'options'    => array(
+				'group_title' => __( 'Related Words', 'k2k' ),
+				'closed'      => true,
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$related_group,
+		array(
+			'id'   => $prefix . 'related_unlinked',
+			'name' => __( 'Related Words (unlinked)', 'k2k' ),
+			'type' => 'text',
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$related_group,
+		array(
+			'name'    => esc_html__( 'Related Words (linked)', 'k2k' ),
+			'id'      => $prefix . 'related_linked',
+			'type'    => 'custom_attached_posts',
+			'options' => array(
+				'filter_boxes' => true,
+				'query_args'   => array(
+					'posts_per_page' => 10,
+					'post_type'      => 'k2k-vocabulary',
+				),
+			),
+		)
+	);
+
 	/**
 	 * Info - Synonyms
 	 *
@@ -191,13 +235,13 @@ function k2k_register_metabox_vocabulary() {
 	 */
 	$synonym_group = $k2k_metabox->add_field(
 		array(
-			'id'   => $prefix . 'synonym_group',
+			'id'         => $prefix . 'synonym_group',
 			// 'name' => __( 'Synonyms', 'k2k' ),
-			'type' => 'group',
+			'type'       => 'group',
 			'repeatable' => false,
-			'options'     => array(
+			'options'    => array(
 				'group_title' => __( 'Synonyms', 'k2k' ),
-				'closed' => true,
+				'closed'      => true,
 			),
 		)
 	);
@@ -234,13 +278,13 @@ function k2k_register_metabox_vocabulary() {
 	 */
 	$antonym_group = $k2k_metabox->add_field(
 		array(
-			'id'   => $prefix . 'antonym_group',
+			'id'         => $prefix . 'antonym_group',
 			// 'name' => __( 'Antonyms', 'k2k' ),
-			'type' => 'group',
+			'type'       => 'group',
 			'repeatable' => false,
-			'options'     => array(
+			'options'    => array(
 				'group_title' => __( 'Antonyms', 'k2k' ),
-				'closed' => true,
+				'closed'      => true,
 			),
 		)
 	);
@@ -277,13 +321,13 @@ function k2k_register_metabox_vocabulary() {
 	 */
 	$hanja_group = $k2k_metabox->add_field(
 		array(
-			'id'   => $prefix . 'hanja_group',
+			'id'         => $prefix . 'hanja_group',
 			// 'name' => __( 'Hanja', 'k2k' ),
-			'type' => 'group',
+			'type'       => 'group',
 			'repeatable' => false,
-			'options'     => array(
+			'options'    => array(
 				'group_title' => __( 'Hanja', 'k2k' ),
-				'closed' => true,
+				'closed'      => true,
 			),
 		)
 	);

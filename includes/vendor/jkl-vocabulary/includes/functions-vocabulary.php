@@ -53,20 +53,14 @@ function jkl_vocabulary_get_meta_data() {
 	// Get post meta data.
 	$meta_prefix = 'k2k_vocab_meta_';
 
-	// Subtitle (translation).
-	$meta['subtitle'] = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );
-	// Definitions (array).
-	$meta['definitions'] = get_post_meta( get_the_ID(), $meta_prefix . 'definitions', true );
-	// Sentences (array).
-	$meta['sentences'] = get_post_meta( get_the_ID(), $meta_prefix . 'sentences', true );
-	// Common Usage (array).
-	$meta['usage'] = get_post_meta( get_the_ID(), $meta_prefix . 'common_usage', true );
-	// Synonyms (array).
-	$meta['synonyms'] = get_post_meta( get_the_ID(), $meta_prefix . 'synonym_group', true );
-	// Antonyms (array).
-	$meta['antonyms'] = get_post_meta( get_the_ID(), $meta_prefix . 'antonym_group', true );
-	// Hanja (array).
-	$meta['hanja'] = get_post_meta( get_the_ID(), $meta_prefix . 'hanja_group', true );
+	$meta['subtitle']    = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );      // Subtitle (translation).
+	$meta['definitions'] = get_post_meta( get_the_ID(), $meta_prefix . 'definitions', true );   // Definitions (array).
+	$meta['sentences']   = get_post_meta( get_the_ID(), $meta_prefix . 'sentences', true );     // Sentences (array).
+	$meta['usage']       = get_post_meta( get_the_ID(), $meta_prefix . 'common_usage', true );  // Common Usage (array).
+	$meta['related']     = get_post_meta( get_the_ID(), $meta_prefix . 'related_group', true ); // Related Words (array).
+	$meta['synonyms']    = get_post_meta( get_the_ID(), $meta_prefix . 'synonym_group', true ); // Synonyms (array).
+	$meta['antonyms']    = get_post_meta( get_the_ID(), $meta_prefix . 'antonym_group', true ); // Antonyms (array).
+	$meta['hanja']       = get_post_meta( get_the_ID(), $meta_prefix . 'hanja_group', true );   // Hanja (array).
 
 	// Term Meta.
 	$term_prefix      = 'k2k_taxonomy_';
@@ -79,20 +73,20 @@ function jkl_vocabulary_get_meta_data() {
 
 	foreach ( $vocab_taxonomies as $taxonomy ) {
 
-		$tax_terms = get_the_terms( get_the_ID(), $taxonomy ); // Translation, Image.
+		$tax_terms = get_the_terms( get_the_ID(), $taxonomy ); // Translation, Image, Weblink, or Term Color.
 
 		// If there are no terms saved for this taxonomy, move on to the next one.
 		if ( ! $tax_terms ) {
 			continue;
 		}
 
-		$tax_term['_slug']        = $tax_terms[0]->slug;
-		$tax_term['_name']        = $tax_terms[0]->name;
-		$tax_term['_description'] = $tax_terms[0]->description;
-		$tax_term['_translation'] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
-		$tax_term['_image']       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
-		$tax_term['_weblink']     = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'weblink', true );
-		$tax_term['_term_color']  = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_color', true );
+		$tax_term['slug']        = $tax_terms[0]->slug;
+		$tax_term['name']        = $tax_terms[0]->name;
+		$tax_term['description'] = $tax_terms[0]->description;
+		$tax_term['translation'] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
+		$tax_term['image']       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
+		$tax_term['weblink']     = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'weblink', true );
+		$tax_term['term_color']  = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_color', true );
 
 		$meta[ substr( $taxonomy, 4 ) ] = array_filter( $tax_term ); // Use array_filter() to remove null values.
 
@@ -101,5 +95,47 @@ function jkl_vocabulary_get_meta_data() {
 	}
 
 	return array_filter( $meta ); // Use array_filter() to remove null values.
+
+}
+
+/**
+ * Function to check for saved vocabulary meta data.
+ *
+ * Looks for taxonomy information for Level, Part of Speech, Topic, and Vocab Group.
+ *
+ * @param array $meta An array of vocabulary meta data.
+ * @return boolean
+ */
+function jkl_has_vocabulary_meta( $meta = [] ) {
+
+	if ( empty( $meta ) ) {
+		$meta = jkl_vocabulary_get_meta_data();
+	}
+
+	return array_key_exists( 'level', $meta )
+		|| array_key_exists( 'part-of-speech', $meta )
+		|| array_key_exists( 'topic', $meta )
+		|| array_key_exists( 'vocab-group', $meta );
+
+}
+
+/**
+ * Function to check for related vocabulary meta data.
+ *
+ * Looks for saved data for Related, Synonyms, Antonyms, and Hanja.
+ *
+ * @param array $meta An array of vocabulary meta data.
+ * @return boolean
+ */
+function jkl_has_related_vocabulary_meta( $meta = [] ) {
+
+	if ( empty( $meta ) ) {
+		$meta = jkl_vocabulary_get_meta_data();
+	}
+
+	return array_key_exists( 'related', $meta )
+		|| array_key_exists( 'synonyms', $meta )
+		|| array_key_exists( 'antonyms', $meta )
+		|| array_key_exists( 'hanja', $meta );
 
 }

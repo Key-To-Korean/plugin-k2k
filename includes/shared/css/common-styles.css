@@ -1,4 +1,7 @@
 .level-stars {
 	font-size: 0.6rem;
 	color: #cf8031;
+	position: absolute;
+	top: 1rem;
+	left: 2rem;
 }

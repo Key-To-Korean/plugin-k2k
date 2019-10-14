@@ -18,41 +18,11 @@ get_header(); ?>
 			wp_print_styles( array( 'gaya-content' ) ); // Note: If this was already done it will be skipped.
 			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
 
-			$meta = get_all_the_post_meta( array( 'k2k-level', 'k2k-part-of-speech', 'k2k-topic' ) );
+			$meta = jkl_vocabulary_get_meta_data();
 
 			?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<?php
-
-				/*
-				<header class="entry-header">
-
-					<div class="post-cats">
-						<?php
-						custom_meta_button( 'button', 'k2k-level' );
-						custom_meta_button( 'button', 'k2k-topic' );
-						?>
-					</div>
-
-					<?php
-					if ( is_singular() ) :
-						the_title( '<h1 class="entry-title">', '</h1>' );
-					else :
-						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-					endif;
-
-					if ( array_key_exists( 'k2k_vocab_meta_subtitle', $meta['post'] ) ) {
-						echo '<h2 class="post-subtitle translation">' . esc_html( $meta['post']['k2k_vocab_meta_subtitle'][0] ) . ' (';
-						custom_meta_button( 'link', 'k2k-part-of-speech' );
-						echo ')</h2>';
-					}
-					?>
-
-				</header><!-- .entry-header -->
-				*/
-				?>
-
 				<?php
 				/* Ad Above Post */
 				if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
@@ -65,16 +35,28 @@ get_header(); ?>
 				<?php
 				if ( is_singular() ) :
 					?>
+
 					<div class="entry-meta">
+
 						<?php
-							gaya_post_thumbnail();
-							echo 'Level: ';
-							custom_meta_button( 'link', 'k2k-level' );
-							echo '<br />Part of Speech: ';
+						get_level_stars();
+						display_vocabulary_top_meta( $meta );
+
+						gaya_post_thumbnail();
+
+						if ( is_singular() ) :
+							the_title( '<h1 class="entry-title">', '</h1>' );
+						else :
+							the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
+						endif;
+
+						if ( array_key_exists( 'subtitle', $meta ) ) {
+							echo '<p class="post-subtitle translation">' . esc_html( $meta['subtitle'] ) . ' (';
 							custom_meta_button( 'link', 'k2k-part-of-speech' );
-							echo '<br />Topic: ';
-							custom_meta_button( 'link', 'k2k-topic' );
-							gaya_edit_post_link();
+							echo ')</p>';
+						}
+
+						gaya_edit_post_link();
 						?>
 					</div><!-- .entry-meta -->
 					<?php
@@ -82,29 +64,6 @@ get_header(); ?>
 				?>
 
 				<div class="entry-content">
-
-					<div class="post-cats">
-						<?php
-						get_level_stars();
-						custom_meta_button( 'button', 'k2k-level' );
-						custom_meta_button( 'button', 'k2k-topic' );
-						?>
-					</div>
-
-					<?php
-					if ( is_singular() ) :
-						the_title( '<h1 class="entry-title">', '</h1>' );
-					else :
-						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-					endif;
-
-					if ( array_key_exists( 'k2k_vocab_meta_subtitle', $meta['post'] ) ) {
-						echo '<h2 class="post-subtitle translation">' . esc_html( $meta['post']['k2k_vocab_meta_subtitle'][0] ) . ' (';
-						custom_meta_button( 'link', 'k2k-part-of-speech' );
-						echo ')</h2>';
-					}
-					?>
-
 					<?php
 					the_content(
 						sprintf(
@@ -120,26 +79,18 @@ get_header(); ?>
 							get_the_title()
 						)
 					);
-
-					wp_link_pages(
-						array(
-							'before' => '<div class="page-links">' . esc_html__( 'Pages:', 'gaya' ),
-							'after'  => '</div>',
-						)
-					);
 					?>
 
 					<?php
 					if ( is_singular() ) :
 
-						if ( array_key_exists( 'k2k_vocab_meta_definitions', $meta['post'] ) ) :
+						if ( array_key_exists( 'definitions', $meta ) ) :
 							?>
 
 							<h3>Definitions</h3>
 							<ol>
 								<?php
-								$definitions = get_post_meta( get_the_ID(), 'k2k_vocab_meta_definitions', true );
-								foreach ( $definitions as $definition ) {
+								foreach ( $meta['definitions'] as $definition ) {
 									echo '<li>' . esc_html( $definition ) . '</li>';
 								}
 								?>
@@ -148,12 +99,11 @@ get_header(); ?>
 							<?php
 						endif;
 
-						$jkl_meta = jkl_vocabulary_get_meta_data();
-						echo '<pre>';
-						var_dump( $jkl_meta );
-						echo '</pre>';
+						// echo '<pre>';
+						// var_dump( $meta );
+						// echo '</pre>';.
 
-						if ( array_key_exists( 'k2k_vocab_meta_sentences', $meta['post'] ) ) :
+						if ( array_key_exists( 'sentences', $meta ) ) :
 							?>
 
 							<h3>Sentences</h3>
@@ -162,10 +112,9 @@ get_header(); ?>
 							</div>
 							<ol class="sentences">
 								<?php
-								$sentences   = get_post_meta( get_the_ID(), 'k2k_vocab_meta_sentences', true );
 								$pattern     = '/[*_](.*?)[*_]/';
 								$replacement = '<strong>$1</strong>';
-								foreach ( $sentences as $sentence ) {
+								foreach ( $meta['sentences'] as $sentence ) {
 									echo '<li>';
 									echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
 									echo '<p class="ko">' . wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_vocab_meta_sentences_1'] ) ) . '</p>';
@@ -180,22 +129,12 @@ get_header(); ?>
 						?>
 
 						<footer class="entry-footer">
+
 							<div class="related-terms-container">
-							<hr />
 								<?php
-								$synonyms = get_post_meta( get_the_ID(), 'k2k_vocab_meta_synonyms', true );
-								if ( $synonyms ) {
-									custom_footer_meta( 'Synonyms', $synonyms );
-								}
-
-								$antonyms = get_post_meta( get_the_ID(), 'k2k_vocab_meta_antonyms', true );
-								if ( $antonyms ) {
-									custom_footer_meta( 'Antonyms', $antonyms );
-								}
-
-								$hanja = get_post_meta( get_the_ID(), 'k2k_vocab_meta_hanja', true );
-								if ( $hanja ) {
-									custom_footer_meta( 'Hanja', $hanja );
+								if ( jkl_has_related_vocabulary_meta( $meta ) ) {
+									echo wp_kses_post( __( '<h3>Related</h3>', 'k2k' ) );
+									display_vocabulary_related_meta( $meta );
 								}
 								?>
 							</div>

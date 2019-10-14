@@ -11,6 +11,8 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 require_once 'includes/functions-vocabulary.php';
+require_once 'includes/template-tags-vocabulary.php';
+
 require_once 'includes/post-type-register-vocabulary.php';
 require_once 'includes/taxonomy-register-vocab-group.php';
 require_once 'includes/metabox-register-vocabulary.php';
