@@ -1,14 +1,120 @@
 /* Archive Pages */
 ul.archive-posts-grid.vocabulary-posts-grid {
   display: flex;
+  flex-wrap: wrap;
 }
 
-.vocabulary-posts-grid li {
+.vocabulary-item article {
   margin-right: 2rem;
+  display: flex;
+}
+
+.part-of-speech-circle {
+  width: 22px;
+  height: 22px;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px;
+  border-radius: 30px;
+  display: inline-block;
+  margin-right: 0.5rem;
+  text-align: center;
+}
+
+.part-of-speech-circle:hover,
+.part-of-speech-circle:active,
+.part-of-speech-circle:focus {
+  opacity: 0.7;
+}
+
+.part-of-speech-circle:visited {
+  color: white;
+}
+
+.archive .level-stars {
+  /* position: static; */
+  top: -0.75rem;
+  left: 0;
+}
+
+.archive .entry-header a {
+  position: relative;
+  display: flex;
 }
 
 .archive .entry-title {
   margin-top: 0;
+  font-size: 1.125rem;
+  margin-right: 0.5rem;
+}
+
+.archive .entry-subtitle {
+  font-size: 0.8rem;
+  float: left;
+}
+
+.vocabulary-sidebar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  max-width: 75rem;
+  margin: 0 auto;
+}
+
+.vocabulary-filters {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.vocabulary-filter {
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+  max-width: 180px;
+  overflow: visible;
+}
+
+.vocabulary-filter select {
+  padding-right: 0.5rem;
+  padding-left: 0.75rem;
+}
+
+.vocabulary-index-search {
+  align-self: flex-end;
+  display: flex;
+}
+
+.vocabulary-index-link {
+  font-size: 0.9rem;
+  margin-right: 1rem;
+  margin-top: 0.5rem;
+}
+
+.vocabulary-search {
+  position: relative;
+  margin-bottom: 0;
+}
+
+.vocabulary-search:before {
+  font-family: 'Font Awesome 5 Free';
+  content: '\f002';
+  font-weight: 900;
+  font-size: 0.8rem;
+  position: absolute;
+  top: 0.5rem;
+  left: 0.75rem;
+}
+
+.vocabulary-search #search {
+  padding: 0.25rem 0.5rem 0.25rem 2.25rem;
+  color: var(--gaya-grey);
+  background: rgba(135, 149, 161, 0.2);
+  cursor: pointer;
+  border-radius: 100px;
+  border: none;
+  font-size: 0.9rem;
+  line-height: 2;
+  letter-spacing: 0;
+  max-width: 200px;
 }
 
 /* Single Pages */
@@ -23,6 +129,7 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   padding: 2rem;
   text-align: center;
   max-width: 25rem;
+  width: 25rem;
   margin: 0 auto !important;
   position: relative;
   transition: all 0.3s;

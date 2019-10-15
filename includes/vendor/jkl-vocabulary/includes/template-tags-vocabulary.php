@@ -164,10 +164,10 @@ function display_vocabulary_related_meta( $meta = [] ) {
  */
 function display_vocabulary_search_form() {
 	?>
-	<form action="/" method="get">
-		<label for="search"><?php esc_html_e( 'Search Vocabulary', 'k2k' ); ?></label>
-		<input type="text" name="s" id="search" value="<?php the_search_query(); ?>" />
-		<input type="submit" value="<?php esc_html_e( 'Search', 'k2k' ); ?>" />
+	<form action="/" method="get" class="vocabulary-search">
+		<label for="search" class="screen-reader-text"><?php esc_html_e( 'Search Vocabulary', 'k2k' ); ?></label>
+		<input type="text" name="s" id="search" placeholder="<?php esc_html_e( 'Search Vocabulary', 'k2k' ); ?>" value="<?php the_search_query(); ?>" />
+		<!-- <input type="submit" value="<?php esc_html_e( 'Search', 'k2k' ); ?>" /> -->
 		<input type="hidden" value="k2k-vocabulary" name="post_type" id="post_type" />
 	</form>
 	<?php

@@ -89,30 +89,26 @@ get_header(); ?>
 
 					<?php
 					if ( is_singular() ) :
+						?>
 
-						if ( array_key_exists( 'definitions', $meta ) ) :
-							?>
-
-							<h3>Definitions</h3>
-							<ol>
-								<?php
+						<h3><?php esc_html_e( 'Definitions', 'k2k' ); ?></h3>
+						<ol class="definitions-list">
+							<?php
+							if ( array_key_exists( 'definitions', $meta ) ) {
 								foreach ( $meta['definitions'] as $definition ) {
 									echo '<li>' . esc_html( $definition ) . '</li>';
 								}
-								?>
-							</ol>
+							} elseif ( array_key_exists( 'subtitle', $meta ) ) {
+								echo '<li>' . esc_html( $meta['subtitle'] ) . '</li>';
+							}
+							?>
+						</ol>
 
-							<?php
-						endif;
-
-						// echo '<pre>';
-						// var_dump( $meta );
-						// echo '</pre>';.
-
+						<?php
 						if ( array_key_exists( 'sentences', $meta ) ) :
 							?>
 
-							<h3>Sentences</h3>
+							<h3><?php esc_html_e( 'Sentences', 'k2k' ); ?></h3>
 							<div class="sentence-buttons">
 								<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
 							</div>
@@ -139,7 +135,9 @@ get_header(); ?>
 							<div class="related-terms-container">
 								<?php
 								if ( jkl_has_related_vocabulary_meta( $meta ) ) {
-									echo wp_kses_post( __( '<h3>Related</h3>', 'k2k' ) );
+									?>
+									<h3><?php esc_html_e( 'Related', 'k2k' ); ?></h3>
+									<?php
 									display_vocabulary_related_meta( $meta );
 								}
 								?>

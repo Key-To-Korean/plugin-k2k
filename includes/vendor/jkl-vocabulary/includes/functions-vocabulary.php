@@ -39,6 +39,57 @@ function jkl_vocabulary_enqueue_scripts() {
 add_action( 'wp_enqueue_scripts', 'jkl_vocabulary_enqueue_scripts' );
 
 /**
+ * Function to retrieve the subtitle.
+ */
+function get_subtitle() {
+	return get_post_meta( get_the_ID(), 'k2k_vocab_meta_subtitle', true );
+}
+
+/**
+ * Function to retrieve the (first letter of the) Part of Speech.
+ */
+function get_part_of_speech() {
+
+	$ps = get_the_terms( get_the_ID(), 'k2k-part-of-speech' );
+
+	if ( ! $ps ) {
+		return '';
+	}
+
+	$tax_term['slug']        = $ps[0]->slug;
+	$tax_term['name']        = $ps[0]->name;
+	$tax_term['description'] = $ps[0]->description;
+	$tax_term['translation'] = get_term_meta( $ps[0]->term_id, 'k2k_taxonomy_term_translation', true );
+	$tax_term['image']       = get_term_meta( $ps[0]->term_id, 'k2k_taxonomy_term_avatar', true );
+	$tax_term['weblink']     = get_term_meta( $ps[0]->term_id, 'k2k_taxonomy_term_weblink', true );
+	$tax_term['color']       = get_term_meta( $ps[0]->term_id, 'k2k_taxonomy_term_term_color', true );
+
+	if ( '' !== $tax_term['translation'] ) {
+		switch ( $tax_term['translation'] ) {
+			case '명사':
+				$tax_term['letter'] = substr( $tax_term['translation'], 0, 3 ); // There are 3 characters that make the first syllable: ㅁㅕㅇ.
+				break;
+			case '동사':
+				$tax_term['letter'] = substr( $tax_term['translation'], 0, 3 );
+				break;
+			case '형용사':
+				$tax_term['letter'] = substr( $tax_term['translation'], 0, 3 );
+				break;
+			case '부사':
+				$tax_term['letter'] = substr( $tax_term['translation'], 0, 2 );
+				break;
+			default:
+				$tax_term['letter'] = $tax_term['translation'];
+		}
+	} else {
+			$tax_term['letter'] = substr( $tax_term['name'], 0, 1 );
+	}
+
+	return $tax_term;
+
+}
+
+/**
  * Function to return all Post and Meta data for JKL Vocabulary Post Types in a single array.
  *
  * @return array All the Post and Meta data.

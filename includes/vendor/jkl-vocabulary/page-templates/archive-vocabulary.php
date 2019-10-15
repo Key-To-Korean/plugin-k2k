@@ -1,10 +1,10 @@
 <?php
 /**
- * The template for displaying archive pages
+ * The template for displaying Vocabulary archive pages.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
- * @package gaya
+ * @package K2K
  */
 
 get_header(); ?>
@@ -16,6 +16,8 @@ get_header(); ?>
 
 		/* Display the appropriate header when required. */
 		k2k_index_header();
+
+		require_once 'sidebar-vocabulary.php';
 
 		echo '<ul class="vocabulary-posts-grid archive-posts-grid">';
 
@@ -37,27 +39,26 @@ get_header(); ?>
 			 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
 			 */
 			?>
-			<li>
+			<li class="vocabulary-item">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-					<?php // gaya_archive_thumbnails();. ?>
+					<?php $part_of_speech = get_part_of_speech(); ?>
+
+					<a class="part-of-speech-circle" style="background:
+						<?php echo $part_of_speech['color'] ? esc_attr( $part_of_speech['color'] ) : '#543210'; ?>
+						" href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
+						<?php echo esc_attr( $part_of_speech['letter'] ); ?>
+					</a>
 
 					<header class="entry-header">
-						<?php
-							get_level_stars();
-							the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-						?>
+						<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
+							<?php
+								get_level_stars();
+								the_title( '<h2 class="entry-title">', '</h2>' );
+								echo '<span class="entry-subtitle">' . esc_html( get_subtitle() ) . '</span>';
+							?>
+						</a>
 					</header><!-- .entry-header -->
-
-					<!-- <div class="entry-content"> -->
-						<?php
-						/* wprig_fancy_excerpt(); */
-						?>
-					<!-- </div>.entry-content -->
-
-					<footer class="entry-footer">
-
-					</footer><!-- .entry-footer -->
 				</article><!-- #post-<?php the_ID(); ?> -->
 			</li>
 			<?php
