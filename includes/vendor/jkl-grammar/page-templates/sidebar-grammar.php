@@ -10,7 +10,7 @@
 ?>
 
 <!-- <aside id="secondary" class="primary-sidebar widget-area"> -->
-	<aside id="grammar-filter-box" class="widget k2k-sidebar vocabulary-sidebar">
+	<aside id="grammar-filter-box" class="widget k2k-sidebar grammar-sidebar">
 
 		<!-- Sortable / Filterable Terms Lists -->
 		<?php
@@ -23,24 +23,36 @@
 			);
 			$taxonomies[] = get_terms(
 				array(
+					'taxonomy'   => 'k2k-book',
+					'hide_empty' => false,
+				)
+			);
+			$taxonomies[] = get_terms(
+				array(
 					'taxonomy'   => 'k2k-part-of-speech',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-topic',
+					'taxonomy'   => 'k2k-expression',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-vocab-group',
+					'taxonomy'   => 'k2k-usage',
+					'hide_empty' => false,
+				)
+			);
+			$taxonomies[] = get_terms(
+				array(
+					'taxonomy'   => 'k2k-phrase-type',
 					'hide_empty' => false,
 				)
 			);
 
-			$icons = [ '⚡️', '🗣', '📗', '⚙️', '', '👐', '🏷' ];
+			$icons = [ '⚡️', '📗', '⚙️', '🗣', '👐', '🏷' ];
 
 			if ( ! empty( $taxonomies ) ) :
 				?>
@@ -67,7 +79,7 @@
 
 							if ( 0 === $key ) {
 								?>
-								<option value="<?php echo esc_url( get_home_url() ) . '/vocabulary/'; ?>">
+								<option value="<?php echo esc_url( get_home_url() ) . '/grammar/'; ?>">
 									<?php echo esc_html( $icons[ $i ] . $tax_name ); ?>
 								</option>
 								<?php
@@ -102,10 +114,10 @@
 
 				<!-- Search -->
 				<div class="k2k-index-search">
-					<span class="k2k-index-link"><a href="<?php echo esc_url( home_url() ); ?>/vocabulary/">
-						<i class="fas fa-bars" title="<?php esc_html_e( 'Vocabulary Index', 'k2k' ); ?>"></i>
+					<span class="k2k-index-link"><a href="<?php echo esc_url( home_url() ); ?>/grammar/">
+						<i class="fas fa-bars" title="<?php esc_html_e( 'Grammar Index', 'k2k' ); ?>"></i>
 					</a></span>
-					<?php display_vocabulary_search_form(); ?>
+					<?php display_grammar_search_form(); ?>
 				</div>
 
 				<?php

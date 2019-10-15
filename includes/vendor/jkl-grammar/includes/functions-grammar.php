@@ -1,6 +1,6 @@
 <?php
 /**
- * JKL Vocabulary Post Type Functions.
+ * JKL Grammar Post Type Functions.
  *
  * @package K2K
  */
@@ -11,38 +11,38 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Enqueue Vocabulary Post Type styles and scripts.
+ * Enqueue Grammar Post Type styles and scripts.
  */
-function jkl_vocabulary_enqueue_scripts() {
+function jkl_grammar_enqueue_scripts() {
 
-	/* Vocabulary Scripts */
-	if ( 'k2k-vocabulary' === get_post_type() ) {
+	/* Grammar Scripts */
+	if ( 'k2k-grammar' === get_post_type() ) {
 		wp_enqueue_style(
-			'k2k-vocab-style',
-			plugins_url( 'css/vocab.css', __DIR__ ),
+			'k2k-grammar-style',
+			plugins_url( 'css/grammar.css', __DIR__ ),
 			array(),
-			filemtime( plugin_dir_path( __DIR__ ) . 'css/vocab.css' )
+			filemtime( plugin_dir_path( __DIR__ ) . 'css/grammar.css' )
 		);
 
-		if ( is_singular( 'k2k-vocabulary' ) ) {
+		if ( is_singular( 'k2k-grammar' ) ) {
 			wp_enqueue_script(
-				'k2k-vocab-script',
-				plugins_url( 'js/vocab.js', __DIR__ ),
+				'k2k-grammar-script',
+				plugins_url( 'js/grammar.js', __DIR__ ),
 				array(),
-				filemtime( plugin_dir_path( __DIR__ ) . 'js/vocab.js' ),
+				filemtime( plugin_dir_path( __DIR__ ) . 'js/grammar.js' ),
 				true
 			);
 		}
 	}
 
 }
-add_action( 'wp_enqueue_scripts', 'jkl_vocabulary_enqueue_scripts' );
+add_action( 'wp_enqueue_scripts', 'jkl_grammar_enqueue_scripts' );
 
 /**
  * Function to retrieve the subtitle.
  */
-function get_vocab_subtitle() {
-	return get_post_meta( get_the_ID(), 'k2k_vocab_meta_subtitle', true );
+function get_grammar_subtitle() {
+	return get_post_meta( get_the_ID(), 'k2k_grammar_meta_subtitle', true );
 }
 
 if ( ! function_exists( 'get_part_of_speech' ) ) {
@@ -92,11 +92,11 @@ if ( ! function_exists( 'get_part_of_speech' ) ) {
 }
 
 /**
- * Function to return all Post and Meta data for JKL Vocabulary Post Types in a single array.
+ * Function to return all Post and Meta data for JKL grammar Post Types in a single array.
  *
  * @return array All the Post and Meta data.
  */
-function jkl_vocabulary_get_meta_data() {
+function jkl_grammar_get_meta_data() {
 
 	$meta = [];
 
@@ -104,27 +104,30 @@ function jkl_vocabulary_get_meta_data() {
 	$meta['featured_image'] = get_the_post_thumbnail_url( get_the_ID() );
 
 	// Get post meta data.
-	$meta_prefix = 'k2k_vocab_meta_';
+	$meta_prefix = 'k2k_grammar_meta_';
 
-	$meta['subtitle']    = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );      // Subtitle (translation).
-	$meta['definitions'] = get_post_meta( get_the_ID(), $meta_prefix . 'definitions', true );   // Definitions (array).
-	$meta['sentences']   = get_post_meta( get_the_ID(), $meta_prefix . 'sentences', true );     // Sentences (array).
-	$meta['usage']       = get_post_meta( get_the_ID(), $meta_prefix . 'common_usage', true );  // Common Usage (array).
-	$meta['related']     = get_post_meta( get_the_ID(), $meta_prefix . 'related_group', true ); // Related Words (array).
-	$meta['synonyms']    = get_post_meta( get_the_ID(), $meta_prefix . 'synonym_group', true ); // Synonyms (array).
-	$meta['antonyms']    = get_post_meta( get_the_ID(), $meta_prefix . 'antonym_group', true ); // Antonyms (array).
-	$meta['hanja']       = get_post_meta( get_the_ID(), $meta_prefix . 'hanja_group', true );   // Hanja (array).
+	$meta['subtitle']        = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );        // Subtitle (translation).
+	$meta['wysiwyg']         = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );         // Explanation (html).
+	$meta['adjectives']      = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );      // Adjective Conjugations (array).
+	$meta['verbs']           = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );           // Verb Conjugations (array).
+	$meta['nouns']           = get_post_meta( get_the_ID(), $meta_prefix . 'nouns', true );           // Noun Conjugations (array).
+	$meta['sentences']       = get_post_meta( get_the_ID(), $meta_prefix . 'sentences', true );       // Sentences (array).
+	$meta['exercises']       = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );       // Exercises (array).
+	$meta['related_grammar'] = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true ); // Related Grammar Points (array).
 
 	// Term Meta.
-	$term_prefix      = 'k2k_taxonomy_';
-	$vocab_taxonomies = array( // Taxonomy Data.
+	$term_prefix        = 'k2k_taxonomy_';
+	$grammar_taxonomies = array( // Taxonomy Data.
 		'k2k-level',             // Level (1).
-		'k2k-part-of-speech',    // Part of Speech (1).
-		'k2k-topic',             // Topic.
-		'k2k-vocab-group',       // Vocab Group.
+		'k2k-part-of-speech',    // Part of Speech (multiple).
+		'k2k-expression',        // Expression (1).
+		'k2k-book',              // Book (multiple).
+		'k2k-tenses',            // Tenses (multiple).
+		'k2k-usage',             // Usage (multiple?).
+		'k2k-phrase-type',       // Phrase Type.
 	);
 
-	foreach ( $vocab_taxonomies as $taxonomy ) {
+	foreach ( $grammar_taxonomies as $taxonomy ) {
 
 		$tax_terms = get_the_terms( get_the_ID(), $taxonomy ); // Translation, Image, Weblink, or Term Color.
 
@@ -152,17 +155,17 @@ function jkl_vocabulary_get_meta_data() {
 }
 
 /**
- * Function to check for saved vocabulary meta data.
+ * Function to check for saved grammar meta data.
  *
  * Looks for taxonomy information for Level, Part of Speech, Topic, and Vocab Group.
  *
- * @param array $meta An array of vocabulary meta data.
+ * @param array $meta An array of grammar meta data.
  * @return boolean
  */
-function jkl_has_vocabulary_meta( $meta = [] ) {
+function jkl_has_grammar_meta( $meta = [] ) {
 
 	if ( empty( $meta ) ) {
-		$meta = jkl_vocabulary_get_meta_data();
+		$meta = jkl_grammar_get_meta_data();
 	}
 
 	return array_key_exists( 'level', $meta )
@@ -173,17 +176,17 @@ function jkl_has_vocabulary_meta( $meta = [] ) {
 }
 
 /**
- * Function to check for related vocabulary meta data.
+ * Function to check for related grammar meta data.
  *
  * Looks for saved data for Related, Synonyms, Antonyms, and Hanja.
  *
- * @param array $meta An array of vocabulary meta data.
+ * @param array $meta An array of grammar meta data.
  * @return boolean
  */
-function jkl_has_related_vocabulary_meta( $meta = [] ) {
+function jkl_has_related_grammar_meta( $meta = [] ) {
 
 	if ( empty( $meta ) ) {
-		$meta = jkl_vocabulary_get_meta_data();
+		$meta = jkl_grammar_get_meta_data();
 	}
 
 	return array_key_exists( 'related', $meta )

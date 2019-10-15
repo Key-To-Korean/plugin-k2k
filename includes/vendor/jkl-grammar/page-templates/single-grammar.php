@@ -19,7 +19,7 @@ get_header(); ?>
 			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
 
 			$this_tax = $wp_query->get_queried_object();
-			$meta     = get_all_the_post_meta( array( 'k2k-book', 'k2k-level', 'k2k-part-of-speech', 'k2k-expression', 'k2k-usage' ) );
+			$meta     = jkl_grammar_get_meta_data();
 
 			?>
 
@@ -27,17 +27,9 @@ get_header(); ?>
 
 				<header class="entry-header">
 
-					<div id="nav-above" class="navigation">
-						<div class="nav-previous">
-								<?php previous_post_link( '<span class="meta-nav"> %link </span>', esc_attr_x( '&#9668; Previous', 'Previous post link', 'category' ), true, '', esc_attr( $this_tax->taxonomy ) ); ?>
-						</div>
-						<div class="nav-index">
-							<span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/grammar'; ?>"><?php esc_attr_e( 'Grammar Index', 'k2k' ); ?></a></span>
-						</div>
-						<div class="nav-previous">
-								<?php next_post_link( '<span class="meta-nav"> %link </span>', esc_attr_x( 'Next &#9658;', 'Next post link', 'category' ), true, '', esc_attr( $this_tax->taxonomy ) ); ?>
-						</div>
-					</div><!-- #nav-above -->
+					<?php
+						require_once 'sidebar-grammar.php';
+					?>
 
 					<div class="post-cats">
 						<?php
@@ -54,8 +46,8 @@ get_header(); ?>
 						the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
 					endif;
 
-					if ( array_key_exists( 'k2k_grammar_meta_subtitle', $meta['post'] ) ) {
-						echo '<h2 class="post-subtitle translation">' . esc_html( $meta['post']['k2k_grammar_meta_subtitle'][0] ) . '</h2>';
+					if ( array_key_exists( 'subtitle', $meta ) ) {
+						echo '<h2 class="post-subtitle translation">' . esc_html( $meta['subtitle'] ) . '</h2>';
 					}
 
 					// gaya_post_thumbnail();.
@@ -140,29 +132,27 @@ get_header(); ?>
 
 				if ( is_singular() ) :
 
-					if ( array_key_exists( 'k2k_grammar_meta_wysiwyg', $meta['post'] ) ) :
+					if ( array_key_exists( 'wysiwyg', $meta ) ) :
 						?>
 
 						<h3>Explanation</h3>
 						<div>
-							<?php echo wp_kses_post( wpautop( get_post_meta( get_the_ID(), 'k2k_grammar_meta_wysiwyg', true ) ) ); ?></p>
+							<?php echo wp_kses_post( wpautop( $meta['wysiwyg'] ) ); ?></p>
 						</div>
 
 						<?php
 					endif;
 
-					if ( array_key_exists( 'k2k_grammar_meta_sentences', $meta['post'] ) ) :
+					if ( array_key_exists( 'sentences', $meta ) ) :
 						?>
 
 						<h3>Sentences</h3>
 						<div class="sentence-buttons">
 							<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
-							<button class="contract-all" title="Hide all English sentences"><i class="fas fa-caret-up"></i></button>
 						</div>
 						<ol class="sentences">
 							<?php
-							$sentences = get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences', true );
-							foreach ( $sentences as $sentence ) {
+							foreach ( $meta['sentences'] as $sentence ) {
 								echo '<li>';
 								echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
 								echo '<p class="ko">' . wp_kses_post( $sentence['k2k_grammar_meta_sentences_1'] ) . '</p>';

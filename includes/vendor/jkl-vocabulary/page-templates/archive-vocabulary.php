@@ -55,7 +55,7 @@ get_header(); ?>
 							<?php
 								get_level_stars();
 								the_title( '<h2 class="entry-title">', '</h2>' );
-								echo '<span class="entry-subtitle">' . esc_html( get_subtitle() ) . '</span>';
+								echo '<span class="entry-subtitle">' . esc_html( get_vocab_subtitle() ) . '</span>';
 							?>
 						</a>
 					</header><!-- .entry-header -->
@@ -65,8 +65,21 @@ get_header(); ?>
 
 			$count++;
 		endwhile;
+		?>
 
-		echo '</ul>';
+		</ul>
+
+		<hr />
+		<section class="page-section archive-taxonomies vocabulary-taxonomies-list">
+			<?php
+				display_taxonomy_list( 'k2k-level', __( 'All Levels', 'k2k' ) );
+				display_taxonomy_list( 'k2k-part-of-speech', __( 'All Parts of Speech', 'k2k' ) );
+				display_taxonomy_list( 'k2k-topic', __( 'All Topics', 'k2k' ) );
+				display_taxonomy_list( 'k2k-vocab-group', __( 'All Vocab Groups', 'k2k' ) );
+			?>
+		</section>
+
+		<?php
 
 		/*
 			Finally a Posts Navigation

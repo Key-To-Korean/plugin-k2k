@@ -142,17 +142,7 @@ if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
  * Grammar Post Type.
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
-
-	require_once K2K_PATH . 'includes/vendor/jkl-grammar/post-type-grammar-register.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-grammar/metabox-grammar-register.php';
-
-	// Include Grammar Taxonomies.
-	require_once K2K_PATH . 'includes/vendor/jkl-grammar/taxonomy-register-grammar-book.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-grammar/taxonomy-register-grammar-tenses.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-grammar/taxonomy-register-grammar-usage.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-grammar/metabox-taxonomy-weblinks.php';
-
-
+	require_once K2K_PATH . 'includes/vendor/jkl-grammar/jkl-grammar.php';
 }
 
 /**

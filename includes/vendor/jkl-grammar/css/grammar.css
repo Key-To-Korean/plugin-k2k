@@ -1,6 +1,12 @@
 /* Archive Pages */
+.entry-header {
+	position: relative;
+}
+
 .archive .entry-title {
 	margin-top: 0;
+	margin-bottom: -0.25rem;
+	font-size: 1.125rem;
 }
 
 .entry-header #nav-above {
@@ -8,4 +14,18 @@
 	text-align: center;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1rem;
+}
+
+.archive .entry-subtitle {
+	font-size: 0.9rem;
+}
+
+.archive .level-stars {
+	position: static;
+}
+
+.grammar-taxonomies-list {
+	display: grid;
+	grid-template-columns: repeat(3, 1fr);
+	grid-gap: 2rem;
 }

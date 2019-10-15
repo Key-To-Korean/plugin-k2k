@@ -110,16 +110,6 @@ function k2k_scripts() {
 		}
 	}
 
-	/* Grammar Scripts */
-	if ( 'k2k-grammar' === get_post_type() ) {
-		wp_enqueue_style( 'k2k-grammar-style', plugins_url( 'vendor/jkl-grammar/css/grammar.css', __FILE__ ), array(), '20191008' );
-		wp_enqueue_style( 'k2k-vocab-style', plugins_url( 'vendor/jkl-vocabulary/css/vocab.css', __FILE__ ), array(), '20191008' );
-
-		if ( is_singular( 'k2k-grammar' ) ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-vocab-script', plugins_url( 'vendor/jkl-vocabulary/js/vocab.js', __FILE__ ), array(), '20191008', true );
-		}
-	}
-
 	/* Phrases Scripts */
 	if ( 'k2k-phrases' === get_post_type() ) {
 		wp_enqueue_style( 'k2k-phrases-style', plugins_url( 'vendor/jkl-phrases/css/phrases.css', __FILE__ ), array(), '20191008' );

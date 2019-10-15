@@ -36,10 +36,9 @@ get_header(); ?>
 				if ( is_singular() ) :
 					?>
 					<div class="entry-header">
-					<?php
-					display_vocabulary_search_form();
-					display_vocabulary_navigation();
-					?>
+
+						<?php require_once 'sidebar-vocabulary.php'; ?>
+
 					</div>
 
 					<div class="entry-meta">

@@ -58,7 +58,7 @@ function k2k_index_header() {
 
 	} elseif ( is_archive() && 'k2k-grammar' === get_post_type() ) {
 
-		$archive_page_title = __( 'Grammar Index', 'k2k' );
+		$archive_page_title = __( 'Grammar', 'k2k' );
 
 	} elseif ( is_archive() && 'k2k-phrases' === get_post_type() ) {
 
@@ -79,7 +79,7 @@ function k2k_index_header() {
 		<h1 class="page-title">
 			<?php
 			/* translators: %s is the Archive Title. */
-			printf( esc_html__( 'Archives: %s', 'k2k' ), '<span>' . esc_attr( $archive_page_title ) . '</span>' );
+			printf( esc_html__( 'Index: %s', 'k2k' ), '<span>' . esc_attr( $archive_page_title ) . '</span>' );
 			?>
 		</h1>
 	</header>
@@ -180,5 +180,37 @@ function custom_footer_meta( $title, $array ) {
 	$output .= '</ul>';
 
 	echo wp_kses_post( $output );
+
+}
+
+/**
+ * Display lists of Taxonomies associated with the Custom Post Type.
+ *
+ * @param string $taxonomy Slug of the taxonomy we want a list of terms for.
+ * @param string $title Title to display (optional).
+ */
+function display_taxonomy_list( $taxonomy, $title = '' ) {
+
+	echo '<div class="archive-taxonomies-list">';
+	if ( '' !== $title ) {
+		?>
+	<h3 class="taxonomy-title all-categories"><?php echo esc_html( $title ); ?></h3>
+	<?php } ?>
+
+	<ul class="blog-categories k2k-taxonomies">
+		<?php
+		$categories = get_category( get_query_var( 'cat' ) );
+		// use $categories->parent and '&child_of' . $categories->parent . if you want only SUB categories.
+		$categories = wp_list_categories(
+			'orderby=id&depth=1&show_count=0' .
+			'&title_li=&use_desc_for_title=1' .
+			'&echo=0&taxonomy=' . $taxonomy
+		);
+		echo wp_kses_post( $categories );
+		?>
+	</ul>
+
+	<?php
+	echo '</div>';
 
 }

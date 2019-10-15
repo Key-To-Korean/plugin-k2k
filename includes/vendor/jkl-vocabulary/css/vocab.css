@@ -53,68 +53,10 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   float: left;
 }
 
-.vocabulary-sidebar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: space-between;
-  max-width: 75rem;
-  margin: 0 auto;
-}
-
-.vocabulary-filters {
-  display: flex;
-  flex-wrap: wrap;
-}
-
-.vocabulary-filter {
-  margin-right: 0.5rem;
-  margin-bottom: 0.5rem;
-  max-width: 180px;
-  overflow: visible;
-}
-
-.vocabulary-filter select {
-  padding-right: 0.5rem;
-  padding-left: 0.75rem;
-}
-
-.vocabulary-index-search {
-  align-self: flex-end;
-  display: flex;
-}
-
-.vocabulary-index-link {
-  font-size: 0.9rem;
-  margin-right: 1rem;
-  margin-top: 0.5rem;
-}
-
-.vocabulary-search {
-  position: relative;
-  margin-bottom: 0;
-}
-
-.vocabulary-search:before {
-  font-family: 'Font Awesome 5 Free';
-  content: '\f002';
-  font-weight: 900;
-  font-size: 0.8rem;
-  position: absolute;
-  top: 0.5rem;
-  left: 0.75rem;
-}
-
-.vocabulary-search #search {
-  padding: 0.25rem 0.5rem 0.25rem 2.25rem;
-  color: var(--gaya-grey);
-  background: rgba(135, 149, 161, 0.2);
-  cursor: pointer;
-  border-radius: 100px;
-  border: none;
-  font-size: 0.9rem;
-  line-height: 2;
-  letter-spacing: 0;
-  max-width: 200px;
+.vocabulary-taxonomies-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
 }
 
 /* Single Pages */
@@ -166,82 +108,6 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   line-height: 1.8;
   opacity: 0.7;
   margin-top: -1rem;
-}
-
-.sentence-buttons {
-  margin: -1rem 0 1rem;
-}
-
-.sentence-buttons button {
-  height: 40px;
-  width: 40px;
-  padding: 0;
-  text-align: center;
-  font-size: 1.2rem;
-  color: #a9bac9;
-}
-
-.sentence-buttons button:active,
-.sentence-buttons button:focus {
-  outline: none;
-}
-
-.entry-content .sentences {
-  list-style: none;
-  margin: 0 auto;
-  padding: 0;
-  max-width: 45rem;
-}
-
-.sentences li {
-  /* border: 1px solid rgba(0, 0, 0, 0.14); */
-  padding: 8px 35px;
-  margin: 0 0 0rem;
-  border-radius: 10px;
-  transition: all 0.3s;
-  position: relative;
-}
-
-.sentences .expand {
-  position: absolute;
-  background: transparent;
-  left: 5px;
-  top: 7px;
-  padding: 5px;
-  font-weight: bold;
-  color: #a9bac9;
-  cursor: pointer;
-  border: none;
-  font-size: 1.2rem;
-}
-
-.sentences .expand:focus,
-.sentences .expand:active {
-  outline: none;
-  /* color: red; */
-}
-
-.sentences li p {
-  margin: 0;
-}
-
-.sentences .en {
-  /*   display: none; */
-  visibility: hidden;
-  position: relative;
-  top: -2rem;
-  height: 0;
-  font-size: 80%;
-}
-
-.sentences .en.active {
-  /*   display: block; */
-  visibility: visible;
-  border-top: 1px solid rgba(0, 0, 0, 0.14);
-  margin-top: 8px;
-  padding-top: 8px;
-  height: auto;
-  top: 0;
 }
 
 .entry-footer .related-terms-container {
