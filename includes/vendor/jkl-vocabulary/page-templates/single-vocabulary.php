@@ -35,6 +35,12 @@ get_header(); ?>
 				<?php
 				if ( is_singular() ) :
 					?>
+					<div class="entry-header">
+					<?php
+					display_vocabulary_search_form();
+					display_vocabulary_navigation();
+					?>
+					</div>
 
 					<div class="entry-meta">
 

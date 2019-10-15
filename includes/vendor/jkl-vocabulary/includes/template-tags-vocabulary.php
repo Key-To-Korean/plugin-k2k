@@ -158,3 +158,44 @@ function display_vocabulary_related_meta( $meta = [] ) {
 	}
 
 }
+
+/**
+ * Custom Search Form for Vocabulary Post Type.
+ */
+function display_vocabulary_search_form() {
+	?>
+	<form action="/" method="get">
+		<label for="search"><?php esc_html_e( 'Search Vocabulary', 'k2k' ); ?></label>
+		<input type="text" name="s" id="search" value="<?php the_search_query(); ?>" />
+		<input type="submit" value="<?php esc_html_e( 'Search', 'k2k' ); ?>" />
+		<input type="hidden" value="k2k-vocabulary" name="post_type" id="post_type" />
+	</form>
+	<?php
+}
+
+/**
+ * Custom navigation for Vocabulary Post Type.
+ *
+ * Default Taxonomy is 'Level' - but can pass in a different taxonomy if desired.
+ * Possible taxonomies for Vocabulary are 'Level', 'Part-of-Speech', 'Topic', 'Vocab-Group'.
+ *
+ * @param string $taxonomy The taxonomy to display post navigation for.
+ */
+function display_vocabulary_navigation( $taxonomy = 'k2k-part-of-speech' ) {
+	?>
+	<nav id="nav-above" class="navigation post-navigation vocabulary-navigation" role="navigation">
+		<p class="screen-reader-text"><?php esc_html_e( 'Vocabulary Navigation', 'k2k' ); ?></p>
+		<div class="nav-index">
+			<span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/vocabulary/'; ?>"><?php esc_html_e( 'Vocabulary Index', 'jkl-grammar' ); ?></a></span>
+		</div>
+		<div class="nav-links">
+			<div class="nav-previous">
+				<?php previous_post_link( '%link', '&#9668; %title', true, '', $taxonomy ); ?>
+			</div>
+			<div class="nav-next">
+				<?php next_post_link( '%link', '%title &#9658;', true, '', $taxonomy ); ?>
+			</div>
+		</div>
+	</nav><!-- #nav-above -->
+	<?php
+}
