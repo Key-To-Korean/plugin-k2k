@@ -18,7 +18,8 @@ get_header(); ?>
 			wp_print_styles( array( 'gaya-content' ) ); // Note: If this was already done it will be skipped.
 			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
 
-			$meta = jkl_vocabulary_get_meta_data();
+			$meta     = jkl_vocabulary_get_meta_data();
+			$this_tax = $wp_query->get_queried_object();
 
 			?>
 
@@ -38,6 +39,7 @@ get_header(); ?>
 					<div class="entry-header">
 
 						<?php require_once 'sidebar-vocabulary.php'; ?>
+						<?php display_vocabulary_navigation(); ?>
 
 					</div>
 
@@ -107,10 +109,13 @@ get_header(); ?>
 						if ( array_key_exists( 'sentences', $meta ) ) :
 							?>
 
-							<h3><?php esc_html_e( 'Sentences', 'k2k' ); ?></h3>
-							<div class="sentence-buttons">
-								<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+							<div class="sentences-header">
+								<h3><?php esc_html_e( 'Sentences', 'k2k' ); ?></h3>
+								<div class="sentence-buttons">
+									<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+								</div>
 							</div>
+
 							<ol class="sentences">
 								<?php
 								$pattern     = '/[*_](.*?)[*_]/';

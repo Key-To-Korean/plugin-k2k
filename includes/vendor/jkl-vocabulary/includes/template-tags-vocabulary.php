@@ -63,14 +63,21 @@ function get_linked_terms( $meta ) {
  */
 function get_unlinked_terms( $meta ) {
 
-	$output = '';
+	// If this is a list of terms, output them separately.
+	if ( strpos( $meta, ',' ) ) {
 
-	$items = explode( ',', $meta );
-	foreach ( $items as $item ) {
-		$output .= '<li>' . $item . '</li>';
+		$output = '';
+
+		$items = explode( ', ', $meta );
+		foreach ( $items as $item ) {
+			$output .= '<li>' . $item . '</li>';
+		}
+
+		return $output;
+
+	} else {
+		return '<li>' . $meta . '</li>';
 	}
-
-	return $output;
 
 }
 
@@ -119,42 +126,33 @@ function display_vocabulary_related_meta( $meta = [] ) {
 		$meta = jkl_vocabulary_get_meta_data();
 	}
 
-	$prefix = 'k2k_vocab_meta_';
+	$prefix       = 'k2k_vocab_meta_';
+	$related      = [ 'related', 'synonyms', 'antonyms', 'hanja' ];
+	$related_meta = [];
 
-	// Related Words.
-	if ( array_key_exists( 'related', $meta ) ) {
-		echo '<ul class="related-terms">';
-		esc_html_e( 'Related Words: ', 'k2k' );
-		echo wp_kses_post( get_linked_terms( $meta['related'][0][ $prefix . 'related_linked' ] ) );
-		echo wp_kses_post( get_unlinked_terms( $meta['related'][0][ $prefix . 'related_unlinked' ] ) );
-		echo '</ul>';
+	foreach ( $related as $r ) {
+		if ( array_key_exists( $r, $meta ) ) {
+			$related_meta[ $r ] = $meta[ $r ][0];
+		}
 	}
 
-	// Synonyms.
-	if ( array_key_exists( 'synonyms', $meta ) ) {
-		echo '<ul class="related-terms">';
-		esc_html_e( 'Synonyms: ', 'k2k' );
-		echo wp_kses_post( get_linked_terms( $meta['synonyms'][0][ $prefix . 'synonyms_linked' ] ) );
-		echo wp_kses_post( get_unlinked_terms( $meta['synonyms'][0][ $prefix . 'synonyms_unlinked' ] ) );
-		echo '</ul>';
-	}
+	if ( ! empty( $related_meta ) ) {
 
-	// Antonyms.
-	if ( array_key_exists( 'antonyms', $meta ) ) {
-		echo '<ul class="related-terms">';
-		esc_html_e( 'Antonyms: ', 'k2k' );
-		echo wp_kses_post( get_linked_terms( $meta['antonyms'][0][ $prefix . 'antonyms_linked' ] ) );
-		echo wp_kses_post( get_unlinked_terms( $meta['antonyms'][0][ $prefix . 'antonyms_unlinked' ] ) );
-		echo '</ul>';
-	}
+		foreach ( $related_meta as $key => $value ) {
 
-	// Hanja.
-	if ( array_key_exists( 'hanja', $meta ) ) {
-		echo '<ul class="related-terms">';
-		esc_html_e( 'Hanja: ', 'k2k' );
-		echo wp_kses_post( get_linked_terms( $meta['hanja'][0][ $prefix . 'hanja_linked' ] ) );
-		echo wp_kses_post( get_unlinked_terms( $meta['hanja'][0][ $prefix . 'hanja_unlinked' ] ) );
-		echo '</ul>';
+			echo '<ul class="related-terms">';
+			echo '<li class="related-terms-title">' . esc_html( ucwords( $key ) ) . ':</li>';
+
+			if ( array_key_exists( $prefix . $key . '_linked', $value ) ) {
+				echo wp_kses_post( get_linked_terms( $value[ $prefix . $key . '_linked' ] ) );
+			}
+			if ( array_key_exists( $prefix . $key . '_unlinked', $value ) ) {
+				echo wp_kses_post( get_unlinked_terms( $value[ $prefix . $key . '_unlinked' ] ) );
+			}
+
+			echo '</ul>';
+
+		}
 	}
 
 }
@@ -181,12 +179,12 @@ function display_vocabulary_search_form() {
  *
  * @param string $taxonomy The taxonomy to display post navigation for.
  */
-function display_vocabulary_navigation( $taxonomy = 'k2k-part-of-speech' ) {
+function display_vocabulary_navigation( $taxonomy = 'k2k-level' ) {
 	?>
 	<nav id="nav-above" class="navigation post-navigation vocabulary-navigation" role="navigation">
 		<p class="screen-reader-text"><?php esc_html_e( 'Vocabulary Navigation', 'k2k' ); ?></p>
 		<div class="nav-index">
-			<span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/vocabulary/'; ?>"><?php esc_html_e( 'Vocabulary Index', 'jkl-grammar' ); ?></a></span>
+			<span class="meta-nav"><a href="<?php echo esc_url( get_home_url() ) . '/vocabulary/'; ?>"><?php esc_html_e( 'Vocabulary Index', 'k2k' ); ?></a></span>
 		</div>
 		<div class="nav-links">
 			<div class="nav-previous">

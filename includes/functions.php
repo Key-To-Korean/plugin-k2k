@@ -103,10 +103,21 @@ function k2k_scripts() {
 
 	/* Common Scripts */
 	if ( k2k_any_cpt_enabled() ) {
-		wp_enqueue_style( 'k2k-common-style', plugins_url( 'shared/css/common-styles.css', __FILE__ ), array(), '20191008' );
+		wp_enqueue_style(
+			'k2k-common-style',
+			plugins_url( 'includes/shared/css/common-styles.css', __DIR__ ),
+			array(),
+			filemtime( plugin_dir_path( __DIR__ ) . 'includes/shared/css/common-styles.css' )
+		);
 
 		if ( is_single() ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-common-script', plugins_url( 'shared/js/common-functions.js', __FILE__ ), array(), '20191008', true );
+			wp_enqueue_script(
+				'k2k-common-script',
+				plugins_url( 'includes/shared/js/common-functions.js', __DIR__ ),
+				array(),
+				filemtime( plugin_dir_path( __DIR__ ) . 'includes/shared/js/common-functions.js' ),
+				true
+			);
 		}
 	}
 

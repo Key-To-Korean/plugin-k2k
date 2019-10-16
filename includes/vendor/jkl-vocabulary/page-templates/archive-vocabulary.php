@@ -23,7 +23,7 @@ get_header(); ?>
 
 		/* Start the "Official" Loop */
 		$count = 0;
-		while ( have_posts() && $count < 16 ) :
+		while ( have_posts() && $count < 100 ) :
 			the_post();
 
 			/*

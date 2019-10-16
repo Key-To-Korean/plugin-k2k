@@ -39,6 +39,7 @@ function k2k_register_metabox_vocabulary() {
 						$prefix . 'part_of_speech',
 						$prefix . 'definitions',
 						$prefix . 'sentences',
+						$prefix . 'vocab_group',
 					),
 				),
 				array(
@@ -47,12 +48,10 @@ function k2k_register_metabox_vocabulary() {
 					'title'  => esc_html__( 'Related', 'k2k' ),
 					'fields' => array(
 						$prefix . 'topic',
-						$prefix . 'common_usage',
 						$prefix . 'related_group',
 						$prefix . 'synonym_group',
 						$prefix . 'antonym_group',
 						$prefix . 'hanja_group',
-						$prefix . 'vocab_group',
 					),
 				),
 			),
@@ -104,7 +103,8 @@ function k2k_register_metabox_vocabulary() {
 	$k2k_metabox->add_field(
 		array(
 			'id'             => $prefix . 'definitions',
-			'name'           => __( 'Definition(s)', 'k2k' ),
+			'name'           => __( 'Definition(s) (Optional)', 'k2k' ),
+			'description'    => __( 'Add additional definitions. If none are added, the translation will be used.', 'k2k' ),
 			'type'           => 'text',
 			'sortable'       => true,
 			'repeatable'     => true,
@@ -170,7 +170,7 @@ function k2k_register_metabox_vocabulary() {
 
 	/**
 	 * Repeating text field for common usages.
-	 */
+	 *
 	$k2k_metabox->add_field(
 		array(
 			'id'             => $prefix . 'common_usage',
@@ -184,6 +184,7 @@ function k2k_register_metabox_vocabulary() {
 			),
 		)
 	);
+	*/
 
 		/**
 	 * Info - Related Words

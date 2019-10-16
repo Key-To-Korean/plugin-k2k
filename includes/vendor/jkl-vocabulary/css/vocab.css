@@ -1,12 +1,22 @@
 /* Archive Pages */
 ul.archive-posts-grid.vocabulary-posts-grid {
-  display: flex;
-  flex-wrap: wrap;
+  /* display: flex;
+  flex-wrap: wrap; */
 }
 
 .vocabulary-item article {
   margin-right: 2rem;
+  margin-bottom: 0rem;
   display: flex;
+  transition: all 0.3s;
+  padding: 1rem 0.25rem 0.25rem;
+  border-radius: 10px;
+}
+
+.vocabulary-item article:hover,
+.vocabulary-item article:focus,
+.vocabulary-item article:active {
+  background: #efefef;
 }
 
 .part-of-speech-circle {
@@ -18,6 +28,7 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   border-radius: 30px;
   display: inline-block;
   margin-right: 0.5rem;
+  margin-top: -2px;
   text-align: center;
 }
 
@@ -33,24 +44,29 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 
 .archive .level-stars {
   /* position: static; */
-  top: -0.75rem;
+  top: -1rem;
   left: 0;
 }
 
 .archive .entry-header a {
   position: relative;
   display: flex;
+  transition: all 0.3s;
 }
 
 .archive .entry-title {
   margin-top: 0;
-  font-size: 1.125rem;
+  font-size: 1.25rem !important;
   margin-right: 0.5rem;
+  margin-bottom: 0;
+  margin-top: -5px;
+  word-break: keep-all !important;
 }
 
 .archive .entry-subtitle {
   font-size: 0.8rem;
   float: left;
+  color: #a9bac9;
 }
 
 .vocabulary-taxonomies-list {
@@ -60,6 +76,10 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 }
 
 /* Single Pages */
+.entry-header {
+  position: relative;
+}
+
 .entry-meta,
 .entry-content {
   grid-column: span 2;
@@ -110,6 +130,11 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   margin-top: -1rem;
 }
 
+.entry-footer {
+  margin-top: 2.5rem !important;
+  padding-top: 0 !important;
+}
+
 .entry-footer .related-terms-container {
   margin-bottom: 2rem;
 }
@@ -124,4 +149,10 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 .related-terms li {
   display: inline-block;
   margin-right: 0.5rem;
+}
+
+.related-terms li:not(.related-terms-title) {
+  background: rgba(135, 149, 161, .2);
+  padding: 0 10px;
+  border-radius: 30px;
 }

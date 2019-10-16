@@ -1,5 +1,6 @@
 /* Archive Pages */
-.entry-header {
+.entry-header,
+.entry-header .post-cats {
 	position: relative;
 }
 
@@ -7,13 +8,6 @@
 	margin-top: 0;
 	margin-bottom: -0.25rem;
 	font-size: 1.125rem;
-}
-
-.entry-header #nav-above {
-	display: grid;
-	text-align: center;
-	grid-template-columns: 1fr 1fr 1fr;
-	grid-gap: 1rem;
 }
 
 .archive .entry-subtitle {
@@ -28,4 +22,22 @@
 	display: grid;
 	grid-template-columns: repeat(3, 1fr);
 	grid-gap: 2rem;
+}
+
+/* Single Posts */
+.level-stars {
+	top: 0;
+	left: 0;
+}
+
+.k2k-filter select {
+	max-width: 100px;
+}
+
+#nav-above {
+	top: 2.5rem;
+}
+
+.content-header {
+	margin-top: 4rem;
 }

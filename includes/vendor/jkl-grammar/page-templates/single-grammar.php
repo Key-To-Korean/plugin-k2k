@@ -25,17 +25,22 @@ get_header(); ?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-				<header class="entry-header">
+				<header class="entry-header filter-nav-header">
 
-					<?php
-						require_once 'sidebar-grammar.php';
-					?>
+					<?php require_once 'sidebar-grammar.php'; ?>
+					<?php display_grammar_navigation(); ?>
+
+				</header>
+
+				<header class="entry-header content-header">
 
 					<div class="post-cats">
 						<?php
 						get_level_stars();
-						custom_meta_button( 'button', 'k2k-level' );
-						custom_meta_button( 'button', 'k2k-topic' );
+						/**
+						// custom_meta_button( 'button', 'k2k-level' );
+						// custom_meta_button( 'button', 'k2k-topic' );
+						*/
 						?>
 					</div>
 
