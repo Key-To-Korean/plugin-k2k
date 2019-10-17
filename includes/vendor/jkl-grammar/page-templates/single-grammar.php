@@ -135,19 +135,23 @@ get_header(); ?>
 
 						<ol class="sentences">
 							<?php
-							$pattern     = '/[*_](.*?)[*_]/';
-							$replacement = '<strong>$1</strong>';
+							$italic_pattern     = '/\*\*(.*?)\*\*/';
+							$italic_replacement = '<em>$1</em>';
+							$bold_pattern       = '/[*_](.*?)[*_]/';
+							$bold_replacement   = '<strong>$1</strong>';
 							foreach ( $meta['sentences'] as $key => $array ) {
 
 								echo '<h4 class="sentence-tense-title">' . esc_html( ucwords( $key ) ) . ' Tense Examples</h4>';
 
 								foreach ( $array as $sentence ) {
+									// Check for ** doubled - for italics first.
+									$italicize = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_grammar_meta_sentences_1'] );
 									?>
 
 									<li>
 										<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>
-										<p class="ko"><?php echo wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_grammar_meta_sentences_1'] ) ); ?></p>
-										<p class="en"><?php echo wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_grammar_meta_sentences_2'] ) ); ?></p>
+										<p class="ko"><?php echo wp_kses_post( preg_replace( $bold_pattern, $bold_replacement, $italicize ) ); ?></p>
+										<p class="en"><?php echo wp_kses_post( preg_replace( $bold_pattern, $bold_replacement, $italicize ) ); ?></p>
 									</li>
 
 									<?php

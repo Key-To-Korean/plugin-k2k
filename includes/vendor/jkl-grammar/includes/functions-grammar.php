@@ -132,6 +132,11 @@ function jkl_grammar_get_meta_data() {
 	$meta['exercises']       = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );       // Exercises (array).
 	$meta['related_grammar'] = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true ); // Related Grammar Points (array).
 
+	$related_needs_link = get_post_meta( get_the_ID(), $meta_prefix . 'related_needs_link', true ); // Needs Link.
+	if ( '' !== $related_needs_link ) {
+		$meta['related_grammar']['needs_link'] = $related_needs_link;
+	}
+
 	$sent_past = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_past', true );    // Sentences Past (array).
 	$sent_pres = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_present', true ); // Sentences Present (array).
 	$sent_futr = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_future', true );  // Sentences Future (array).
@@ -168,18 +173,30 @@ function jkl_grammar_get_meta_data() {
 			continue;
 		}
 
-		$tax_term['slug']        = $tax_terms[0]->slug;
-		$tax_term['name']        = $tax_terms[0]->name;
-		$tax_term['description'] = $tax_terms[0]->description;
-		$tax_term['translation'] = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_translation', true );
-		$tax_term['image']       = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'avatar', true );
-		$tax_term['weblink']     = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'weblink', true );
-		$tax_term['term_color']  = get_term_meta( $tax_terms[0]->term_id, $term_prefix . 'term_color', true );
+		foreach ( $tax_terms as $tax_term ) {
 
-		$meta[ substr( $taxonomy, 4 ) ] = array_filter( $tax_term ); // Use array_filter() to remove null values.
+			$tt['slug']        = $tax_term->slug;
+			$tt['name']        = $tax_term->name;
+			$tt['description'] = $tax_term->description;
+			$tt['translation'] = get_term_meta( $tax_term->term_id, $term_prefix . 'term_translation', true );
+			$tt['image']       = get_term_meta( $tax_term->term_id, $term_prefix . 'avatar', true );
+			$tt['weblink']     = get_term_meta( $tax_term->term_id, $term_prefix . 'weblink', true );
+			$tt['term_color']  = get_term_meta( $tax_term->term_id, $term_prefix . 'term_color', true );
 
-		unset( $tax_term );
+			$meta[ substr( $taxonomy, 4 ) ][] = array_filter( $tt ); // Use array_filter() to remove null values.
 
+			unset( $tt );
+
+		}
+	}
+
+	// Additional Usage meta.
+	$meta_usage = get_post_meta( get_the_ID(), $meta_prefix . 'usage', true )[0];
+	if ( $meta_usage[ $meta_prefix . 'usage_mu' ] ) {
+		$meta['usage']['must_use'] = $meta_usage[ $meta_prefix . 'usage_mu' ];
+	}
+	if ( $meta_usage[ $meta_prefix . 'usage_no' ] ) {
+		$meta['usage']['prohibited'] = $meta_usage[ $meta_prefix . 'usage_no' ];
 	}
 
 	return array_filter( $meta ); // Use array_filter() to remove null values.

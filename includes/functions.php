@@ -21,8 +21,17 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function k2k_sanitize_sentence_callback( $value, $field_args, $field ) {
 
-	/* Custom sanitization - with strip_tags to allow certain tags. */
-	$value = strip_tags( $value, '<b><strong><em><span>' );
+	if ( is_array( $value ) ) {
+
+		$new_value = array_map( 'strip_tags', $value );
+		return $new_value;
+
+	} elseif ( ! is_array( $value ) ) {
+
+		/* Custom sanitization - with strip_tags to allow certain tags. */
+		$value = strip_tags( $value, '<b><strong><em><span>' );
+
+	}
 
 	return $value;
 

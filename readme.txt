@@ -5,7 +5,7 @@ Plugin URI:             https://github.com/jekkilekki/plugin-k2k
 Author:                 Aaron Snowberger
 Author URI:             https://www.aaron.kr/
 Donate link:            https://www.paypal.com/cgi-bin/webscr?cmd=_s-xclick&hosted_button_id=567MWDR76KHLU
-Tags:                   custom post type, gutenberg
+Tags:                   custom post types, custom taxonomies, page templates, cmb2
 Requires at least:      3.5
 Tested up to:           5.0
 Stable tag:             1.1.0

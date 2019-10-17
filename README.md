@@ -7,20 +7,172 @@
 - [Plugin Page](https://github.com/jekkilekki/plugin-k2k)
 - [Author Page](https://aaron.kr/)
 
-A simple plugin that adds a "Grammar" Custom Post Type to better organize grammar points for language learning blogs and sites.
+A complete Language Learning plugin that adds multiple new Custom Post Types, Taxonomies, and Page Templates for language learning blogs and sites.
 
 ## Description
 
 Requires WordPress 3.5 and PHP 5.5 or later.
 
 This plugin was built for my own Korean language learning site (keytokorean.com) to
-enable me to better organize the grammar points I'm studying. It includes the following taxonomies:
+enable me to better organize the grammar points I'm studying. It includes the following helper plugins:
+
+1. CMB2 (Custom Metaboxes 2)
+	- CMB2 Tabs
+	- CMB2 Switch Button
+	- CMB2 Attached Posts
+	- [CMB2 Grid]
+	- [CMB2 Field Slider]
+2. JKL
+	- [JKL Vocabulary](#jkl-vocabulary)
+	- [JKL Grammar](#jkl-grammar)
+	- [JKL Phrases](#jkl-phrases)
+	- [JKL Writing](#jkl-writing)
+	- [JKL Reading](#jkl-reading)
+
+## JKL Plugins
+
+### JKL Vocabulary
+
+This plugin adds a Vocabulary Custom Post Type and the following taxonomies are associated with it:
+
+- Levels
+- Parts of Speech
+- Topics
+- Vocabulary Group
+
+The Vocabulary CPT includes a custom meta box (CMB2) that includes the following fields:
+
+CMB2 `k2k_vocab_meta_metabox`
+
+Info Tab
+
+| Name: Info Tab | ID: `tab_info` | Type: Tab |
+| --- | --- | --- |
+| Translation (EN) | `k2k_vocab_meta_subtitle` | Text |
+| Level |`k2k_vocab_meta_level` | Taxonomy |
+| Part of Speech | `k2k_vocab_meta_part_of_speech` | Taxonomy |
+| Definitions [array] | `k2k_vocab_meta_definitions` | Text (repeatable) |
+| Sentences [array] | `k2k_vocab_meta_sentences` | Group (repeatable) |
+| - Original (KO) | `k2k_vocab_meta_sentences_1` | Text |
+| - Translation (EN) | `k2k_vocab_meta_sentences_2` | Text |
+| Vocab Group | `k2k_vocab_meta_vocab_group` | Taxonomy |
+
+Related Tab
+
+| Name: Related Tab | ID: `tab_related` | Type: Tab |
+| --- | --- | --- |
+| Topic | `k2k_vocab_meta_topic` | Taxonomy |
+| Related Words | `k2k_vocab_meta_related_group` | Group |
+| - Unlinked | `k2k_vocab_meta_related_unlinked` | Text |
+| - Linked | `k2k_vocab_meta_related_linked` | Attached Posts |
+| Synonyms | `k2k_vocab_meta_synonym_group` | Group |
+| - Unlinked | `k2k_vocab_meta_synonyms_unlinked` | Text |
+| - Linked | `k2k_vocab_meta_synonyms_linked` | Attached Posts |
+| Antonyms | `k2k_vocab_meta_antonym_group` | Group |
+| - Unlinked | `k2k_vocab_meta_antonyms_unlinked` | Text |
+| - Linked | `k2k_vocab_meta_antonyms_linked` | Attached Posts |
+| Hanja | `k2k_vocab_meta_hanja_group` | Group |
+| - Unlinked | `k2k_vocab_meta_hanja_unlinked` | Text |
+| - Linked | `k2k_vocab_meta_hanja_linked` | Attached Posts |
+
+### JKL Grammar
+
+This plugin adds a Grammar Custom Post Type and the following taxonomies are associated with it:
+
+- Levels
+- Parts of Speech
+- Expressions
+- Books
+- Tenses
+- Usage
+- Phrase Type
+
+The Grammar CPT includes a custom meta box (CMB2) that includes the following fields:
+
+CMB2 `k2k_grammar_meta_metabox`
+
+Info Tab
+
+| Name: Info Tab | ID: `tab_info` | Type: Tab |
+| --- | --- | --- |
+| Translation (EN) | `k2k_grammar_meta_subtitle` | Text |
+| Level | `k2k_grammar_meta_level` | Taxonomy |
+| Detailed Explanation | `k2k_grammar_meta_wysiwyg` | Wysiwyg |
+| Usage | `k2k_grammar_meta_usage` | Group |
+| - Usage Type | `k2k_grammar_meta_usage_tax` | Taxonomy |
+| - Must Use | `k2k_grammar_meta_usage_mu` | Text |
+| - Prohibited | `k2k_grammar_meta_usage_no` | Text |
+| Expression | `k2k_grammar_meta_expression` | Taxonomy |
+| Book | `k2k_grammar_meta_book` | Taxonomy |
+
+Conjugations Tab
+
+| Name: Conjugations Tab | ID: `tab_conjugations` | Type: Tab |
+| --- | --- | --- |
+| Part of Speech | `k2k_grammar_meta_part_of_speech` | Taxonomy |
+| Tenses | `k2k_grammar_meta_tenses` | Taxonomy |
+| Adjective Conjugation | `k2k_grammar_meta_adjectives` | Group |
+| - Past | `k2k_grammar_meta_adjective_past` | Text |
+| - Present | `k2k_grammar_meta_adjective_present` | Text |
+| - Future | `k2k_grammar_meta_adjective_future` | Text |
+| - Supposition | `k2k_grammar_meta_adjective_supposition` | Text |
+| Verb Conjugation | `k2k_grammar_meta_verbs` | Group |
+| - Past | `k2k_grammar_meta_verb_past` | Text |
+| - Present | `k2k_grammar_meta_verb_present` | Text |
+| - Future | `k2k_grammar_meta_verb_future` | Text |
+| - Supposition | `k2k_grammar_meta_verb_supposition` | Text |
+| Noun Conjugation | `k2k_grammar_meta_nouns` | Group |
+| - Past | `k2k_grammar_meta_noun_past` | Text |
+| - Present | `k2k_grammar_meta_noun_present` | Text |
+| - Future | `k2k_grammar_meta_noun_future` | Text |
+| - Supposition | `k2k_grammar_meta_noun_supposition` | Text |
+
+Sentences Tab
+
+| Name: Sentences Tab | ID: `tab_sentences` | Type: Tab |
+| --- | --- | --- |
+| Past Tense Sentence | `k2k_grammar_meta_sentences_past` | Group (repeatable) |
+| - Original (KO) | `k2k_grammar_meta_sentence_1` | Text |
+| - Translation (EN) | `k2k_grammar_meta_sentence_2` | Text |
+| Present Tense Sentence | `k2k_grammar_meta_sentences_present` | Group (repeatable) |
+| - Original (KO) | `k2k_grammar_meta_sentence_1` | Text |
+| - Translation (EN) | `k2k_grammar_meta_sentence_2` | Text |
+| Future Tense Sentence | `k2k_grammar_meta_sentences_future` | Group (repeatable) |
+| - Original (KO) | `k2k_grammar_meta_sentence_1` | Text |
+| - Translation (EN) | `k2k_grammar_meta_sentence_2` | Text |
+
+More Tab
+
+| Name: More Tab | ID: `tab_more` | Type: Tab |
+| --- | --- | --- |
+| Practice Exercise | `k2k_grammar_meta_exercises` | Text (repeatable) |
+| Related Grammar | `k2k_grammar_meta_related_grammar` | Group |
+| - Needs Link | `k2k_grammar_meta_related_needs_link` | Checkbox |
+| - Related Grammar Points | `k2k_grammar_meta_related_grammar_points` | Attached Posts |
+
+### JKL Phrases
+
+[Upcoming]
+
+### JKL Writing
+
+[Upcoming]
+
+### JKL Reading
+
+[Upcoming]
+
+## Taxonomies
 
 1. Level (Beginner, etc)
 2. Book (Seoul University, Korean Grammar in Use, etc)
 3. Part of Speech (Verb, Noun, etc)
 4. Expression (frustation, excitement, etc)
 5. Usage (formal, written, spoken, etc)
+6. Tenses (past, present, future, supposition, etc)
+7. Phrase Type (prepositive, interrogative, idiom, slang, etc)
+8. Topics (Animals, Food, etc)
+9. Vocab Group (Intermediate Day 1, etc)
 
 **Tested with**
 

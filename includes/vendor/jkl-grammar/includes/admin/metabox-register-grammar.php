@@ -483,29 +483,19 @@ function k2k_register_metabox_grammar() {
 	/**
 	 * Repeating text field for exercises.
 	 */
-	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
-	$exercise_group = $k2k_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
-			'id'          => $prefix . 'exercises',
-			'type'        => 'group',
-			'name'        => __( 'Exercises.', 'k2k' ),
-			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
-			'options'     => array(
-				'group_title'   => __( 'Exercise', 'k2k' ),
-				'add_button'    => __( 'Add Another Exercise', 'k2k' ),
-				'remove_button' => __( 'Remove Exercise', 'k2k' ),
-				'sortable'      => true,
-			),
-		)
-	);
-
-	$k2k_metabox->add_group_field(
-		$exercise_group,
-		array(
-			'id'              => $prefix . 'exercise',
+			'id'              => $prefix . 'exercises',
 			'name'            => __( 'Practice Exercise', 'k2k' ),
+			'description'    => __( 'Add optional practice exercises. Use ... to create a fill-in-the-blank.', 'k2k' ),
 			'type'            => 'text',
+			'sortable'       => true,
+			'repeatable'      => true,
+			'repeatable_max' => 10,
 			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
+			'text'           => array(
+				'add_row_text' => __( 'Add Practice', 'k2k' ),
+			),
 		)
 	);
 
