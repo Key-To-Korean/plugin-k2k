@@ -11,7 +11,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
- * Enqueue Grammar Post Type styles and scripts.
+ * Enqueue Grammar Post Type styles and scripts on public facing pages.
  */
 function jkl_grammar_enqueue_scripts() {
 
@@ -37,6 +37,24 @@ function jkl_grammar_enqueue_scripts() {
 
 }
 add_action( 'wp_enqueue_scripts', 'jkl_grammar_enqueue_scripts' );
+
+/**
+ * Enqueue Grammar Post Type styles and scripts on admin pages.
+ */
+function jkl_grammar_enqueue_admin_scripts() {
+
+	/* Grammar Scripts */
+	if ( 'k2k-grammar' === get_post_type() ) {
+		wp_enqueue_style(
+			'k2k-grammar-style',
+			plugins_url( 'css/grammar-admin.css', __DIR__ ),
+			array(),
+			filemtime( plugin_dir_path( __DIR__ ) . 'css/grammar-admin.css' )
+		);
+	}
+
+}
+add_action( 'admin_enqueue_scripts', 'jkl_grammar_enqueue_admin_scripts' );
 
 /**
  * Function to retrieve the subtitle.
@@ -111,9 +129,23 @@ function jkl_grammar_get_meta_data() {
 	$meta['adjectives']      = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );      // Adjective Conjugations (array).
 	$meta['verbs']           = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );           // Verb Conjugations (array).
 	$meta['nouns']           = get_post_meta( get_the_ID(), $meta_prefix . 'nouns', true );           // Noun Conjugations (array).
-	$meta['sentences']       = get_post_meta( get_the_ID(), $meta_prefix . 'sentences', true );       // Sentences (array).
 	$meta['exercises']       = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );       // Exercises (array).
 	$meta['related_grammar'] = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true ); // Related Grammar Points (array).
+
+	$sent_past = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_past', true );    // Sentences Past (array).
+	$sent_pres = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_present', true ); // Sentences Present (array).
+	$sent_futr = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_future', true );  // Sentences Future (array).
+
+	// Add sentences to our meta array - if we have any.
+	if ( '' !== $sent_past ) {
+		$meta['sentences']['past'] = $sent_past;
+	}
+	if ( '' !== $sent_pres ) {
+		$meta['sentences']['present'] = $sent_pres;
+	}
+	if ( '' !== $sent_futr ) {
+		$meta['sentences']['future'] = $sent_futr;
+	}
 
 	// Term Meta.
 	$term_prefix        = 'k2k_taxonomy_';

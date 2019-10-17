@@ -81,9 +81,9 @@ function k2k_register_new_terms_tenses() {
 			'description' => __( 'Future Tense', 'k2k' ),
 		),
 		'3' => array(
-			'name'        => __( 'Future Probable', 'k2k' ),
-			'slug'        => 'tense-future-probable',
-			'description' => __( 'Future - Probable (surmise)', 'k2k' ),
+			'name'        => __( 'Supposition', 'k2k' ),
+			'slug'        => 'tense-supposition',
+			'description' => __( 'Supposition', 'k2k' ),
 		),
 		'4' => array(
 			'name'        => __( 'Continuous', 'k2k' ),

@@ -85,31 +85,6 @@ get_header(); ?>
 							echo '<br />Usage: ';
 							echo get_the_term_list( $post->ID, 'k2k-usage', '<p>', ' ', '</p>' );
 							gaya_edit_post_link();
-
-						/*
-						?>
-						<strong><?php esc_html_e( 'Level', 'k2k' ); ?></strong>
-						<div class="grammar-level">
-							<?php echo get_the_term_list( $post->ID, 'k2k-level', '<p>', ' ', '</p>' ); ?>
-						</div>
-						<strong><?php esc_html_e( 'Book', 'k2k' ); ?></strong>
-						<div class="grammar-book">
-							<?php echo get_the_term_list( $post->ID, 'k2k-book', '<p>', ' ', '</p>' ); ?>
-						</div>
-						<strong><?php esc_html_e( 'Expressing', 'k2k' ); ?></strong>
-						<div class="grammar-expression tagcloud">
-							<?php echo get_the_term_list( $post->ID, 'k2k-expression', '<p>', ' ', '</p>' ); ?>
-						</div>
-						<strong><?php esc_html_e( 'Parts of Speech', 'k2k' ); ?></strong>
-						<div class="grammar-part tagcloud">
-							<?php echo get_the_term_list( $post->ID, 'k2k-part-of-speech', '<p>', ' ', '</p>' ); ?>
-						</div>
-						<strong><?php esc_html_e( 'Usage', 'k2k' ); ?></strong>
-						<div class="grammar-usage tagcloud">
-							<?php echo get_the_term_list( $post->ID, 'k2k-usage', '<p>', ' ', '</p>' ); ?>
-						</div>
-						<?php
-						*/
 						?>
 					</div><!-- .entry-meta -->
 					<?php
@@ -151,18 +126,32 @@ get_header(); ?>
 					if ( array_key_exists( 'sentences', $meta ) ) :
 						?>
 
-						<h3>Sentences</h3>
-						<div class="sentence-buttons">
-							<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+						<div class="sentences-header">
+							<h3>Sentences</h3>
+							<div class="sentence-buttons">
+								<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+							</div>
 						</div>
+
 						<ol class="sentences">
 							<?php
-							foreach ( $meta['sentences'] as $sentence ) {
-								echo '<li>';
-								echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
-								echo '<p class="ko">' . wp_kses_post( $sentence['k2k_grammar_meta_sentences_1'] ) . '</p>';
-								echo '<p class="en">' . wp_kses_post( $sentence['k2k_grammar_meta_sentences_2'] ) . '</p>';
-								echo '</li>';
+							$pattern     = '/[*_](.*?)[*_]/';
+							$replacement = '<strong>$1</strong>';
+							foreach ( $meta['sentences'] as $key => $array ) {
+
+								echo '<h4 class="sentence-tense-title">' . esc_html( ucwords( $key ) ) . ' Tense Examples</h4>';
+
+								foreach ( $array as $sentence ) {
+									?>
+
+									<li>
+										<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>
+										<p class="ko"><?php echo wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_grammar_meta_sentences_1'] ) ); ?></p>
+										<p class="en"><?php echo wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_grammar_meta_sentences_2'] ) ); ?></p>
+									</li>
+
+									<?php
+								}
 							}
 							?>
 						</ol>

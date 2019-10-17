@@ -31,26 +31,37 @@ function k2k_register_metabox_grammar() {
 			'tabs'         => array(
 				array(
 					'id'     => 'tab-info',
-					'icon'   => 'dashicons-editor-alignleft',
+					'icon'   => 'dashicons-info',
 					'title'  => esc_html__( 'Info', 'k2k' ),
 					'fields' => array(
 						$prefix . 'subtitle',
 						$prefix . 'level',
-						$prefix . 'part_of_speech',
-						$prefix . 'tenses',
+						$prefix . 'wysiwyg',
 						$prefix . 'expression',
 						$prefix . 'usage',
+						$prefix . 'book',
 					),
 				),
 				array(
 					'id'     => 'tab-conjugations',
 					'icon'   => 'dashicons-editor-quote',
-					'title'  => esc_html__( 'Details & Conjugations', 'k2k' ),
+					'title'  => esc_html__( 'Conjugations', 'k2k' ),
 					'fields' => array(
-						$prefix . 'wysiwyg',
+						$prefix . 'part_of_speech',
+						$prefix . 'tenses',
 						$prefix . 'adjectives',
 						$prefix . 'verbs',
 						$prefix . 'nouns',
+					),
+				),
+				array(
+					'id'     => 'tab-sentences',
+					'icon'   => 'dashicons-editor-alignleft',
+					'title'  => esc_html__( 'Sentences', 'k2k' ),
+					'fields' => array(
+						$prefix . 'sentences_past',
+						$prefix . 'sentences_present',
+						$prefix . 'sentences_future',
 					),
 				),
 				array(
@@ -58,9 +69,7 @@ function k2k_register_metabox_grammar() {
 					'icon'   => 'dashicons-nametag',
 					'title'  => esc_html__( 'More', 'k2k' ),
 					'fields' => array(
-						$prefix . 'sentences',
 						$prefix . 'exercises',
-						$prefix . 'book',
 						$prefix . 'related_grammar',
 					),
 				),
@@ -120,31 +129,7 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
-	 * Info - Usage Selection
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'     => esc_html__( 'Usage', 'k2k' ),
-			'id'       => $prefix . 'usage',
-			'type'     => 'taxonomy_multicheck_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-usage', // Taxonomy Slug.
-		)
-	);
-
-	/**
-	 * Info - Expression Type
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'     => esc_html__( 'Expression', 'k2k' ),
-			'id'       => $prefix . 'expression',
-			'type'     => 'taxonomy_radio', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-expression', // Taxonomy Slug.
-		)
-	);
-
-	/**
-	 * Conjugations - Wysiwyg
+	 * Details - Wysiwyg
 	 */
 	$k2k_metabox->add_field(
 		array(
@@ -161,32 +146,54 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
-	 * Grouping for sentences.
+	 * Info - Usage Selection
 	 */
-	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
-	$sentence_group = $k2k_metabox->add_field(
+	$usage_group = $k2k_metabox->add_field(
 		array(
-			'id'          => $prefix . 'sentences',
+			'id'          => $prefix . 'usage',
 			'type'        => 'group',
-			'description' => __( 'Example Sentences', 'k2k' ),
+			'repeatable' => false,
+			// 'description' => __( 'Adjective Conjugations', 'k2k' ),
 			'options'     => array(
-				'group_title'   => __( 'Sentence', 'k2k' ),
-				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
-				'remove_button' => __( 'Remove Sentence', 'k2k' ),
-				'sortable'      => true,
+				'group_title' => __( 'How to Use', 'k2k' ),
 			),
+		)
+	);
+	$k2k_metabox->add_group_field(
+		$usage_group,
+		array(
+			'name'     => esc_html__( 'Usage type', 'k2k' ),
+			'id'       => $prefix . 'usage_tax',
+			'type'     => 'taxonomy_multicheck_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
+			'taxonomy' => 'k2k-usage', // Taxonomy Slug.
+		)
+	);
+	$k2k_metabox->add_group_field(
+		$usage_group,
+		array(
+			'name' => esc_html__( 'Must use', 'k2k' ),
+			'id'   => $prefix . 'usage_mu',
+			'type' => 'text',
+		)
+	);
+	$k2k_metabox->add_group_field(
+		$usage_group,
+		array(
+			'name' => esc_html__( 'Prohibited', 'k2k' ),
+			'id'   => $prefix . 'usage_no',
+			'type' => 'text',
 		)
 	);
 
 	/**
-	 * Conjugations - Noun Usage
+	 * Info - Expression Type
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name' => esc_html__( 'Noun Usage', 'k2k' ),
-			// 'desc' => esc_html__( 'Leave blank if no conjugation.', 'k2k' ),
-			'id'   => $prefix . 'noun_usage',
-			'type' => 'text',
+			'name'     => esc_html__( 'Expression', 'k2k' ),
+			'id'       => $prefix . 'expression',
+			'type'     => 'taxonomy_radio', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
+			'taxonomy' => 'k2k-expression', // Taxonomy Slug.
 		)
 	);
 
@@ -198,49 +205,50 @@ function k2k_register_metabox_grammar() {
 		array(
 			'id'          => $prefix . 'adjectives',
 			'type'        => 'group',
+			'repeatable' => false,
 			// 'description' => __( 'Adjective Conjugations', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Adjective Conjugation', 'k2k' ),
 				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
 				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
 				'sortable'      => true,
+				'closed'        => true,
 			),
 		)
 	);
-	/** Conjugations - Adjective Tense */
+	/** Conjugations - Adjective Past */
 	$k2k_metabox->add_group_field(
 		$adjectives_group,
 		array(
-			'name'     => esc_html__( 'Tense', 'k2k' ),
-			'id'       => $prefix . 'adjective_tense',
-			'type'     => 'taxonomy_select',
-			'taxonomy' => 'k2k-tenses',
-		)
-	);
-	/** Conjugations - Adjective Usage */
-	$k2k_metabox->add_group_field(
-		$adjectives_group,
-		array(
-			'name' => esc_html__( 'Usage', 'k2k' ),
-			'id'   => $prefix . 'adjective_usage',
+			'name' => esc_html__( 'Past', 'k2k' ),
+			'id'   => $prefix . 'adjective_past',
 			'type' => 'text',
 		)
 	);
-	/** Conjugations - Adjective Example */
+	/** Conjugations - Adjective Present */
 	$k2k_metabox->add_group_field(
 		$adjectives_group,
 		array(
-			'name' => esc_html__( 'Example', 'k2k' ),
-			'id'   => $prefix . 'adjective_example',
+			'name' => esc_html__( 'Present', 'k2k' ),
+			'id'   => $prefix . 'adjective_present',
 			'type' => 'text',
 		)
 	);
-	/** Conjugations - Adjective Conjugation */
+	/** Conjugations - Adjective Future */
 	$k2k_metabox->add_group_field(
 		$adjectives_group,
 		array(
-			'name' => esc_html__( 'Conjugation', 'k2k' ),
-			'id'   => $prefix . 'adjective_conjugation',
+			'name' => esc_html__( 'Future', 'k2k' ),
+			'id'   => $prefix . 'adjective_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Adjective Supposition */
+	$k2k_metabox->add_group_field(
+		$adjectives_group,
+		array(
+			'name' => esc_html__( 'Supposition', 'k2k' ),
+			'id'   => $prefix . 'adjective_supposition',
 			'type' => 'text',
 		)
 	);
@@ -253,49 +261,50 @@ function k2k_register_metabox_grammar() {
 		array(
 			'id'          => $prefix . 'verbs',
 			'type'        => 'group',
+			'repeatable'  => false,
 			// 'description' => __( 'Verb Conjugations', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Verb Conjugation', 'k2k' ),
 				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
 				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
 				'sortable'      => true,
+				'closed'        => true,
 			),
 		)
 	);
-	/** Conjugations - verb Tense */
+	/** Conjugations - Verb Past */
 	$k2k_metabox->add_group_field(
 		$verbs_group,
 		array(
-			'name'     => esc_html__( 'Tense', 'k2k' ),
-			'id'       => $prefix . 'verb_tense',
-			'type'     => 'taxonomy_select',
-			'taxonomy' => 'k2k-tenses',
-		)
-	);
-	/** Conjugations - verb Usage */
-	$k2k_metabox->add_group_field(
-		$verbs_group,
-		array(
-			'name' => esc_html__( 'Usage', 'k2k' ),
-			'id'   => $prefix . 'verb_usage',
+			'name' => esc_html__( 'Past', 'k2k' ),
+			'id'   => $prefix . 'verb_past',
 			'type' => 'text',
 		)
 	);
-	/** Conjugations - verb Example */
+	/** Conjugations - Verb Present */
 	$k2k_metabox->add_group_field(
 		$verbs_group,
 		array(
-			'name' => esc_html__( 'Example', 'k2k' ),
-			'id'   => $prefix . 'verb_example',
+			'name' => esc_html__( 'Present', 'k2k' ),
+			'id'   => $prefix . 'verb_present',
 			'type' => 'text',
 		)
 	);
-	/** Conjugations - verb Conjugation */
+	/** Conjugations - Verb Future */
 	$k2k_metabox->add_group_field(
 		$verbs_group,
 		array(
-			'name' => esc_html__( 'Conjugation', 'k2k' ),
-			'id'   => $prefix . 'verb_conjugation',
+			'name' => esc_html__( 'Future', 'k2k' ),
+			'id'   => $prefix . 'verb_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Verb Supposition */
+	$k2k_metabox->add_group_field(
+		$verbs_group,
+		array(
+			'name' => esc_html__( 'Supposition', 'k2k' ),
+			'id'   => $prefix . 'verb_supposition',
 			'type' => 'text',
 		)
 	);
@@ -308,64 +317,66 @@ function k2k_register_metabox_grammar() {
 		array(
 			'id'          => $prefix . 'nouns',
 			'type'        => 'group',
+			'repeatable'  => false,
 			// 'description' => __( 'Noun Conjugations', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Noun Conjugation', 'k2k' ),
 				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
 				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
 				'sortable'      => true,
+				'closed'        => true,
 			),
 		)
 	);
-	/** Conjugations - noun Tense */
+	/** Conjugations - Noun Past */
 	$k2k_metabox->add_group_field(
 		$nouns_group,
 		array(
-			'name'     => esc_html__( 'Tense', 'k2k' ),
-			'id'       => $prefix . 'noun_tense',
-			'type'     => 'taxonomy_select',
-			'taxonomy' => 'k2k-tenses',
-		)
-	);
-	/** Conjugations - noun Usage */
-	$k2k_metabox->add_group_field(
-		$nouns_group,
-		array(
-			'name' => esc_html__( 'Usage', 'k2k' ),
-			'id'   => $prefix . 'noun_usage',
+			'name' => esc_html__( 'Past', 'k2k' ),
+			'id'   => $prefix . 'noun_past',
 			'type' => 'text',
 		)
 	);
-	/** Conjugations - noun Example */
+	/** Conjugations - Noun Present */
 	$k2k_metabox->add_group_field(
 		$nouns_group,
 		array(
-			'name' => esc_html__( 'Example', 'k2k' ),
-			'id'   => $prefix . 'noun_example',
+			'name' => esc_html__( 'Present', 'k2k' ),
+			'id'   => $prefix . 'noun_present',
 			'type' => 'text',
 		)
 	);
-	/** Conjugations - noun Conjugation */
+	/** Conjugations - Noun Future */
 	$k2k_metabox->add_group_field(
 		$nouns_group,
 		array(
-			'name' => esc_html__( 'Conjugation', 'k2k' ),
-			'id'   => $prefix . 'noun_conjugation',
+			'name' => esc_html__( 'Future', 'k2k' ),
+			'id'   => $prefix . 'noun_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Noun Supposition */
+	$k2k_metabox->add_group_field(
+		$nouns_group,
+		array(
+			'name' => esc_html__( 'Supposition', 'k2k' ),
+			'id'   => $prefix . 'noun_supposition',
 			'type' => 'text',
 		)
 	);
 
 	/**
-	 * Repeating text field for sentences.
+	 * Repeating text field for PAST TENSE sentences.
 	 */
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
-	$sentence_group = $k2k_metabox->add_field(
+	$sentence_past_group = $k2k_metabox->add_field(
 		array(
-			'id'          => $prefix . 'sentences',
+			'id'          => $prefix . 'sentences_past',
 			'type'        => 'group',
-			'description' => __( 'Example Sentences. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;', 'k2k' ),
+			'name'        => __( 'Example Sentences.', 'k2k' ),
+			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
 			'options'     => array(
-				'group_title'   => __( 'Example Sentence', 'k2k' ),
+				'group_title'   => __( 'Past Tense Sentence', 'k2k' ),
 				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
 				'remove_button' => __( 'Remove Sentence', 'k2k' ),
 				'sortable'      => true,
@@ -374,7 +385,7 @@ function k2k_register_metabox_grammar() {
 	);
 
 	$k2k_metabox->add_group_field(
-		$sentence_group,
+		$sentence_past_group,
 		array(
 			'id'              => $prefix . 'sentences_1',
 			'name'            => __( 'Original (KO)', 'k2k' ),
@@ -384,7 +395,83 @@ function k2k_register_metabox_grammar() {
 	);
 
 	$k2k_metabox->add_group_field(
-		$sentence_group,
+		$sentence_past_group,
+		array(
+			'id'              => $prefix . 'sentences_2',
+			'name'            => __( 'Translation (EN)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
+		)
+	);
+
+	/**
+	 * Repeating text field for PRESENT TENSE sentences.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$sentence_present_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'sentences_present',
+			'type'        => 'group',
+			// 'description' => __( 'Example Sentences.<br />Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Present Tense Sentence', 'k2k' ),
+				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
+				'remove_button' => __( 'Remove Sentence', 'k2k' ),
+				'sortable'      => true,
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$sentence_present_group,
+		array(
+			'id'              => $prefix . 'sentences_1',
+			'name'            => __( 'Original (KO)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$sentence_present_group,
+		array(
+			'id'              => $prefix . 'sentences_2',
+			'name'            => __( 'Translation (EN)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
+		)
+	);
+
+	/**
+	 * Repeating text field for FUTURE TENSE sentences.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$sentence_future_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'sentences_future',
+			'type'        => 'group',
+			// 'description' => __( 'Example Sentences.<br />Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Future Tense Sentence', 'k2k' ),
+				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
+				'remove_button' => __( 'Remove Sentence', 'k2k' ),
+				'sortable'      => true,
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$sentence_future_group,
+		array(
+			'id'              => $prefix . 'sentences_1',
+			'name'            => __( 'Original (KO)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$sentence_future_group,
 		array(
 			'id'              => $prefix . 'sentences_2',
 			'name'            => __( 'Translation (EN)', 'k2k' ),
@@ -401,7 +488,8 @@ function k2k_register_metabox_grammar() {
 		array(
 			'id'          => $prefix . 'exercises',
 			'type'        => 'group',
-			'description' => __( 'Exercises. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;', 'k2k' ),
+			'name'        => __( 'Exercises.', 'k2k' ),
+			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Exercise', 'k2k' ),
 				'add_button'    => __( 'Add Another Exercise', 'k2k' ),
@@ -426,7 +514,7 @@ function k2k_register_metabox_grammar() {
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'     => esc_html__( 'Book', 'k2k' ),
+			'name'     => esc_html__( 'Found in these Books', 'k2k' ),
 			'id'       => $prefix . 'book',
 			'type'     => 'taxonomy_multicheck_hierarchical', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
 			'taxonomy' => 'k2k-book', // Taxonomy Slug.
@@ -438,11 +526,37 @@ function k2k_register_metabox_grammar() {
 	 *
 	 * @link https://github.com/CMB2/cmb2-attached-posts
 	 */
-	$k2k_metabox->add_field(
+	$related_grammar = $k2k_metabox->add_field(
+		array(
+			'id'         => $prefix . 'related_grammar',
+			// 'name' => __( 'Related', 'k2k' ),
+			'type'       => 'group',
+			'repeatable' => false,
+			'options'    => array(
+				'group_title' => __( 'Related Grammar', 'k2k' ),
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$related_grammar,
+		array(
+			'id'   => $prefix . 'related_needs_link',
+			'name' => __( 'Needs link', 'k2k' ),
+			'type' => 'checkbox',
+			'column' => array(
+				'position' => 2,
+				'name'     => __( 'Needs Link', 'k2k' ),
+			),
+		)
+	);
+
+	$k2k_metabox->add_group_field(
+		$related_grammar,
 		array(
 			'name'    => esc_html__( 'Related Grammar Points', 'k2k' ),
 			'desc'    => __( 'Drag posts from the left column to the right column to attach them to this page.<br />You may rearrange the order of the posts in the right column by dragging and dropping.', 'k2k' ),
-			'id'      => $prefix . 'related_grammar',
+			'id'      => $prefix . 'related_grammar_points',
 			'type'    => 'custom_attached_posts',
 			'options' => array(
 				'show_thumbnails' => true,
