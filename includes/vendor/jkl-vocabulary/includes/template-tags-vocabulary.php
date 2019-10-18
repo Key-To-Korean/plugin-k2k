@@ -47,8 +47,8 @@ function get_linked_terms( $meta ) {
 
 	foreach ( $meta as $item ) {
 		$post    = get_post( $item );
-		$output .= '<li>';
-		$output .= '<a class="btn button" rel="tag" href="' . get_the_permalink( $post->ID ) . '">' . $post->post_title . '</a>';
+		$output .= '<li class="related-term linked">';
+		$output .= '<a class="tag-button" rel="tag" href="' . get_the_permalink( $post->ID ) . '">' . $post->post_title . '</a>';
 		$output .= '</li>';
 	}
 
@@ -70,7 +70,7 @@ function get_unlinked_terms( $meta ) {
 
 		$items = explode( ', ', $meta );
 		foreach ( $items as $item ) {
-			$output .= '<li>' . $item . '</li>';
+			$output .= '<li class="related-term unlinked">' . $item . '</li>';
 		}
 
 		return $output;

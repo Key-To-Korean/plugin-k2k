@@ -144,6 +144,7 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   padding-left: 0;
   padding-right: 0;
   list-style: none;
+  margin-bottom: 1rem;
 }
 
 .related-terms li {
@@ -151,8 +152,30 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   margin-right: 0.5rem;
 }
 
-.related-terms li:not(.related-terms-title) {
+.related-terms li:not(.related-terms-title),
+.post-part-of-speech {
   background: rgba(135, 149, 161, .2);
   padding: 0 10px;
   border-radius: 30px;
+  display: inline-block;
+}
+
+.related-terms li.linked {
+  padding: 0;
+  border: 1px solid #a9bac9;
+  /* background: white; */
+  opacity: 0.7;
+}
+
+.linked a {
+  padding: 0 10px;
+  border-bottom: none !important;
+  background: transparent;
+  color: #32373c;
+  color: var(--gaya-grey);
+}
+
+.linked a:visited {
+  color: #32373c;
+  color: var(--gaya-grey);
 }

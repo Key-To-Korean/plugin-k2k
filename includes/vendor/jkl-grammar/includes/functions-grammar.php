@@ -191,12 +191,14 @@ function jkl_grammar_get_meta_data() {
 	}
 
 	// Additional Usage meta.
-	$meta_usage = get_post_meta( get_the_ID(), $meta_prefix . 'usage', true )[0];
-	if ( $meta_usage[ $meta_prefix . 'usage_mu' ] ) {
-		$meta['usage']['must_use'] = $meta_usage[ $meta_prefix . 'usage_mu' ];
-	}
-	if ( $meta_usage[ $meta_prefix . 'usage_no' ] ) {
-		$meta['usage']['prohibited'] = $meta_usage[ $meta_prefix . 'usage_no' ];
+	$meta_usage = get_post_meta( get_the_ID(), $meta_prefix . 'usage', true );
+	if ( '' !== $meta_usage ) {
+		if ( $meta_usage[0][ $meta_prefix . 'usage_mu' ] ) {
+			$meta['usage']['must_use'] = $meta_usage[0][ $meta_prefix . 'usage_mu' ];
+		}
+		if ( $meta_usage[0][ $meta_prefix . 'usage_no' ] ) {
+			$meta['usage']['prohibited'] = $meta_usage[0][ $meta_prefix . 'usage_no' ];
+		}
 	}
 
 	return array_filter( $meta ); // Use array_filter() to remove null values.

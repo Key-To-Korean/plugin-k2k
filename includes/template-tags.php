@@ -137,12 +137,15 @@ function get_custom_meta( $meta_key ) {
 function custom_meta_button( $type, $taxonomy, $multiple = false ) {
 
 	$meta       = get_all_the_post_meta( array( $taxonomy ) );
-	$classnames = 'button' === $type ? 'btn button' : '';
+	$classnames = 'button' === $type ? 'btn button' : 'k2k-part-of-speech' === $taxonomy ? 'tag-button' : '';
+	$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( '_term_color', $meta['post'][ $taxonomy ] ) )
+									? 'background: ' . $meta['post'][ $taxonomy ]['_term_color'] : '';
 
 	if ( array_key_exists( $taxonomy, $meta['post'] ) ) {
 
 		$output  = '<a class="' . $classnames . '" title="' . $meta['post'][ $taxonomy ]['_name'];
 		$output .= '" href="' . home_url() . '/' . substr( $taxonomy, 4 ) . '/' . $meta['post'][ $taxonomy ]['_slug'];
+		$output .= '" style="' . $style;
 		$output .= '">';
 
 		if ( array_key_exists( '_translation', $meta['post'][ $taxonomy ] ) ) {

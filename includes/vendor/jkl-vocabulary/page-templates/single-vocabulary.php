@@ -58,9 +58,12 @@ get_header(); ?>
 						endif;
 
 						if ( array_key_exists( 'subtitle', $meta ) ) {
-							echo '<p class="post-subtitle translation">' . esc_html( $meta['subtitle'] ) . ' (';
-							custom_meta_button( 'link', 'k2k-part-of-speech' );
-							echo ')</p>';
+							?>
+							<p class="post-subtitle translation"><?php echo esc_html( $meta['subtitle'] ); ?></p>
+							<p class="post-part-of-speech">
+								<?php custom_meta_button( 'link', 'k2k-part-of-speech' ); ?>
+							</p>
+							<?php
 						}
 
 						gaya_edit_post_link();
@@ -112,20 +115,28 @@ get_header(); ?>
 							<div class="sentences-header">
 								<h3><?php esc_html_e( 'Sentences', 'k2k' ); ?></h3>
 								<div class="sentence-buttons">
-									<button class="expand-all" title="Show all English sentences"><i class="fas fa-caret-down"></i></button>
+									<button class="expand-all" title="<?php esc_html_e( 'Show all English sentences', 'k2k' ); ?>"><i class="fas fa-caret-down"></i></button>
 								</div>
 							</div>
 
 							<ol class="sentences">
 								<?php
-								$pattern     = '/[*_](.*?)[*_]/';
-								$replacement = '<strong>$1</strong>';
+								$italic_pattern     = '/\*\*(.*?)\*\*/';
+								$italic_replacement = '<em>$1</em>';
+								$bold_pattern       = '/[*_](.*?)[*_]/';
+								$bold_replacement   = '<strong>$1</strong>';
 								foreach ( $meta['sentences'] as $sentence ) {
-									echo '<li>';
-									echo '<button class="expand" title="Show English sentence"><i class="fas fa-caret-down"></i></button>';
-									echo '<p class="ko">' . wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_vocab_meta_sentences_1'] ) ) . '</p>';
-									echo '<p class="en">' . wp_kses_post( preg_replace( $pattern, $replacement, $sentence['k2k_vocab_meta_sentences_2'] ) ) . '</p>';
-									echo '</li>';
+									$italicize_ko = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_vocab_meta_sentences_1'] );
+									$italicize_en = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_vocab_meta_sentences_2'] );
+									?>
+
+									<li class="sentence">
+										<button class="expand" title="<?php esc_html_e( 'Show English sentence', 'k2k' ); ?>"><i class="fas fa-caret-down"></i></button>
+										<p class="ko"><?php echo wp_kses_post( preg_replace( $bold_pattern, $bold_replacement, $italicize_ko ) ); ?></p>
+										<p class="en"><?php echo wp_kses_post( preg_replace( $bold_pattern, $bold_replacement, $italicize_en ) ); ?></p>
+									</li>
+
+									<?php
 								}
 								?>
 							</ol>
