@@ -90,20 +90,26 @@ function k2k_index_header() {
 /**
  * Output HTML stars based on Difficulty Level.
  */
-function get_level_stars() {
+function display_level_stars() {
 
 	$level = get_the_terms( get_the_ID(), 'k2k-level' )[0]; // Translation, Image.
 	$stars = '';
 
 	switch ( $level->slug ) {
 		case 'level-advanced':
-			$stars = '<div class="level-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i></div>';
+			$stars  = '<div class="level-stars" title="' . esc_html__( 'Advanced Level', 'k2k' ) . '">';
+			$stars .= '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
+			$stars .= '</div>';
 			break;
 		case 'level-intermediate':
-			$stars = '<div class="level-stars"><i class="fas fa-star"></i><i class="fas fa-star"></i></div>';
+			$stars  = '<div class="level-stars" title="' . esc_html__( 'Intermediate Level', 'k2k' ) . '">';
+			$stars .= '<i class="fas fa-star"></i><i class="fas fa-star"></i>';
+			$stars .= '</div>';
 			break;
 		case 'level-beginner':
-			$stars = '<div class="level-stars"><i class="fas fa-star"></i></div>';
+			$stars  = '<div class="level-stars" title="' . esc_html__( 'Beginner Level', 'k2k' ) . '">';
+			$stars .= '<i class="fas fa-star"></i>';
+			$stars .= '</div>';
 			break;
 		default:
 			$stars = '';
@@ -122,6 +128,7 @@ function get_level_stars() {
  */
 function get_custom_meta( $meta_key ) {
 
+	// Returns the first (single) meta key.
 	$meta = get_post_meta( get_the_ID(), $meta_key, true );
 	return $meta;
 
@@ -130,36 +137,88 @@ function get_custom_meta( $meta_key ) {
 /**
  * Create a button (or link) for the custom meta value.
  *
- * @param string $type Whether we want a 'button' or 'link' (default).
+ * @param array  $meta The meta for the post.
  * @param string $taxonomy The taxonomy we are querying for a value.
- * @param bool   $multiple Whether or not to output more than one item.
+ * @param string $type Whether we want a 'button' or 'link' (default).
+ * @param bool   $single Whether or not to output a single (the first) item.
  */
-function custom_meta_button( $type, $taxonomy, $multiple = false ) {
+function display_meta_buttons( $meta, $taxonomy, $type = 'link', $single = false ) {
 
-	$meta       = get_all_the_post_meta( array( $taxonomy ) );
-	$classnames = 'button' === $type ? 'btn button' : 'k2k-part-of-speech' === $taxonomy ? 'tag-button' : '';
-	$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( '_term_color', $meta['post'][ $taxonomy ] ) )
-									? 'background: ' . $meta['post'][ $taxonomy ]['_term_color'] : '';
+	$taxonomy = substr( $taxonomy, 4 );
+	$count    = 0;
+	$tax_term = $meta[ $taxonomy ][ $count ];
 
-	if ( array_key_exists( $taxonomy, $meta['post'] ) ) {
-
-		$output  = '<a class="' . $classnames . '" title="' . $meta['post'][ $taxonomy ]['_name'];
-		$output .= '" href="' . home_url() . '/' . substr( $taxonomy, 4 ) . '/' . $meta['post'][ $taxonomy ]['_slug'];
-		$output .= '" style="' . $style;
-		$output .= '">';
-
-		if ( array_key_exists( '_translation', $meta['post'][ $taxonomy ] ) ) {
-			$output .= $meta['post'][ $taxonomy ]['_translation'];
-		} else {
-			$output .= $meta['post'][ $taxonomy ]['_name'];
-		}
-
-		$output .= '</a>';
-
-		echo wp_kses_post( $output );
-
+	if ( ! array_key_exists( $taxonomy, $meta ) ) {
+		return;
 	}
 
+	// If there is only one item.
+	if ( $single || count( $meta[ $taxonomy ] ) === 1 ) {
+
+		$classnames = 'button' === $type ? 'btn button' : 'k2k-part-of-speech' === $taxonomy ? 'tag-button' : '';
+		$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
+									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
+
+		display_meta_item(
+			array(
+				'taxonomy'    => $taxonomy,
+				'classnames'  => $classnames,
+				'style'       => $style,
+				'name'        => $tax_term['name'],
+				'slug'        => $tax_term['slug'],
+				'translation' => array_key_exists( 'translation', $tax_term )
+					? $tax_term['translation']
+					: $tax_term['name'],
+			)
+		);
+
+	} else {
+
+		foreach ( $meta[ $taxonomy ] as $item ) {
+
+			// Ignore anything that's not an array.
+			if ( ! is_array( $item ) ) {
+				continue;
+			}
+
+			$classnames = 'button' === $type ? 'btn button' : 'part-of-speech' === $taxonomy ? 'tag-button' : '';
+			$style      = ( 'part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
+									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
+
+			display_meta_item(
+				array(
+					'taxonomy'    => $taxonomy,
+					'classnames'  => $classnames,
+					'style'       => $style,
+					'name'        => $item['name'],
+					'slug'        => $item['slug'],
+					'translation' => array_key_exists( 'translation', $item )
+						? $item['translation']
+						: $item['name'],
+				)
+			);
+
+			$count++;
+
+		}
+	}
+
+}
+
+/**
+ * Function to display a single taxonomy item with special styles, or the translation.
+ *
+ * @param array $args All the relevant data needed to build and output the taxonomy item.
+ */
+function display_meta_item( $args ) {
+	$output  = '<li><a class="' . $args['classnames'] . '" title="' . $args['name'];
+	$output .= '" href="' . home_url() . '/' . substr( $args['taxonomy'], 4 ) . '/' . $args['slug'];
+	$output .= '" style="' . $args['style'];
+	$output .= '">';
+	$output .= $args['translation'];
+	$output .= '</a></li>';
+
+	echo wp_kses_post( $output );
 }
 
 /**

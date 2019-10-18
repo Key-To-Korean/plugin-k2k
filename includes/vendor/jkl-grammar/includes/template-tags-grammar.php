@@ -70,6 +70,86 @@ function display_grammar_thumbnail() {
 }
 
 /**
+ * Function to display the entry meta for the Grammar Post.
+ *
+ * @param array $meta The post meta.
+ */
+function display_grammar_entry_meta( $meta ) {
+
+	// Level.
+	if ( array_key_exists( 'level', $meta ) ) {
+		esc_html_e( 'Level: ', 'k2k' );
+		display_meta_buttons( $meta, 'k2k-level' );
+	}
+
+	// Book.
+	if ( array_key_exists( 'book', $meta ) ) {
+		esc_html_e( 'Book: ', 'k2k' );
+		display_meta_buttons( $meta, 'k2k-book' );
+	}
+
+	// Expression.
+	if ( array_key_exists( 'expression', $meta ) ) {
+		esc_html_e( 'Expressing: ', 'k2k' );
+		display_meta_buttons( $meta, 'k2k-expression' );
+	}
+
+	// Part of Speech.
+	if ( array_key_exists( 'part-of-speech', $meta ) ) {
+		esc_html_e( 'Parts of Speech: ', 'k2k' );
+		display_meta_buttons( $meta, 'k2k-part-of-speech' );
+	}
+
+	// Usage.
+	if ( array_key_exists( 'usage', $meta ) ) {
+		esc_html_e( 'Usage: ', 'k2k' );
+		display_meta_buttons( $meta, 'k2k-usage' );
+	}
+
+	// Post Edit Link.
+	gaya_edit_post_link();
+
+}
+
+/**
+ * Display a broken link icon if there is a related grammar point that needs linked.
+ *
+ * @param array $meta The post meta.
+ */
+function display_grammar_needs_link( $meta ) {
+	if ( array_key_exists( 'related_grammar', $meta ) && array_key_exists( 'k2k_grammar_meta_related_needs_link', $meta['related_grammar'][0] ) ) {
+		echo ' <i class="fas fa-unlink" title="' . esc_attr( 'Related grammar point needs link', 'k2k' ) . '"></i>';
+	}
+}
+
+/**
+ * Display a list of related grammar points if there are any.
+ *
+ * @param array $meta The post meta.
+ */
+function display_grammar_related_points( $meta ) {
+
+	if ( array_key_exists( 'related_grammar', $meta ) && array_key_exists( 'k2k_grammar_meta_related_grammar_points', $meta['related_grammar'][0] ) ) {
+		?>
+		<div class="entry-meta">
+			<ul class="related-grammar">
+				<li class="related-grammar-title"><?php esc_html_e( 'Related Grammar:', 'k2k' ); ?></li>
+				<?php
+				foreach ( $meta['related_grammar'][0]['k2k_grammar_meta_related_grammar_points'] as $related ) {
+					$related_post = get_post( $related );
+					echo '<li class="related-term linked">';
+					echo '<a class="tag-button" rel="tag" href="' . esc_url( get_the_permalink( $related_post->ID ) ) . '">' . esc_html( $related_post->post_title ) . '</a>';
+					echo '</li>';
+				}
+				?>
+			</ul>
+		</div>
+		<?php
+	}
+
+}
+
+/**
  * Function to construct a simple table with verb conjugations.
  *
  * @param array $meta Array containing post meta data.
@@ -200,4 +280,113 @@ function display_grammar_usage_rules( $meta ) {
 
 	echo '</div>';
 
+}
+
+/**
+ * Function to output the sentences related to the post.
+ *
+ * @param array $meta The post meta data.
+ */
+function display_grammar_sentences( $meta ) {
+	?>
+
+	<!-- Sentences -->
+	<div class="sentences-header">
+		<h3><?php esc_html_e( 'Sentence Examples', 'k2k' ); ?></h3>
+		<div class="sentence-buttons">
+			<button class="expand-all" title="<?php esc_html_e( 'Show all English sentences', 'k2k' ); ?>">
+				<i class="fas fa-caret-down"></i>
+			</button>
+		</div>
+	</div>
+
+	<ol class="sentences">
+		<?php
+		// Swap out words surrounded in ** with italic markup.
+		$italic_pattern     = '/\*\*(.*?)\*\*/';
+		$italic_replacement = '<em>$1</em>';
+
+		// Swap out words surrounded in _ or * with bold markup.
+		$bold_pattern     = '/[*_](.*?)[*_]/';
+		$bold_replacement = '<strong>$1</strong>';
+
+		// Surround the part of speech (V / A / N) with special markup.
+		$part_of_speech_pattern     = '/^([VANvan]:)/';
+		$part_of_speech_replacement = '<span class="part-of-speech">$1</span>';
+
+		foreach ( $meta['sentences'] as $key => $array ) {
+			?>
+
+			<h4 class="sentence-tense-title"><?php echo esc_html( ucwords( $key ) ) . esc_html__( ' Tense', 'k2k' ); ?></h4>
+
+			<?php
+			foreach ( $array as $sentence ) {
+				// Add <em> tags.
+				$italicize_ko = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_grammar_meta_sentences_1'] );
+				$italicize_en = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_grammar_meta_sentences_2'] );
+
+				// Add <strong> tags.
+				$bold_ko = preg_replace( $bold_pattern, $bold_replacement, $italicize_ko );
+				$bold_en = preg_replace( $bold_pattern, $bold_replacement, $italicize_en );
+
+				// Add <span> tags.
+				$ps_ko = preg_replace( $part_of_speech_pattern, $part_of_speech_replacement, $bold_ko );
+				$ps_en = preg_replace( $part_of_speech_pattern, $part_of_speech_replacement, $bold_en );
+				?>
+
+				<li class="sentence">
+					<button class="expand" title="<?php esc_html_e( 'Show English sentence', 'k2k' ); ?>">
+						<i class="fas fa-caret-down"></i>
+					</button>
+					<p class="ko"><?php echo wp_kses_post( str_replace( ':', '', $ps_ko ) ); ?></p>
+					<p class="en"><?php echo wp_kses_post( str_replace( ':', '', $ps_en ) ); ?></p>
+				</li>
+
+				<?php
+			}
+		}
+		?>
+	</ol>
+
+	<?php
+}
+
+/**
+ * Function to output the exercises related to the post.
+ *
+ * @param array $meta The post meta data.
+ */
+function display_grammar_exercises( $meta ) {
+	?>
+
+	<footer class="entry-footer exercises-box">
+
+		<h3><?php esc_html_e( 'Practice Exercises', 'k2k' ); ?></h3>
+		<ol class="practice-exercises">
+
+			<?php
+			// Replace ... in the middle of the exercise with a fill-in-the-blank.
+			$pattern     = '/\s\.{3}\s/';
+			$replacement = '<span class="fill-in-the-blank">$1</span>';
+
+			// Surround the keyword in () with <em> tags.
+			$word_pattern     = '/\((.*?)\)/';
+			$word_replacement = '<em class="keyword">($1)</em>';
+
+			foreach ( $meta['exercises'] as $exercise ) {
+				$words  = preg_replace( $word_pattern, $word_replacement, $exercise );
+				$blanks = preg_replace( $pattern, $replacement, $words );
+
+				echo '<li class="exercise">' . wp_kses_post( $blanks ) . '</li>';
+
+			}
+			?>
+
+		</ol>
+
+		<?php gaya_edit_post_link(); ?>
+
+	</footer>
+
+	<?php
 }

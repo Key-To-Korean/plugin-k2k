@@ -46,7 +46,7 @@ get_header(); ?>
 					<div class="entry-meta">
 
 						<?php
-						get_level_stars();
+						display_level_stars();
 						display_vocabulary_top_meta( $meta );
 
 						gaya_post_thumbnail();

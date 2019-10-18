@@ -53,7 +53,7 @@ get_header(); ?>
 					<header class="entry-header">
 						<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
 							<?php
-								get_level_stars();
+								display_level_stars();
 								the_title( '<h2 class="entry-title">', '</h2>' );
 								echo '<span class="entry-subtitle">' . esc_html( get_vocab_subtitle() ) . '</span>';
 							?>
