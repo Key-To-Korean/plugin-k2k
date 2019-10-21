@@ -246,3 +246,47 @@ function jkl_has_related_grammar_meta( $meta = [] ) {
 		|| array_key_exists( 'hanja', $meta );
 
 }
+
+/**
+ * Function to retrieve the color assigned for a taxonomy term.
+ *
+ * @return array An array of color strings distinguished by term name.
+ */
+function get_part_of_speech_term_color() {
+
+	$parts_of_speech = array();
+	$tax_terms       = get_the_terms( get_the_ID(), 'k2k-part-of-speech' ); // Translation, Image, Weblink, or Term Color.
+
+	// If there are no terms saved for this taxonomy, move on to the next one.
+	if ( ! $tax_terms ) {
+		return 'No colors found';
+	}
+
+	foreach ( $tax_terms as $tax_term ) {
+		$parts_of_speech[ strtolower( $tax_term->name ) ] = get_term_meta( $tax_term->term_id, 'k2k_taxonomy_term_color', true );
+	}
+
+	return $parts_of_speech;
+
+}
+
+/**
+ * Function to set part of speech styles on a page.
+ */
+function set_part_of_speech_term_colors() {
+
+	$colors = get_part_of_speech_term_color();
+
+	if ( is_singular( 'k2k-grammar' ) && ! empty( $colors ) ) {
+		?>
+		<style>
+			.part-of-speech { color: #fff; }
+			.part-of-speech.adjective { background: <?php echo esc_attr( $colors['adjective'] ); ?> }
+			.part-of-speech.verb { background: <?php echo esc_attr( $colors['verb'] ); ?> }
+			.part-of-speech.noun { background: <?php echo esc_attr( $colors['noun'] ); ?> }
+		</style>
+		<?php
+	}
+
+}
+add_action( 'wp_head', 'set_part_of_speech_term_colors' );

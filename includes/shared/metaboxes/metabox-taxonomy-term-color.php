@@ -24,7 +24,7 @@ function k2k_register_taxonomy_term_color_metabox() {
 	 */
 	$k2k_tax_term = new_cmb2_box(
 		array(
-			'id'           => $prefix . 'term_color',
+			'id'           => $prefix . 'term_color_box',
 			'title'        => esc_html__( 'Term Color', 'k2k' ), // Doesn't output for term boxes.
 			'object_types' => array( 'term' ), // Tells CMB2 to use term_meta vs post_meta.
 			'taxonomies'   => array( 'k2k-level', 'k2k-part-of-speech', 'k2k-tenses' ), // Tells CMB2 which taxonomies should have these fields.
@@ -36,7 +36,7 @@ function k2k_register_taxonomy_term_color_metabox() {
 		array(
 			'name'       => esc_html__( 'Term Color', 'k2k' ),
 			'desc'       => esc_html__( 'Select the color for this Term.', 'k2k' ),
-			'id'         => $prefix . 'level_color',
+			'id'         => $prefix . 'term_color',
 			'type'       => 'colorpicker',
 			'default'    => '#ffffff',
 			'column'     => array( 'position' => 3 ),

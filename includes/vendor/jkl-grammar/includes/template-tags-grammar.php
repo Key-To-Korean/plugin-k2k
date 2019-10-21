@@ -178,11 +178,12 @@ function build_conjugation_table( $meta ) {
 
 	$count = 0;
 	foreach ( $conjugations as $part_of_speech ) :
+		$classname = 's' === substr( $ps_keys[ $count ], -1 ) ? substr( $ps_keys[ $count ], 0, -1 ) : $ps_keys[ $count ];
 		?>
 
 		<tr class="part-of-speech-conjugation">
 			<th rowspan="<?php echo count( $part_of_speech[0] ); ?>" class="<?php echo esc_attr( $ps_keys[ $count ] ); ?>">
-				<span class="part-of-speech" title="<?php echo esc_html( ucwords( $ps_keys[ $count ] ) ); ?>">
+				<span class="part-of-speech <?php echo esc_attr( $classname ); ?>" title="<?php echo esc_html( ucwords( $ps_keys[ $count ] ) ); ?>">
 					<?php echo esc_html( ucwords( substr( $ps_keys[ $count ], 0, 1 ) ) ); ?>
 				</span>
 			</th>
@@ -311,8 +312,12 @@ function display_grammar_sentences( $meta ) {
 		$bold_replacement = '<strong>$1</strong>';
 
 		// Surround the part of speech (V / A / N) with special markup.
-		$part_of_speech_pattern     = '/^([VANvan]:)/';
-		$part_of_speech_replacement = '<span class="part-of-speech">$1</span>';
+		$part_of_speech_a      = '/^([Aa]:)/';
+		$part_of_speech_v      = '/^([Vv]:)/';
+		$part_of_speech_n      = '/^([Nn]:)/';
+		$part_of_speech_adj_r  = '<span class="part-of-speech adjective">$1</span>';
+		$part_of_speech_verb_r = '<span class="part-of-speech verb">$1</span>';
+		$part_of_speech_noun_r = '<span class="part-of-speech noun">$1</span>';
 
 		foreach ( $meta['sentences'] as $key => $array ) {
 			?>
@@ -330,8 +335,12 @@ function display_grammar_sentences( $meta ) {
 				$bold_en = preg_replace( $bold_pattern, $bold_replacement, $italicize_en );
 
 				// Add <span> tags.
-				$ps_ko = preg_replace( $part_of_speech_pattern, $part_of_speech_replacement, $bold_ko );
-				$ps_en = preg_replace( $part_of_speech_pattern, $part_of_speech_replacement, $bold_en );
+				$ps_ko = preg_replace( $part_of_speech_a, $part_of_speech_adj_r, $bold_ko );
+				$ps_en = preg_replace( $part_of_speech_a, $part_of_speech_adj_r, $bold_en );
+				$ps_ko = preg_replace( $part_of_speech_v, $part_of_speech_verb_r, $ps_ko );
+				$ps_en = preg_replace( $part_of_speech_v, $part_of_speech_verb_r, $ps_en );
+				$ps_ko = preg_replace( $part_of_speech_n, $part_of_speech_noun_r, $ps_ko );
+				$ps_en = preg_replace( $part_of_speech_n, $part_of_speech_noun_r, $ps_en );
 				?>
 
 				<li class="sentence">
