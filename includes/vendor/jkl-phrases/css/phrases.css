@@ -1,0 +1,81 @@
+/* Archive Pages */
+.archive-posts-grid .entry-title {
+	font-size: 1.2rem !important;
+	margin-bottom: 0;
+}
+
+.archive-titles h2,
+.archive-titles p {
+	position: static;
+	font-size: 1rem;
+	margin: 0;
+	line-height: 1.8;
+}
+
+.archive-titles p {
+	font-size: 80%;
+}
+
+.archive-titles p:before {
+	content: 'Literally: ';
+}
+
+/* Single Pages */
+.entry-header {
+	position: relative;
+}
+
+.entry-meta,
+.entry-content {
+	grid-column: span 2;
+	position: relative;
+}
+
+.entry-meta {
+	display: flex;
+	align-items: center;
+	border-top: 1px solid gainsboro;
+	padding-top: 0.5rem;
+	margin-top: 2rem !important;
+}
+
+.entry-meta .k2k-taxonomy-item {
+	margin-bottom: 0;
+}
+
+.entry-titles {
+	display: flex;
+	align-items: top;
+	position: relative;
+}
+
+.entry-subtitle {
+	margin-left: 1rem;
+	margin-top: 1rem;
+	margin-bottom: 0;
+	opacity: 0.7;
+}
+
+.entry-subtitle:before {
+	content: '\201C';
+}
+
+.entry-subtitle:after {
+	content: '\201D';
+}
+
+.entry-definition {
+	position: absolute;
+	top: 3.5rem;
+	font-size: 1rem;
+	color: #a9bac9;
+	font-style: italic;
+}
+
+.content-header {
+	margin-top: 2rem;
+}
+
+.k2k-phrases .entry-content {
+	margin-top: 0;
+}

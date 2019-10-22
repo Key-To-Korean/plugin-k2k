@@ -44,9 +44,8 @@ get_header(); ?>
 
 					<?php $part_of_speech = get_part_of_speech(); ?>
 
-					<a class="part-of-speech-circle" style="background:
-						<?php echo $part_of_speech['color'] ? esc_attr( $part_of_speech['color'] ) : '#543210'; ?>
-						" href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
+					<a class="part-of-speech part-of-speech-circle <?php echo esc_attr( strtolower( $part_of_speech['name'] ) ); ?>"
+						href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
 						<?php echo esc_attr( $part_of_speech['letter'] ); ?>
 					</a>
 

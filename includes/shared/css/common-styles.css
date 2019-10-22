@@ -6,6 +6,11 @@
 	left: 2rem;
 }
 
+span.part-of-speech,
+li.part-of-speech a {
+	color: white;
+}
+
 .archive .taxonomy-title {
 	margin-top: 2rem;
 	font-size: 1.125rem;
@@ -13,6 +18,44 @@
 
 .archive .k2k-taxonomies {
 	display: block;
+}
+
+.k2k-taxonomy-list {
+	margin: 0;
+	padding: 0;
+	list-style: none;
+	position: relative;
+}
+
+.k2k-taxonomy-item {
+	background: rgba(135, 149, 161, .2);
+	padding: 0 10px;
+	border-radius: 30px;
+	display: inline-block;
+	margin-bottom: 0.5rem;
+	margin-right: 0.5rem;
+}
+
+.k2k-taxonomy-item-stars .level-stars {
+	position: relative;
+	display: inline-block;
+	margin-top: -10px;
+}
+
+.k2k-taxonomy-item.long,
+.k2k-taxonomy-item-title,
+.k2k-taxonomy-item-stars {
+	background: transparent;
+	padding: 0;
+}
+
+.k2k-taxonomy-item-title {
+	margin-bottom: 0;
+}
+
+.k2k-taxonomy-item a {
+	border-bottom: none;
+	color: #32373c;
 }
 
 .k2k-sidebar {
@@ -174,5 +217,5 @@
 #nav-above {
 	position: absolute;
 	width: 100%;
-	top: 4rem;
+	/* top: 4rem; */
 }

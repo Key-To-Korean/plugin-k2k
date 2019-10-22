@@ -131,27 +131,19 @@ if ( k2k_any_cpt_enabled() ) {
 
 }
 
-/**
- * Vocabulary Post Type.
- */
+/** Vocabulary Post Type */
 if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/jkl-vocabulary.php';
 }
 
-/**
- * Grammar Post Type.
- */
+/** Grammar Post Type */
 if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-grammar/jkl-grammar.php';
 }
 
-/**
- * Phrases Post Type.
- */
+/** Phrases Post Type */
 if ( 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
-	require_once K2K_PATH . 'includes/vendor/jkl-phrases/post-type-phrases-register.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-phrases/metabox-phrases-register.php';
-	require_once K2K_PATH . 'includes/vendor/jkl-phrases/taxonomy-register-phrase-type.php';
+	require_once K2K_PATH . 'includes/vendor/jkl-phrases/jkl-phrases.php';
 }
 
 /**

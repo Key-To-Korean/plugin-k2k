@@ -32,15 +32,39 @@ function k2k_register_metabox_phrases() {
 	);
 
 	/**
-	 * Info - Translation (Subtitle)
+	 * Info - Translation
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'   => esc_html__( 'Translation (EN)', 'k2k' ),
-			'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
-			'id'     => $prefix . 'subtitle',
+			'name' => esc_html__( 'Literal Translation (EN)', 'k2k' ),
+			'desc' => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
+			'id'   => $prefix . 'translation',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Info - Meaning (Subtitle)
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'   => esc_html__( 'Meaning (optional)', 'k2k' ),
+			'desc'   => esc_html__( 'If present, the meaning of the phrase will be used as the subtitle (not the literal translation above).', 'k2k' ),
+			'id'     => $prefix . 'meaning',
 			'type'   => 'text',
 			'column' => array( 'position' => 2 ),
+		)
+	);
+
+	/**
+	 * Info - Related Hanja
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'   => esc_html__( 'Related Hanja', 'k2k' ),
+			'desc'   => esc_html__( 'Add hanja from or related to the phrase here.', 'k2k' ),
+			'id'     => $prefix . 'hanja',
+			'type'   => 'text',
 		)
 	);
 
@@ -72,6 +96,7 @@ function k2k_register_metabox_phrases() {
 				'media_buttons' => true,
 				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
 			),
+			'sanitization_cb' => false,
 		)
 	);
 

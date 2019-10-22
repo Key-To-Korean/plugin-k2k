@@ -1,8 +1,6 @@
 <?php
 /**
- * The template for displaying single Grammar posts
- *
- * This is the template that displays all Grammar posts.
+ * The template for displaying single Phrases posts
  *
  * @package K2K
  */
@@ -19,37 +17,41 @@ get_header(); ?>
 			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
 
 			$this_tax = $wp_query->get_queried_object();
-			$meta     = jkl_grammar_get_meta_data();
+			$meta     = jkl_phrases_get_meta_data();
 			?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-				<!-- Grammar Post Type Navigation -->
+				<!-- Phrases Post Type Navigation -->
 				<header class="entry-header filter-nav-header">
 
-					<?php require_once 'sidebar-grammar.php'; ?>
-					<?php display_grammar_navigation(); ?>
+					<?php require_once 'sidebar-phrases.php'; ?>
+					<?php display_phrases_navigation(); ?>
 
 				</header>
 
-				<!-- Grammar Post Content Header -->
+				<!-- Phrases Post Content Header -->
 				<header class="entry-header content-header">
-
-					<div class="post-cats">
-						<?php display_level_stars(); ?>
-					</div>
 
 					<hgroup class="entry-titles">
 						<?php
 						the_title( '<h1 class="entry-title">', '</h1>' );
-
-						if ( array_key_exists( 'subtitle', $meta ) ) {
-							echo '<h2 class="entry-subtitle translation">' . esc_html( $meta['subtitle'] ) . '</h2>';
-						}
+						display_phrase_subtitle( $meta );
 						?>
 					</hgroup>
 
-					<?php display_grammar_thumbnail(); ?>
+					<!-- Phrases Taxonomy Meta -->
+					<?php
+					if ( array_key_exists( 'expression', $meta ) || array_key_exists( 'topic', $meta ) ) :
+						?>
+						<div class="entry-meta phrases-meta">
+							<?php display_phrases_entry_meta( $meta ); ?>
+						</div><!-- .entry-meta -->
+						<?php
+					endif;
+					?>
+
+					<?php gaya_post_thumbnail(); ?>
 
 				</header><!-- .entry-header -->
 
@@ -62,46 +64,21 @@ get_header(); ?>
 				endif;
 				?>
 
-				<!-- Grammar Taxonomy Meta -->
-				<div class="entry-meta grammar-meta">
-					<?php display_grammar_entry_meta( $meta ); ?>
-				</div><!-- .entry-meta -->
-
-				<!-- Grammar Post Content -->
+				<!-- Phrases Post Content -->
 				<div class="entry-content">
 
 				<?php
 				if ( array_key_exists( 'wysiwyg', $meta ) ) :
 					?>
 
-					<h2 class="post-content-title"><?php esc_html_e( 'Detailed Explanation', 'k2k' ); ?>
-						<?php display_grammar_needs_link( $meta ); ?>
-					</h2>
-
-					<?php display_grammar_related_points( $meta ); ?>
+					<h2 class="post-content-title"><?php esc_html_e( 'Detailed Explanation', 'k2k' ); ?></h2>
 
 					<!-- Detailed Explanation -->
 					<div class="detailed-explanation <?php echo array_key_exists( 'usage', $meta ) ? '' : 'no-usage'; ?>">
-						<?php echo wp_kses_post( wpautop( $meta['wysiwyg'] ) ); ?>
+						<?php echo k2k_get_wysiwyg_output( 'k2k_phrase_meta_wysiwyg' ); // phpcs:ignore ?>
 					</div>
 
 					<?php
-				endif;
-				?>
-
-				<!-- Usage rules -->
-				<?php display_grammar_usage_rules( $meta ); ?>
-
-				<!-- Conjugations -->
-				<?php build_conjugation_table( $meta ); ?>
-
-				<?php
-				if ( array_key_exists( 'sentences', $meta ) ) :
-					display_grammar_sentences( $meta );
-				endif;
-
-				if ( array_key_exists( 'exercises', $meta ) ) :
-					display_grammar_exercises( $meta );
 				endif;
 
 				/**
@@ -123,7 +100,7 @@ get_header(); ?>
 						'separator'   => '<span class="screen-reader-text">, </span>',
 					)
 				);
-				?>
+			?>
 
 				</div><!-- .entry-content --> 
 				<?php

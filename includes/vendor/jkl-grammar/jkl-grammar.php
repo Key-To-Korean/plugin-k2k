@@ -1,12 +1,12 @@
 <?php
 /**
- * JKL-Grammar - Main Plugin file
+ * JKL Grammar - Main Plugin file
  *
  * @package JKLG
  */
 
 /*
- * Plugin Name: JKL-Grammar
+ * Plugin Name: JKL Grammar
  * Plugin URI: https://github.com/jekkilekki/plugin-k2k
  * Description: Custom plugin to manage Grammar Post Types and Taxonomies.
  * Version: 1.0.0
@@ -19,18 +19,18 @@
  */
 
 /*
-JKL-Grammar is free software: you can redistribute it and/or modify
+JKL Grammar is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 any later version.
 
-JKL-Grammar is distributed in the hope that it will be useful,
+JKL Grammar is distributed in the hope that it will be useful,
 but WITHOUT ANY WARRANTY; without even the implied warranty of
 MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE. See the
 GNU General Public License for more details.
 
 You should have received a copy of the GNU General Public License
-along with JKL-Grammar. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
+along with JKL Grammar. If not, see https://www.gnu.org/licenses/gpl-2.0.html.
 */
 
 // Prevent direct file access.

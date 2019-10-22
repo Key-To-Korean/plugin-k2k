@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Grammar archive pages.
+ * The template for displaying Phrases archive pages.
  *
  * @package K2K
  */
@@ -15,9 +15,9 @@ get_header(); ?>
 		/* Display the appropriate header when required. */
 		k2k_index_header();
 
-		require_once 'sidebar-grammar.php';
+		require_once 'sidebar-phrases.php';
 
-		echo '<ul class="grammar-posts-grid archive-posts-grid">';
+		echo '<ul class="phrases-posts-grid archive-posts-grid">';
 
 		/* Start the "Official" Loop */
 		$count = 0;
@@ -38,7 +38,7 @@ get_header(); ?>
 			 */
 			?>
 
-			<li class="grammar-post">
+			<li class="phrases-post">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<?php gaya_archive_thumbnails(); ?>
@@ -46,8 +46,9 @@ get_header(); ?>
 				<header class="entry-header">
 					<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
 						<?php
-							display_level_stars();
-							the_title( '<h2 class="entry-title">', '<span class="entry-subtitle">' . esc_html( get_grammar_subtitle() ) . '</span></h2>' );
+							// display_level_stars();.
+							the_title( '<h2 class="entry-title">', '</h2>' );
+							display_phrase_subtitle();
 						?>
 					</a>
 				</header><!-- .entry-header -->
@@ -60,16 +61,13 @@ get_header(); ?>
 		endwhile;
 		?>
 
-		</ul><!-- .grammar-list -->
+		</ul><!-- .phrases-post-grid -->
 
 		<hr />
-		<section class="page-section archive-taxonomies grammar-taxonomies-list">
+		<section class="page-section archive-taxonomies phrases-taxonomies-list">
 			<?php
-				display_taxonomy_list( 'k2k-level', __( 'All Levels', 'k2k' ) );
-				display_taxonomy_list( 'k2k-book', __( 'All Books', 'k2k' ) );
-				display_taxonomy_list( 'k2k-part-of-speech', __( 'All Parts of Speech', 'k2k' ) );
 				display_taxonomy_list( 'k2k-expression', __( 'All Expressions', 'k2k' ) );
-				display_taxonomy_list( 'k2k-usage', __( 'All Usages', 'k2k' ) );
+				display_taxonomy_list( 'k2k-topic', __( 'All Topics', 'k2k' ) );
 				display_taxonomy_list( 'k2k-phrase-type', __( 'All Phrase Types', 'k2k' ) );
 			?>
 		</section>

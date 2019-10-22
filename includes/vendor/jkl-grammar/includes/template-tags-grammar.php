@@ -28,7 +28,7 @@ function display_grammar_search_form() {
  * Custom navigation for Grammar Post Type.
  *
  * Default Taxonomy is 'Level' - but can pass in a different taxonomy if desired.
- * Possible taxonomies for Vocabulary are 'Level', 'Book', 'Part of Speech', 'Expression', 'Usage', 'Phrase Type'.
+ * Possible taxonomies for Grammar are 'Level', 'Book', 'Part of Speech', 'Expression', 'Usage', 'Phrase Type'.
  *
  * @param string $taxonomy The taxonomy to display post navigation for.
  */
@@ -78,32 +78,45 @@ function display_grammar_entry_meta( $meta ) {
 
 	// Level.
 	if ( array_key_exists( 'level', $meta ) ) {
-		esc_html_e( 'Level: ', 'k2k' );
+		echo '<ul class="k2k-taxonomy-list level-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Level: ', 'k2k' ) . '</li>';
 		display_meta_buttons( $meta, 'k2k-level' );
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-stars">';
+		display_level_stars();
+		echo '</li>';
+		echo '</ul>';
 	}
 
 	// Book.
 	if ( array_key_exists( 'book', $meta ) ) {
-		esc_html_e( 'Book: ', 'k2k' );
+		echo '<ul class="k2k-taxonomy-list book-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Book: ', 'k2k' ) . '</li>';
 		display_meta_buttons( $meta, 'k2k-book' );
+		echo '</ul>';
 	}
 
 	// Expression.
 	if ( array_key_exists( 'expression', $meta ) ) {
-		esc_html_e( 'Expressing: ', 'k2k' );
+		echo '<ul class="k2k-taxonomy-list expression-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Expressing: ', 'k2k' ) . '</li>';
 		display_meta_buttons( $meta, 'k2k-expression' );
+		echo '</ul>';
 	}
 
 	// Part of Speech.
 	if ( array_key_exists( 'part-of-speech', $meta ) ) {
-		esc_html_e( 'Parts of Speech: ', 'k2k' );
+		echo '<ul class="k2k-taxonomy-list part-of-speech-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Parts of Speech: ', 'k2k' ) . '</li>';
 		display_meta_buttons( $meta, 'k2k-part-of-speech' );
+		echo '</ul>';
 	}
 
 	// Usage.
 	if ( array_key_exists( 'usage', $meta ) ) {
-		esc_html_e( 'Usage: ', 'k2k' );
+		echo '<ul class="k2k-taxonomy-list usage-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Usage: ', 'k2k' ) . '</li>';
 		display_meta_buttons( $meta, 'k2k-usage' );
+		echo '</ul>';
 	}
 
 	// Post Edit Link.

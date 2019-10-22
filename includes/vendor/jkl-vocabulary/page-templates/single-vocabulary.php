@@ -60,9 +60,7 @@ get_header(); ?>
 						if ( array_key_exists( 'subtitle', $meta ) ) {
 							?>
 							<p class="post-subtitle translation"><?php echo esc_html( $meta['subtitle'] ); ?></p>
-							<p class="post-part-of-speech">
-								<?php custom_meta_button( 'link', 'k2k-part-of-speech' ); ?>
-							</p>
+							<?php display_meta_buttons( $meta, 'k2k-part-of-speech', true ); ?>
 							<?php
 						}
 

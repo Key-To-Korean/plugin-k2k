@@ -100,7 +100,8 @@ function display_vocabulary_top_meta( $meta = [] ) {
 				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['level'], 'level' ) ) . '</li>'
 				: '';
 			echo array_key_exists( 'part-of-speech', $meta )
-				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['part-of-speech'], 'part-of-speech' ) ) . '</li>'
+				? '<li class="k2k-taxonomy-item part-of-speech ' . esc_attr( strtolower( $meta['part-of-speech']['name'] ) ) . '">'
+					. wp_kses_post( get_vocabulary_meta_buttons( $meta['part-of-speech'], 'part-of-speech' ) ) . '</li>'
 				: '';
 			echo array_key_exists( 'topic', $meta )
 				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['topic'], 'topic' ) ) . '</li>'

@@ -177,3 +177,50 @@ function k2k_script_type( $tag, $handle, $src ) {
 	return $tag;
 }
 add_filter( 'script_loader_tag', 'k2k_script_type', 10, 3 );
+
+/**
+ * Function to set part of speech styles on a page.
+ */
+function set_part_of_speech_term_colors() {
+
+	$colors = get_part_of_speech_term_color();
+
+	if ( ( is_singular( 'k2k-grammar' ) || 'k2k-vocabulary' === get_post_type() ) && ! empty( $colors ) ) {
+		?>
+		<style>
+			.part-of-speech { color: #fff; }
+			.part-of-speech.adjective { background: <?php echo esc_attr( $colors['adjective'] ); ?> }
+			.part-of-speech.verb { background: <?php echo esc_attr( $colors['verb'] ); ?> }
+			.part-of-speech.noun { background: <?php echo esc_attr( $colors['noun'] ); ?> }
+			.part-of-speech.noun-special { background: <?php echo esc_attr( $colors['noun-special'] ); ?> }
+			.part-of-speech.adverb { background: <?php esc_attr( $colors['adverb'] ); ?> }
+			.part-of-speech.number { background: <?php esc_attr( $colors['number'] ); ?> }
+			.part-of-speech.other { background: <?php esc_attr( $colors['other'] ); ?> }
+		</style>
+		<?php
+	}
+
+}
+add_action( 'wp_head', 'set_part_of_speech_term_colors' );
+
+/**
+ * Function to return meta box WYSIWYG content with working embeds and shortcodes.
+ *
+ * @param string  $meta_key The meta box ID to retrieve content for.
+ * @param integer $post_id The ID of the post.
+ */
+function k2k_get_wysiwyg_output( $meta_key, $post_id = 0 ) {
+
+	global $wp_embed;
+
+	$post_id = $post_id ? $post_id : get_the_ID();
+
+	$content = get_post_meta( $post_id, $meta_key, true );
+	$content = $wp_embed->autoembed( $content );
+	$content = $wp_embed->run_shortcode( $content );
+	$content = wpautop( $content );
+	$content = do_shortcode( $content );
+
+	return $content;
+
+}

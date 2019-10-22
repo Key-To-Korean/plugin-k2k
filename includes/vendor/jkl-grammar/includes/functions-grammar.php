@@ -46,7 +46,7 @@ function jkl_grammar_enqueue_admin_scripts() {
 	/* Grammar Scripts */
 	if ( 'k2k-grammar' === get_post_type() ) {
 		wp_enqueue_style(
-			'k2k-grammar-style',
+			'k2k-grammar-admin-style',
 			plugins_url( 'css/grammar-admin.css', __DIR__ ),
 			array(),
 			filemtime( plugin_dir_path( __DIR__ ) . 'css/grammar-admin.css' )
@@ -255,7 +255,8 @@ function jkl_has_related_grammar_meta( $meta = [] ) {
 function get_part_of_speech_term_color() {
 
 	$parts_of_speech = array();
-	$tax_terms       = get_the_terms( get_the_ID(), 'k2k-part-of-speech' ); // Translation, Image, Weblink, or Term Color.
+	$tax_terms       = get_terms( array( 'taxonomy' => 'k2k-part-of-speech' ) ); // Get ALL part of speech colors, not just for current post.
+	// get_the_terms( get_the_ID(), 'k2k-part-of-speech' ); // Translation, Image, Weblink, or Term Color.
 
 	// If there are no terms saved for this taxonomy, move on to the next one.
 	if ( ! $tax_terms ) {
@@ -269,24 +270,3 @@ function get_part_of_speech_term_color() {
 	return $parts_of_speech;
 
 }
-
-/**
- * Function to set part of speech styles on a page.
- */
-function set_part_of_speech_term_colors() {
-
-	$colors = get_part_of_speech_term_color();
-
-	if ( is_singular( 'k2k-grammar' ) && ! empty( $colors ) ) {
-		?>
-		<style>
-			.part-of-speech { color: #fff; }
-			.part-of-speech.adjective { background: <?php echo esc_attr( $colors['adjective'] ); ?> }
-			.part-of-speech.verb { background: <?php echo esc_attr( $colors['verb'] ); ?> }
-			.part-of-speech.noun { background: <?php echo esc_attr( $colors['noun'] ); ?> }
-		</style>
-		<?php
-	}
-
-}
-add_action( 'wp_head', 'set_part_of_speech_term_colors' );

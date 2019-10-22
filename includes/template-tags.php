@@ -139,14 +139,14 @@ function get_custom_meta( $meta_key ) {
  *
  * @param array  $meta The meta for the post.
  * @param string $taxonomy The taxonomy we are querying for a value.
- * @param string $type Whether we want a 'button' or 'link' (default).
  * @param bool   $single Whether or not to output a single (the first) item.
+ * @param string $type Whether we want a 'button' or 'link' (default).
  */
-function display_meta_buttons( $meta, $taxonomy, $type = 'link', $single = false ) {
+function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link' ) {
 
 	$taxonomy = substr( $taxonomy, 4 );
 	$count    = 0;
-	$tax_term = $meta[ $taxonomy ][ $count ];
+	$tax_term = $single ? $meta[ $taxonomy ] : $meta[ $taxonomy ][ $count ];
 
 	if ( ! array_key_exists( $taxonomy, $meta ) ) {
 		return;
@@ -211,14 +211,22 @@ function display_meta_buttons( $meta, $taxonomy, $type = 'link', $single = false
  * @param array $args All the relevant data needed to build and output the taxonomy item.
  */
 function display_meta_item( $args ) {
-	$output  = '<li><a class="' . $args['classnames'] . '" title="' . $args['name'];
-	$output .= '" href="' . home_url() . '/' . substr( $args['taxonomy'], 4 ) . '/' . $args['slug'];
+
+	$class  = strpos( $args['name'], ' ' ) ? 'long' : '';
+	$class .= 'part-of-speech' === $args['taxonomy'] ? 'part-of-speech ' . strtolower( $args['name'] ) : '';
+
+	$output  = '<li class="k2k-taxonomy-item ' . $class . '">';
+	$output .= '<a class="' . $args['classnames'];
+	$output .= '" title="' . $args['name'];
+	$output .= '" href="' . home_url() . '/' . $args['taxonomy'] . '/' . $args['slug'];
 	$output .= '" style="' . $args['style'];
 	$output .= '">';
 	$output .= $args['translation'];
-	$output .= '</a></li>';
+	$output .= '</a>';
+	$output .= '</li>';
 
 	echo wp_kses_post( $output );
+
 }
 
 /**
