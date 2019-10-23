@@ -62,7 +62,7 @@ function k2k_register_post_type_phrases() {
 		'hierarchical'       => false,
 		'menu_position'      => K2K_MENU_POSITION + 3,
 		'menu_icon'          => 'dashicons-format-chat',
-		'supports'           => array( 'title', 'thumbnail' ),
+		'supports'           => array( 'title', 'thumbnail', 'comments' ),
 		// 'taxonomies'         => array( 'post_tag' ),
 	);
 

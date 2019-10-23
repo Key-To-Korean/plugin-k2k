@@ -25,15 +25,6 @@ get_header(); ?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 				<?php
-				/* Ad Above Post */
-				if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
-					/* Print styles for adsense widgets */
-					wp_print_styles( array( 'gaya-adsense' ) ); // Note: If this was already done it will be skipped.
-					dynamic_sidebar( 'widget-ad-pre-post' );
-				endif;
-				?>
-
-				<?php
 				if ( is_singular() ) :
 					?>
 					<div class="entry-header">
@@ -67,6 +58,16 @@ get_header(); ?>
 						gaya_edit_post_link();
 						?>
 					</div><!-- .entry-meta -->
+
+					<?php
+					/* Ad Above Post */
+					if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
+						/* Print styles for adsense widgets */
+						wp_print_styles( array( 'gaya-adsense' ) ); // Note: If this was already done it will be skipped.
+						dynamic_sidebar( 'widget-ad-pre-post' );
+					endif;
+					?>
+
 					<?php
 				endif;
 				?>

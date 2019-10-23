@@ -142,9 +142,9 @@ get_header(); ?>
 					gaya_jp_related_posts();
 				}
 
-				echo '<pre></pre><pre>';
-				var_dump( $meta );
-				echo '</pre>';
+				// echo '<pre></pre><pre>';
+				// var_dump( $meta );
+				// echo '</pre>';
 				?>
 			</article><!-- #post-<?php the_ID(); ?> -->
 
