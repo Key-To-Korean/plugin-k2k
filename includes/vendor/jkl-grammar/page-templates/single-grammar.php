@@ -49,7 +49,13 @@ get_header(); ?>
 						?>
 					</hgroup>
 
-					<?php display_grammar_thumbnail(); ?>
+					<?php
+					if ( array_key_exists( 'video', $meta ) ) {
+						display_grammar_video( $meta['video'] );
+					} else {
+						display_grammar_thumbnail();
+					}
+					?>
 
 				</header><!-- .entry-header -->
 
@@ -64,7 +70,12 @@ get_header(); ?>
 
 				<!-- Grammar Taxonomy Meta -->
 				<div class="entry-meta grammar-meta">
-					<?php display_grammar_entry_meta( $meta ); ?>
+					<?php
+					if ( array_key_exists( 'video', $meta ) ) {
+						display_grammar_thumbnail();
+					}
+					display_grammar_entry_meta( $meta );
+					?>
 				</div><!-- .entry-meta -->
 
 				<!-- Grammar Post Content -->

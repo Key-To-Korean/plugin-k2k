@@ -123,6 +123,10 @@ li.part-of-speech a {
 	margin-bottom: 0;
 }
 
+.post-thumbnail.post-video {
+	margin-bottom: 0;
+}
+
 .sentences-header {
 	display: flex;
 	align-items: baseline;

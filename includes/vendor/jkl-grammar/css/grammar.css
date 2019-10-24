@@ -64,7 +64,7 @@
 }
 
 .content-header {
-	margin-top: 4rem;
+	/* margin-top: 4rem; */
 }
 
 .detailed-explanation {
@@ -154,6 +154,12 @@
 .entry-footer.usage-rules-container {
 	border-bottom: 0;
 	padding-bottom: 1rem;
+}
+
+.entry-meta .post-thumbnail {
+	margin-bottom: 1rem;
+	margin-top: 0;
+	height: 120px;
 }
 
 .entry-meta .related-grammar,

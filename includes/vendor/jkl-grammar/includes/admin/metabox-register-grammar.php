@@ -37,6 +37,7 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'subtitle',
 						$prefix . 'level',
 						$prefix . 'wysiwyg',
+						$prefix . 'video',
 						$prefix . 'expression',
 						$prefix . 'usage',
 						$prefix . 'book',
@@ -101,6 +102,18 @@ function k2k_register_metabox_grammar() {
 			'type'     => 'taxonomy_radio_inline',
 			'taxonomy' => 'k2k-level', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
+	/**
+	 * Info - Video (YouTube)
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'   => esc_html__( 'YouTube lesson', 'k2k' ),
+			// 'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
+			'id'     => $prefix . 'video',
+			'type'   => 'text',
 		)
 	);
 

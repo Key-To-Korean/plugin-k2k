@@ -70,6 +70,33 @@ function display_grammar_thumbnail() {
 }
 
 /**
+ * Function to embed and display the post video, if it exists.
+ *
+ * @param string $url The URL of the video link.
+ */
+function display_grammar_video( $url ) {
+
+	if ( '' === $url ) {
+		return;
+	}
+
+	$embed_code = wp_oembed_get(
+		$url,
+		array(
+			'width'  => 1000,
+			'height' => 600,
+		)
+	);
+	?>
+
+	<div class="post-thumbnail post-video">
+		<?php echo $embed_code; // phpcs:ignore ?>
+	</div>
+
+	<?php
+}
+
+/**
  * Function to display the entry meta for the Grammar Post.
  *
  * @param array $meta The post meta.

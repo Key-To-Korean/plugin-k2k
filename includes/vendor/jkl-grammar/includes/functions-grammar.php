@@ -125,6 +125,7 @@ function jkl_grammar_get_meta_data() {
 	$meta_prefix = 'k2k_grammar_meta_';
 
 	$meta['subtitle']        = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );        // Subtitle (translation).
+	$meta['video']           = get_post_meta( get_the_ID(), $meta_prefix . 'video', true );           // YouTube video lesson.
 	$meta['wysiwyg']         = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );         // Explanation (html).
 	$meta['adjectives']      = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );      // Adjective Conjugations (array).
 	$meta['verbs']           = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );           // Verb Conjugations (array).
