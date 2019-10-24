@@ -432,9 +432,6 @@ function display_grammar_exercises( $meta ) {
 			?>
 
 		</ol>
-
-		<?php gaya_edit_post_link(); ?>
-
 	</footer>
 
 	<?php

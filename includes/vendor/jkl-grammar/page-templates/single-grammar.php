@@ -136,7 +136,12 @@ get_header(); ?>
 				);
 				?>
 
-				</div><!-- .entry-content --> 
+				<footer class="entry-footer footer-edit-link">
+					<?php gaya_edit_post_link(); ?>
+				</footer>
+
+				</div><!-- .entry-content -->
+
 				<?php
 				if ( is_singular() ) :
 
@@ -153,9 +158,6 @@ get_header(); ?>
 					gaya_jp_related_posts();
 				}
 
-				// echo '<pre></pre><pre>';
-				// var_dump( $meta );
-				// echo '</pre>';
 				?>
 			</article><!-- #post-<?php the_ID(); ?> -->
 
