@@ -10,7 +10,7 @@
 ?>
 
 <!-- <aside id="secondary" class="primary-sidebar widget-area"> -->
-	<aside id="phrases-filter-box" class="widget k2k-sidebar phrases-sidebar">
+	<aside id="phrases-filter-box" class="k2k-sidebar phrases-sidebar <?php echo is_archive() ? 'archive-page' : ''; ?>">
 
 		<!-- Sortable / Filterable Terms Lists -->
 		<?php

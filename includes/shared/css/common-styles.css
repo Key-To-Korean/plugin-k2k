@@ -64,7 +64,12 @@ li.part-of-speech a {
 	justify-content: space-between;
 	max-width: 75rem;
 	margin: 0 auto;
+	padding-bottom: 3rem;
 	flex-direction: row-reverse;
+}
+
+.k2k-sidebar.archive-page {
+	padding-bottom: 1rem;
 }
 
 .k2k-filters {
@@ -221,5 +226,5 @@ li.part-of-speech a {
 #nav-above {
 	position: absolute;
 	width: 100%;
-	/* top: 4rem; */
+	top: 3rem;
 }
