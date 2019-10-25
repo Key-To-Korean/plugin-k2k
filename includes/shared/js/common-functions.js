@@ -1,3 +1,8 @@
+/**
+ * File to handle the expand/collapse of sentences in our page.
+ */
+
+// Array containing each individual sentence.
 const sentsLI = document.querySelectorAll( '.sentences li' );
 
 for( var i = 0; i < sentsLI.length; i++ ) {
@@ -30,26 +35,33 @@ function contractEl(el) {
   button.innerHTML = '<i class="fas fa-caret-down"></i>';
 }
 
-document.querySelector( '.expand-all' ).onclick = function() {
+// Expand All Sentences button.
+var expandAll = document.querySelector( '.expand-all' );
 
-  if ( this.className === 'expand-all expanded' ) {
+if ( expandAll ) {
 
-    this.className = 'expand-all';
-    this.innerHTML = '<i class="fas fa-caret-down"></i>';
-    this.setAttribute( 'title', 'Show all English sentences.' ); // @TODO: Make translatable.
+  expandAll.onclick = function() {
 
-    for( var i = 0; i < sentsLI.length; i++ ) {
-      contractEl(sentsLI[i].lastElementChild);
-    }
+    if ( this.className === 'expand-all expanded' ) {
 
-  } else {
+      this.className = 'expand-all';
+      this.innerHTML = '<i class="fas fa-caret-down"></i>';
+      this.setAttribute( 'title', 'Show all English sentences.' ); // @TODO: Make translatable.
 
-    this.className = 'expand-all expanded';
-    this.innerHTML = '<i class="fas fa-caret-up"></i>';
-    this.setAttribute( 'title', 'Hide all English sentences.' ); // @TODO: Make translatable.
+      for( var i = 0; i < sentsLI.length; i++ ) {
+        contractEl(sentsLI[i].lastElementChild);
+      }
 
-    for( var i = 0; i < sentsLI.length; i++ ) {
-      expandEl(sentsLI[i].lastElementChild);
+    } else {
+
+      this.className = 'expand-all expanded';
+      this.innerHTML = '<i class="fas fa-caret-up"></i>';
+      this.setAttribute( 'title', 'Hide all English sentences.' ); // @TODO: Make translatable.
+
+      for( var i = 0; i < sentsLI.length; i++ ) {
+        expandEl(sentsLI[i].lastElementChild);
+      }
     }
   }
+
 }
