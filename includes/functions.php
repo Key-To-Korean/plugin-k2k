@@ -46,6 +46,7 @@ function k2k_template( $template_path ) {
 
 	$k2k_post_types = K2K_POST_TYPES; // defined in k2k.php - the main plugin file.
 	$post_type_here = get_post_type();
+	$tax_slug       = is_tax() ? explode( '-', get_query_var( 'taxonomy' ) )[1] : '';
 
 	if ( ! $post_type_here || ( ! in_array( $post_type_here, $k2k_post_types, true ) ) ) {
 		return $template_path;
@@ -67,13 +68,27 @@ function k2k_template( $template_path ) {
 		}
 	} elseif ( is_archive() ) {
 
-		$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
-		$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
+		if ( is_tax() ) {
+			$theme_template_archive  = locate_template( array( 'taxonomy-' . $post_type_slug . '.php' ), false );
+			$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/taxonomy-' . $post_type_slug . '.php';
+			$shared_template_archive = plugin_dir_path( __FILE__ ) . 'shared/page-templates/taxonomy-k2k.php';
 
-		if ( $theme_template_archive ) {
-			$template_path = $theme_template_archive;
-		} elseif ( file_exists( $plugin_template_archive ) ) {
-			$template_path = $plugin_template_archive;
+			if ( $theme_template_archive ) {
+				$template_path = $theme_template_archive;
+			} elseif ( file_exists( $plugin_template_archive ) ) {
+				$template_path = $plugin_template_archive;
+			} else {
+				$template_path = $shared_template_archive;
+			}
+		} else {
+			$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
+			$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
+
+			if ( $theme_template_archive ) {
+				$template_path = $theme_template_archive;
+			} elseif ( file_exists( $plugin_template_archive ) ) {
+				$template_path = $plugin_template_archive;
+			}
 		}
 	}
 

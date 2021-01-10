@@ -51,8 +51,28 @@ function get_all_the_post_meta( $args ) {
 function k2k_index_header() {
 
 	$archive_page_title = '';
+	$taxonomy           = '';
+	$tax_term           = '';
 
-	if ( is_archive() && 'k2k-vocabulary' === get_post_type() ) {
+	if ( is_archive() && is_tax() ) {
+
+		$taxonomy = explode( '-', get_query_var( 'taxonomy' ) );
+		$tax_len  = count( $taxonomy );
+		$tax_str  = '';
+		if ( $tax_len > 2 ) {
+			for ( $i = 1; $i < $tax_len; $i++ ) {
+				$tax_str .= $taxonomy[ $i ] . ' ';
+			}
+		} else {
+			$tax_str = $taxonomy[1];
+		}
+		$tax_term = get_term_by( 'slug', get_query_var( 'term' ), get_query_var( 'taxonomy' ) )->name; // get current term.
+		$parent   = isset( $tax_term->parent ) ? get_term( $tax_term->parent, get_query_var( 'taxonomy' ) ) : ''; // get parent term.
+		$children = isset( $tax_term->term_id ) ? get_term_children( $tax_term->term_id, get_query_var( 'taxonomy' ) ) : ''; // get children.
+
+		$archive_page_title = $tax_term;
+
+	} elseif ( is_archive() && 'k2k-vocabulary' === get_post_type() ) {
 
 		$archive_page_title = __( 'Vocabulary', 'k2k' );
 
@@ -78,8 +98,19 @@ function k2k_index_header() {
 	<header class="page-header">
 		<h1 class="page-title">
 			<?php
-			/* translators: %s is the Archive Title. */
-			printf( esc_html__( 'Index: %s', 'k2k' ), '<span>' . esc_attr( $archive_page_title ) . '</span>' );
+			if ( is_tax() ) {
+				?>
+				<h1 class="page-title">
+					<?php echo esc_attr( $tax_str . ':' ); ?>
+					<span>
+						<?php echo esc_attr( $archive_page_title ); ?>
+					</span>
+				</h1>
+				<?php
+			} else {
+				/* translators: %s is the Archive Title. */
+				printf( esc_html__( 'Index: %s', 'k2k' ), '<span>' . esc_attr( $archive_page_title ) . '</span>' );
+			}
 			?>
 		</h1>
 	</header>
