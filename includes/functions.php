@@ -239,3 +239,50 @@ function k2k_get_wysiwyg_output( $meta_key, $post_id = 0 ) {
 	return $content;
 
 }
+
+/**
+ * Customize Taxonomy Query using Post Meta.
+ *
+ * @param Object $query The main WordPress query.
+ */
+function k2k_filter_taxonomy_archive_query( $query ) {
+
+	// Check that we're in a taxonomy archive and using the main query.
+	if ( is_tax() ) {
+
+		// Check that our Custom Post Type filter is set.
+		if ( isset( $_GET['tax-cpt'], $_POST['tax-filter-nonce'] )
+				&& wp_verify_nonce( sanitize_key( $_POST['tax-filter-nonce'] ), $filter_nonce ) ) :
+
+			$filter_post_type = array();
+			$filter_nonce     = wp_create_nonce( 'tax-filter-nonce' );
+
+			// Add the Vocabulary CPT to the WP_Query.
+			if ( 'vocab' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-vocabulary';
+			}
+			// Add the Grammar CPT to the WP_Query.
+			if ( 'grammar' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-grammar';
+			}
+			// Add the Phrases CPT to the WP_Query.
+			if ( 'phrases' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-phrases';
+			}
+			// Add the Reading CPT to the WP_Query.
+			if ( 'reading' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-reading';
+			}
+			// Add the Writing CPT to the WP_Query.
+			if ( 'writing' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-writing';
+			}
+
+			$query->set( 'post_type', $filter_post_type );
+
+		endif;
+	}
+	$query->set( 'posts_per_page', 50 );
+
+}
+add_action( 'pre_get_posts', 'k2k_filter_taxonomy_archive_query' );

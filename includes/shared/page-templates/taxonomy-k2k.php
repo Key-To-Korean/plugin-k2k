@@ -7,7 +7,37 @@
  * @package K2K
  */
 
-get_header(); ?>
+get_header();
+
+// Check that our Custom Post Type filter is set.
+if ( isset( $_GET['tax-cpt'], $_POST['tax-filter-nonce'] )
+		&& wp_verify_nonce( sanitize_key( $_POST['tax-filter-nonce'] ), $filter_nonce ) ) :
+
+	$filter_post_type = array();
+	$filter_nonce     = wp_create_nonce( 'tax-filter-nonce' );
+
+	// Add the Vocabulary CPT to the WP_Query.
+	if ( 'vocab' === $_GET['tax-cpt'] ) {
+		$filter_post_type[] = 'k2k-vocabulary';
+	}
+	// Add the Grammar CPT to the WP_Query.
+	if ( 'grammar' === $_GET['tax-cpt'] ) {
+		$filter_post_type[] = 'k2k-grammar';
+	}
+	// Add the Phrases CPT to the WP_Query.
+	if ( 'phrases' === $_GET['tax-cpt'] ) {
+		$filter_post_type[] = 'k2k-phrases';
+	}
+	// Add the Reading CPT to the WP_Query.
+	if ( 'reading' === $_GET['tax-cpt'] ) {
+		$filter_post_type[] = 'k2k-reading';
+	}
+	// Add the Writing CPT to the WP_Query.
+	if ( 'writing' === $_GET['tax-cpt'] ) {
+		$filter_post_type[] = 'k2k-writing';
+	}
+endif;
+?>
 
 	<main id="primary" class="site-main">
 
@@ -16,7 +46,34 @@ get_header(); ?>
 
 		/* Display the appropriate header when required. */
 		k2k_index_header();
+		?>
 
+		<form class="page-section taxonomy-filter">
+			<!-- <input type="checkbox" name="tax-cpt" value="all" checked/>All -->
+			<span class="field-wrapper">
+				<input id="vocab-cpt" type="checkbox" name="tax-cpt" value="vocab" <?php echo ( isset( $_GET['tax-cpt'] ) && 'vocab' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
+				<label for="vocab-cpt"> Vocabulary</label>
+			</span>
+			<span class="field-wrapper">
+				<input id="grammar-cpt" type="checkbox" name="tax-cpt" value="grammar" <?php echo ( isset( $_GET['tax-cpt'] ) && 'grammar' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
+				<label for="grammar-cpt"> Grammar</label>
+			</span>
+			<span class="field-wrapper">
+				<input id="phrases-cpt" type="checkbox" name="tax-cpt" value="phrases" <?php echo ( isset( $_GET['tax-cpt'] ) && 'phrases' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
+				<label for="phrases-cpt"> Phrases</label>
+			</span>
+			<span class="field-wrapper">
+				<input id="reading-cpt" type="checkbox" name="tax-cpt" value="reading" <?php echo ( isset( $_GET['tax-cpt'] ) && 'reading' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
+				<label for="reading-cpt"> Reading</label>
+			</span>
+			<span class="field-wrapper">
+				<input id="writing-cpt" type="checkbox" name="tax-cpt" value="writing" <?php echo ( isset( $_GET['tax-cpt'] ) && 'writing' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
+				<label for="writing-cpt"> Writing</label>
+			</span>
+			<input class="btn btn-small" type="submit" value="Filter"/>
+		</form>
+
+		<?php
 		// require_once 'sidebar-vocabulary.php';.
 
 		echo '<ul class="vocabulary-posts-grid archive-posts-grid">';
@@ -44,10 +101,12 @@ get_header(); ?>
 
 					<?php $part_of_speech = get_part_of_speech(); ?>
 
-					<a class="part-of-speech part-of-speech-circle <?php echo esc_attr( strtolower( $part_of_speech['name'] ) ); ?>"
-						href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
-						<?php echo esc_attr( $part_of_speech['letter'] ); ?>
-					</a>
+					<?php if ( '' !== $part_of_speech ) : ?>
+						<a class="part-of-speech part-of-speech-circle <?php echo esc_attr( strtolower( $part_of_speech['name'] ) ); ?>"
+							href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
+							<?php echo esc_attr( $part_of_speech['letter'] ); ?>
+						</a>
+					<?php endif; ?>
 
 					<header class="entry-header">
 						<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
@@ -83,8 +142,7 @@ get_header(); ?>
 		/*
 			Finally a Posts Navigation
 		*/
-		the_posts_navigation();
-		// // gaya_paging_nav();
+		gaya_paging_nav();
 
 		else :
 

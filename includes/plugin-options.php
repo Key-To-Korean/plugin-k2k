@@ -74,9 +74,9 @@ function k2k_register_plugin_options_metabox() {
 			'position'     => K2K_MENU_POSITION, // Menu position. Only applicable if 'parent_slug' is left empty.
 			// 'admin_menu_hook' => 'network_admin_menu', // 'network_admin_menu' to add network-level options page.
 			// 'display_cb'      => false, // Override the options-page form output (CMB2_Hookup::options_page_output()).
-			// 'save_button'     => esc_html__( 'Save Theme Options', 'cmb2' ), // The text for the options-page save button. Defaults to 'Save'.
+			'save_button'  => esc_html__( 'Save K2K Options', 'cmb2' ), // The text for the options-page save button. Defaults to 'Save'.
 			// 'disable_settings_errors' => true, // On settings pages (not options-general.php sub-pages), allows disabling.
-			// 'message_cb'      => 'yourprefix_options_page_message_callback',
+			'message_cb'   => 'k2k_options_page_message_cb',
 			// 'tab_group'       => '', // Tab-group identifier, enables options page tab navigation.
 			// 'tab_title'       => null, // Falls back to 'title' (above).
 			// 'autoload'        => false, // Defaults to true, the options-page option will be autloaded.
@@ -89,19 +89,19 @@ function k2k_register_plugin_options_metabox() {
 	$k2k_options->add_field(
 		array(
 			'name' => esc_html__( 'Additional Meta Data', 'k2k' ),
-			'desc' => esc_html__( 'Enable additional meta data for different things in WordPress.', 'k2k' ),
-			'id'   => $prefix . 'meta_data_title',
+			'desc' => esc_html__( 'Enable additional meta data for User Profiles and Taxonomies.', 'k2k' ),
+			'id'   => $prefix . 'opt_box_meta_data',
 			'type' => 'title',
 		)
 	);
 
 	/*
-	 * Additional user meta data.
+	 * Additional User meta data.
 	 */
 	$k2k_options->add_field(
 		array(
-			'name'    => __( 'Add User Profile Meta', 'k2k' ),
-			'desc'    => __( 'Enable additional meta information for user profiles.', 'k2k' ),
+			'name'    => __( 'Extra User Data', 'k2k' ),
+			'desc'    => __( 'Enable additional meta information (social media URLS, and larger profile images) to be added to User Profiles.', 'k2k' ),
 			'id'      => $prefix . 'enable_user_meta',
 			'type'    => 'switch',
 			'default' => 0,
@@ -117,26 +117,9 @@ function k2k_register_plugin_options_metabox() {
 	 */
 	$k2k_options->add_field(
 		array(
-			'name'    => __( 'Add Taxonomy Meta', 'k2k' ),
-			'desc'    => __( 'Enable additional meta information for taxonomies like Categories, Tags, and Custom Taxonomies.', 'k2k' ),
+			'name'    => __( 'Extra Taxonomy Data', 'k2k' ),
+			'desc'    => __( 'Enable additional meta information (images, translations, and colors) for taxonomies like Categories, Tags, and Custom Taxonomies.', 'k2k' ),
 			'id'      => $prefix . 'enable_tax_meta',
-			'type'    => 'switch',
-			'default' => 0,
-			'label'   => array(
-				'on'  => __( 'Yes', 'k2k' ),
-				'off' => __( 'No', 'k2k' ),
-			),
-		)
-	);
-
-	/*
-	 * Use Default taxonomy terms.
-	 */
-	$k2k_options->add_field(
-		array(
-			'name'    => __( 'Use Default Taxonomy Terms', 'k2k' ),
-			'desc'    => __( 'Preload default taxonomy terms like Beginner, Intermediate, Advanced, and so on.', 'k2k' ),
-			'id'      => $prefix . 'use_default_terms',
 			'type'    => 'switch',
 			'default' => 0,
 			'label'   => array(
@@ -153,7 +136,7 @@ function k2k_register_plugin_options_metabox() {
 		array(
 			'name' => esc_html__( 'Language Learning Post Types', 'k2k' ),
 			'desc' => esc_html__( 'Enable different types of features for language learning.', 'k2k' ),
-			'id'   => $prefix . 'language_post_types_title',
+			'id'   => $prefix . 'opt_box_language_post_types',
 			'type' => 'title',
 		)
 	);
@@ -239,6 +222,35 @@ function k2k_register_plugin_options_metabox() {
 		)
 	);
 
+	/**
+	 * Add Default taxonomy terms.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name' => esc_html__( 'Default Taxonomy Terms', 'k2k' ),
+			'desc' => esc_html__( 'Add default Taxonomy Terms for K2K\'s Custom Post Types.', 'k2k' ),
+			'id'   => $prefix . 'opt_box_default_terms',
+			'type' => 'title',
+		)
+	);
+
+	/*
+	 * Use Default taxonomy terms.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Default Taxonomy Terms', 'k2k' ),
+			'desc'    => __( 'Preload default taxonomy terms like Beginner, Intermediate, Advanced, and so on.', 'k2k' ),
+			'id'      => $prefix . 'use_default_terms',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
 }
 
 /**
@@ -263,7 +275,7 @@ function k2k_register_plugin_options_metabox() {
  *                                   Will be 'updated' if $is_updated is true, else 'notice-warning'.
  * }
  */
-function k2k_options_page_message_callback( $cmb, $args ) {
+function k2k_options_page_message_cb( $cmb, $args ) {
 	if ( ! empty( $args['should_notify'] ) ) {
 
 		if ( $args['is_updated'] ) {

@@ -124,6 +124,12 @@ function k2k_index_header() {
 function display_level_stars() {
 
 	$level = get_the_terms( get_the_ID(), 'k2k-level' )[0]; // Translation, Image.
+
+	// Get out if this item doesn't have a level set.
+	if ( null === $level ) {
+		return;
+	}
+
 	$stars = '';
 
 	switch ( $level->slug ) {
