@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function jkl_vocabulary_more_archive_posts( $query ) {
 	if ( $query->is_main_query() && is_archive() && is_post_type_archive( 'k2k-vocabulary' ) ) {
-		$query->set( 'posts_per_page', '100' );
+		$query->set( 'posts_per_page', '60' );
 	}
 }
 add_action( 'pre_get_posts', 'jkl_vocabulary_more_archive_posts' );

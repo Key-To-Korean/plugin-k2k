@@ -27,7 +27,7 @@ function k2k_register_taxonomy_weblink_metabox() {
 			'id'           => $prefix . 'weblinks',
 			'title'        => esc_html__( 'Book Web Link', 'k2k' ), // Doesn't output for term boxes.
 			'object_types' => array( 'term' ), // Tells CMB2 to use term_meta vs post_meta.
-			'taxonomies'   => 'k2k-book', // Tells CMB2 which taxonomies should have these fields.
+			'taxonomies'   => 'k2k-grammar-book', // Tells CMB2 which taxonomies should have these fields.
 			// 'new_term_section' => true, // Will display in the "Add New Category" section.
 		)
 	);

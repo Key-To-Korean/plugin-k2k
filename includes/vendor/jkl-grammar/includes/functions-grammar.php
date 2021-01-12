@@ -11,6 +11,17 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Unregister old taxonomies from Grammar Post Type.
+ */
+function jkl_unregister_old_grammar_tax() {
+	unregister_taxonomy_for_object_type( 'k2k-level', 'k2k-grammar' );
+	unregister_taxonomy_for_object_type( 'k2k-part-of-speech', 'k2k-grammar' );
+	unregister_taxonomy_for_object_type( 'k2k-expression', 'k2k-grammar' );
+	unregister_taxonomy_for_object_type( 'k2k-phrase-type', 'k2k-grammar' );
+}
+add_action( 'init', 'jkl_unregister_old_grammar_tax' );
+
+/**
  * Enqueue Grammar Post Type styles and scripts on public facing pages.
  */
 function jkl_grammar_enqueue_scripts() {

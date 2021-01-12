@@ -47,6 +47,9 @@ require_once 'includes/admin/post-type-register-grammar.php';
 require_once 'includes/admin/metabox-register-grammar.php';
 
 /* Include Grammar Taxonomies */
+require_once 'includes/admin/taxonomy-register-grammar-level.php';
+require_once 'includes/admin/taxonomy-register-grammar-part-of-speech.php';
+require_once 'includes/admin/taxonomy-register-grammar-expression.php';
 require_once 'includes/admin/taxonomy-register-grammar-book.php';
 require_once 'includes/admin/taxonomy-register-grammar-tenses.php';
 require_once 'includes/admin/taxonomy-register-grammar-usage.php';

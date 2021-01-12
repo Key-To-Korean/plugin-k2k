@@ -68,27 +68,13 @@ function k2k_template( $template_path ) {
 		}
 	} elseif ( is_archive() ) {
 
-		if ( is_tax() ) {
-			$theme_template_archive  = locate_template( array( 'taxonomy-' . $post_type_slug . '.php' ), false );
-			$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/taxonomy-' . $post_type_slug . '.php';
-			$shared_template_archive = plugin_dir_path( __FILE__ ) . 'shared/page-templates/taxonomy-k2k.php';
+		$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
+		$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
 
-			if ( $theme_template_archive ) {
-				$template_path = $theme_template_archive;
-			} elseif ( file_exists( $plugin_template_archive ) ) {
-				$template_path = $plugin_template_archive;
-			} else {
-				$template_path = $shared_template_archive;
-			}
-		} else {
-			$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
-			$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
-
-			if ( $theme_template_archive ) {
-				$template_path = $theme_template_archive;
-			} elseif ( file_exists( $plugin_template_archive ) ) {
-				$template_path = $plugin_template_archive;
-			}
+		if ( $theme_template_archive ) {
+			$template_path = $theme_template_archive;
+		} elseif ( file_exists( $plugin_template_archive ) ) {
+			$template_path = $plugin_template_archive;
 		}
 	}
 
