@@ -53,7 +53,7 @@ function k2k_register_taxonomy_grammar_exp() {
 		'rewrite'               => array( 'slug' => 'grammar/expressing' ),
 	);
 
-	register_taxonomy( 'k2k-grammar-exp', 'k2k-grammar', $args );
+	register_taxonomy( 'k2k-grammar-expression', 'k2k-grammar', $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_grammar_exp' );
@@ -63,7 +63,7 @@ add_action( 'init', 'k2k_register_taxonomy_grammar_exp' );
  */
 function k2k_register_new_terms_grammar_exp() {
 
-	$taxonomy = 'k2k-grammar-exp';
+	$taxonomy = 'k2k-grammar-expression';
 	$terms    = array(
 		'0' => array(
 			'name'        => __( 'Negation', 'k2k' ),

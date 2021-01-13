@@ -205,8 +205,8 @@ function k2k_register_metabox_grammar() {
 		array(
 			'name'     => esc_html__( 'Expression', 'k2k' ),
 			'id'       => $prefix . 'expression',
-			'type'     => 'taxonomy_radio', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-grammar-exp', // Taxonomy Slug.
+			'type'     => 'taxonomy_radio', // Or taxonomy_multicheck_inline/taxonomy_multicheck_hierarchical.
+			'taxonomy' => 'k2k-grammar-expression', // Taxonomy Slug.
 		)
 	);
 

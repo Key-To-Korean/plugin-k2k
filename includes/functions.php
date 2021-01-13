@@ -52,6 +52,7 @@ function k2k_template( $template_path ) {
 		return $template_path;
 	}
 
+	// Remove 'k2k-' from Post Type name.
 	$post_type_slug = explode( '-', $post_type_here )[1];
 
 	if ( is_single() ) {

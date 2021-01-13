@@ -1,3 +1,12 @@
+.single .hentry {
+  /* display: block !important; */
+}
+
+.k2k-sidebar .post-thumbnail .post-edit-link {
+  padding-top: 5px;
+  padding-bottom: 5px;
+}
+
 .level-stars {
   font-size: 0.6rem;
   color: #cf8031;

@@ -17,42 +17,36 @@
 			$taxonomies   = [];
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-level',
+					'taxonomy'   => 'k2k-grammar-level',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-book',
+					'taxonomy'   => 'k2k-grammar-book',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-part-of-speech',
+					'taxonomy'   => 'k2k-grammar-part-of-speech',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-expression',
+					'taxonomy'   => 'k2k-grammar-expression',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-usage',
-					'hide_empty' => false,
-				)
-			);
-			$taxonomies[] = get_terms(
-				array(
-					'taxonomy'   => 'k2k-phrase-type',
+					'taxonomy'   => 'k2k-grammar-usage',
 					'hide_empty' => false,
 				)
 			);
 
-			$icons = [ '⚡️', '📗', '⚙️', '🗣', '👐', '🏷' ];
+			$icons = [ '⚡️', '📗', '⚙️', '🗣', '👐' ];
 
 			if ( ! empty( $taxonomies ) ) :
 				?>
@@ -63,7 +57,11 @@
 				$i = 0;
 				foreach ( $taxonomies as $t ) :
 
-					$tax_name = ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( substr( $t[0]->taxonomy, 3 ) ) ) );
+					if ( empty( $t ) ) {
+						continue;
+					}
+
+					$tax_name = ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( substr( $t[0]->taxonomy, 11 ) ) ) );
 					?>
 
 					<div class="k2k-filter">
@@ -88,7 +86,7 @@
 							$t = $category->taxonomy;
 							?>
 
-							<option value="<?php echo esc_url( get_home_url() ) . '/' . esc_attr( substr( $t, 4 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
+							<option value="<?php echo esc_url( get_home_url() ) . '/grammar/' . esc_attr( substr( $t, 12 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
 								<?php echo esc_html( $category->name ) . ' (' . esc_attr( $category->count ) . ')'; ?>
 							</option>
 

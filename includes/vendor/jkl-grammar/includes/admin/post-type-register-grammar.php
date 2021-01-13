@@ -112,7 +112,7 @@ function k2k_remove_taxonomy_meta_boxes_grammar() {
 	remove_meta_box( 'k2k-grammar-bookdiv', 'k2k-grammar', 'side' );
 	remove_meta_box( 'tagsdiv-k2k-grammar-tenses', 'k2k-grammar', 'side' );
 	remove_meta_box( 'tagsdiv-k2k-grammar-part-of-speech', 'k2k-grammar', 'side' );
-	remove_meta_box( 'tagsdiv-k2k-grammar-exp', 'k2k-grammar', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-grammar-expression', 'k2k-grammar', 'side' );
 
 }
 add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_grammar' );
