@@ -42,14 +42,13 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once 'includes/functions-vocabulary.php';
 require_once 'includes/template-tags-vocabulary.php';
 
-/* Post Type management */
-require_once 'includes/admin/post-type-register-vocabulary.php';
-require_once 'includes/admin/metabox-register-vocabulary.php';
-
-/** Taxonomies
+/* Taxonomies */
 require_once 'includes/admin/taxonomy-register-vocab-level.php';
 require_once 'includes/admin/taxonomy-register-vocab-part-of-speech.php';
 require_once 'includes/admin/taxonomy-register-vocab-topic.php';
-*/
 require_once 'includes/admin/taxonomy-register-vocab-group.php';
+
+/* Post Type management */
+require_once 'includes/admin/post-type-register-vocabulary.php';
+require_once 'includes/admin/metabox-register-vocabulary.php';
 

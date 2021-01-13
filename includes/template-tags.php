@@ -198,7 +198,16 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 
 	// Get the Current Post Type (ex: 'k2k-grammar').
 	$post_type_here = substr( get_post_type( get_the_ID() ), 4 ); // Remove 'k2k-'.
+	if ( 'vocabulary' === $post_type_here ) {
+		$post_type_here = 'vocab';
+	}
 	$taxonomy       = substr( $taxonomy, 4 ); // Remove 'k2k-'.
+
+	// Get out of here if the meta we are seeking doesn't exist.
+	if ( ! array_key_exists( $taxonomy, $meta ) ) {
+		return;
+	}
+
 	$count          = 0;
 	$tax_term       = $single ? $meta[ $taxonomy ] : $meta[ $taxonomy ][ $count ];
 
@@ -217,7 +226,10 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 	// If there is only one item.
 	if ( $single || count( $meta[ $taxonomy ] ) === 1 ) {
 
-		$classnames = 'button' === $type ? 'btn button' : 'k2k-part-of-speech' === $taxonomy ? 'tag-button' : '';
+		$classnames = 'button' === $type ? 'btn button'
+										: 'k2k-grammar-part-of-speech' === $taxonomy ? 'tag-button'
+										: 'k2k-vocab-part-of-speech' === $taxonomy ? 'tag-button'
+										: '';
 		$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
 									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
 

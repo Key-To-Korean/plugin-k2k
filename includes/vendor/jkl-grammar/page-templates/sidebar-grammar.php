@@ -46,7 +46,7 @@
 				)
 			);
 
-			$icons = [ '⚡️', '📗', '⚙️', '🗣', '👐' ];
+			$icons = [ '⚡️', '📗', '🗣', '👐', '⚙️' ];
 
 			if ( ! empty( $taxonomies ) ) :
 				?>
@@ -112,9 +112,11 @@
 
 				<!-- Search -->
 				<div class="k2k-index-search">
-					<span class="k2k-index-link"><a href="<?php echo esc_url( home_url() ); ?>/grammar/">
-						<i class="fas fa-bars" title="<?php esc_html_e( 'Grammar Index', 'k2k' ); ?>"></i>
-					</a></span>
+					<span class="k2k-index-link">
+						<a href="<?php echo esc_url( home_url() ); ?>/grammar/">
+							<span class="index-home grammar" title="<?php esc_html_e( 'Grammar Index', 'k2k' ); ?>">🏠</span>
+						</a>
+					</span>
 					<?php display_grammar_search_form(); ?>
 				</div>
 

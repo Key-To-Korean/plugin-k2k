@@ -2,7 +2,7 @@
   /* display: block !important; */
 }
 
-.k2k-sidebar .post-thumbnail .post-edit-link {
+.archive-posts-grid .post-thumbnail .post-edit-link {
   padding-top: 5px;
   padding-bottom: 5px;
 }
@@ -36,6 +36,11 @@ li.part-of-speech a {
 
 .archive .k2k-taxonomies {
   display: block;
+}
+
+.k2k-filter select {
+  max-width: 125px;
+  min-width: 100px;
 }
 
 .k2k-taxonomy-list {
@@ -112,9 +117,9 @@ li.part-of-speech a {
 }
 
 .k2k-index-link {
-  font-size: 0.9rem;
-  margin-right: 1rem;
-  margin-top: 0.5rem;
+  font-size: 1.5rem;
+  margin-right: 0.5rem;
+  margin-top: -0.25rem;
 }
 
 .k2k-search {
@@ -128,7 +133,7 @@ li.part-of-speech a {
   font-weight: 900;
   font-size: 0.8rem;
   position: absolute;
-  top: 0.5rem;
+  top: 0.25rem;
   left: 0.75rem;
 }
 

@@ -67,27 +67,27 @@ function k2k_register_new_terms_grammar_tenses() {
 	$terms    = array(
 		'0' => array(
 			'name'        => __( 'Past', 'k2k' ),
-			'slug'        => 'tense-past',
+			'slug'        => 'grammar-past-tense',
 			'description' => __( 'Past Grammar Tense', 'k2k' ),
 		),
 		'1' => array(
 			'name'        => __( 'Present', 'k2k' ),
-			'slug'        => 'tense-present',
+			'slug'        => 'grammar-present-tense',
 			'description' => __( 'Present Grammar Tense', 'k2k' ),
 		),
 		'2' => array(
 			'name'        => __( 'Future', 'k2k' ),
-			'slug'        => 'tense-future',
+			'slug'        => 'grammar-future-tense',
 			'description' => __( 'Future Grammar Tense', 'k2k' ),
 		),
 		'3' => array(
 			'name'        => __( 'Supposition', 'k2k' ),
-			'slug'        => 'tense-supposition',
+			'slug'        => 'grammar-supposition-tense',
 			'description' => __( 'Supposition', 'k2k' ),
 		),
 		'4' => array(
 			'name'        => __( 'Continuous', 'k2k' ),
-			'slug'        => 'tense-continuous',
+			'slug'        => 'grammar-continuous-tense',
 			'description' => __( 'Continuous Grammar Tense', 'k2k' ),
 		),
 	);

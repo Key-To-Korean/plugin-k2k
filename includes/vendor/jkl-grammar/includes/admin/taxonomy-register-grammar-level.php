@@ -74,12 +74,12 @@ function k2k_register_new_terms_grammar_level() {
 		'2' => array(
 			'name'        => __( 'Intermediate', 'k2k' ),
 			'slug'        => 'grammar-intermediate',
-			'description' => __( 'Intermediate Level', 'k2k' ),
+			'description' => __( 'Intermediate Grammar Level', 'k2k' ),
 		),
 		'3' => array(
 			'name'        => __( 'Advanced', 'k2k' ),
 			'slug'        => 'grammar-advanced',
-			'description' => __( 'Advanced Level', 'k2k' ),
+			'description' => __( 'Advanced Grammar Level', 'k2k' ),
 		),
 	);
 

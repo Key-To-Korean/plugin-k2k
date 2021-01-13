@@ -63,26 +63,26 @@ add_action( 'init', 'k2k_register_taxonomy_grammar_ps' );
  */
 function k2k_register_new_terms_grammar_ps() {
 
-	$taxonomy = 'k2k-part-of-speech';
+	$taxonomy = 'k2k-grammar-part-of-speech';
 	$terms    = array(
 		'0' => array(
 			'name'        => __( 'Noun', 'k2k' ),
-			'slug'        => 'grammar-use-noun',
+			'slug'        => 'grammar-noun',
 			'description' => __( 'Grammar that uses Nouns', 'k2k' ),
 		),
 		'1' => array(
 			'name'        => __( 'Verb', 'k2k' ),
-			'slug'        => 'grammar-use-verb',
+			'slug'        => 'grammar-verb',
 			'description' => __( 'Grammar that uses Verbs', 'k2k' ),
 		),
 		'2' => array(
 			'name'        => __( 'Adjective', 'k2k' ),
-			'slug'        => 'grammar-use-adjective',
+			'slug'        => 'grammar-adjective',
 			'description' => __( 'Grammar that uses Adjectives', 'k2k' ),
 		),
 		'3' => array(
 			'name'        => __( 'Adverb', 'k2k' ),
-			'slug'        => 'grammar-use-adverb',
+			'slug'        => 'grammar-adverb',
 			'description' => __( 'Grammar that uses Adverbs', 'k2k' ),
 		),
 	);
@@ -105,9 +105,6 @@ function k2k_register_new_terms_grammar_ps() {
 		}
 	}
 }
-if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) &&
-		// Only register Level terms if Vocab or Grammar are enabled.
-		( 'on' === k2k_get_option( 'k2k_enable_grammar' ) )
-) {
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) && 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
 	add_action( 'init', 'k2k_register_new_terms_grammar_ps' );
 }
