@@ -201,15 +201,15 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 	if ( 'vocabulary' === $post_type_here ) {
 		$post_type_here = 'vocab';
 	}
-	$taxonomy       = substr( $taxonomy, 4 ); // Remove 'k2k-'.
+	$taxonomy = substr( $taxonomy, 4 ); // Remove 'k2k-'.
 
 	// Get out of here if the meta we are seeking doesn't exist.
 	if ( ! array_key_exists( $taxonomy, $meta ) ) {
 		return;
 	}
 
-	$count          = 0;
-	$tax_term       = $single ? $meta[ $taxonomy ] : $meta[ $taxonomy ][ $count ];
+	$count    = 0;
+	$tax_term = $single ? $meta[ $taxonomy ] : $meta[ $taxonomy ][ $count ];
 
 	// Useful for debugging.
 	$meta_data = array(

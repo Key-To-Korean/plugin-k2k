@@ -60,24 +60,15 @@ add_action( 'init', 'k2k_register_taxonomy_vocab_topic' );
 
 /**
  * Add Terms to taxonomy.
+ */
 function k2k_register_new_terms_vocab_topic() {
 
 	$taxonomy = 'k2k-vocab-topic';
 	$terms    = array(
 		'0' => array(
-			'name'        => __( 'Negation', 'k2k' ),
-			'slug'        => 'expression-negation',
-			'description' => __( 'Negation expressions', 'k2k' ),
-		),
-		'1' => array(
-			'name'        => __( 'Particles', 'k2k' ),
-			'slug'        => 'expression-particles',
-			'description' => __( 'Particles, articles, markers', 'k2k' ),
-		),
-		'2' => array(
-			'name'        => __( 'Listing', 'k2k' ),
-			'slug'        => 'expression-listing',
-			'description' => __( 'Listing expressions', 'k2k' ),
+			'name'        => __( 'General Vocab', 'k2k' ),
+			'slug'        => 'vocab-topic-general',
+			'description' => __( 'General Vocabulary terms.', 'k2k' ),
 		),
 	);
 
@@ -102,4 +93,3 @@ function k2k_register_new_terms_vocab_topic() {
 if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) && 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
 	add_action( 'init', 'k2k_register_new_terms_vocab_topic' );
 }
- */

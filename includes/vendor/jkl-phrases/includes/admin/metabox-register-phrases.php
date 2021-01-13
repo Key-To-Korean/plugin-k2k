@@ -61,10 +61,10 @@ function k2k_register_metabox_phrases() {
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'   => esc_html__( 'Related Hanja', 'k2k' ),
-			'desc'   => esc_html__( 'Add hanja from or related to the phrase here.', 'k2k' ),
-			'id'     => $prefix . 'hanja',
-			'type'   => 'text',
+			'name' => esc_html__( 'Related Hanja', 'k2k' ),
+			'desc' => esc_html__( 'Add hanja from or related to the phrase here.', 'k2k' ),
+			'id'   => $prefix . 'hanja',
+			'type' => 'text',
 		)
 	);
 
@@ -77,7 +77,7 @@ function k2k_register_metabox_phrases() {
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
 			'id'       => $prefix . 'topic',
 			'type'     => 'taxonomy_radio_inline',
-			'taxonomy' => 'k2k-topic', // Taxonomy Slug.
+			'taxonomy' => 'k2k-phrase-topic', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
 		)
 	);
@@ -87,11 +87,11 @@ function k2k_register_metabox_phrases() {
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'    => esc_html__( 'Detailed Explanation', 'k2k' ),
+			'name'            => esc_html__( 'Detailed Explanation', 'k2k' ),
 			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
-			'id'      => $prefix . 'wysiwyg',
-			'type'    => 'wysiwyg',
-			'options' => array(
+			'id'              => $prefix . 'wysiwyg',
+			'type'            => 'wysiwyg',
+			'options'         => array(
 				'wpautop'       => true,
 				'media_buttons' => true,
 				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
@@ -101,15 +101,15 @@ function k2k_register_metabox_phrases() {
 	);
 
 	/**
-	 * Info - Expression Selection
+	 * Info - Phrase Type
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'     => esc_html__( 'Expression', 'k2k' ),
+			'name'     => esc_html__( 'Phrase Type', 'k2k' ),
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'       => $prefix . 'expression',
-			'type'     => 'taxonomy_multicheck',
-			'taxonomy' => 'k2k-expression', // Taxonomy Slug.
+			'id'       => $prefix . 'type',
+			'type'     => 'taxonomy_radio_inline',
+			'taxonomy' => 'k2k-phrase-type', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
 		)
 	);

@@ -62,34 +62,15 @@ add_action( 'init', 'k2k_register_taxonomy_vocab_group' );
 
 /**
  * Add Terms to taxonomy.
-function k2k_register_new_terms_phrase_type() {
+ */
+function k2k_register_new_terms_vocab_group() {
 
-	$taxonomy = 'k2k-phrase-type';
+	$taxonomy = 'k2k-vocab-group';
 	$terms    = array(
 		'0' => array(
-			'name'        => __( 'Idiom', 'k2k' ),
-			'slug'        => 'phrase-type-idiom',
-			'description' => __( 'Idiomatic phrases', 'k2k' ),
-		),
-		'1' => array(
-			'name'        => __( 'Proverb', 'k2k' ),
-			'slug'        => 'phrase-type-proverb',
-			'description' => __( 'Proverbs', 'k2k' ),
-		),
-		'2' => array(
-			'name'        => __( 'Dialect', 'k2k' ),
-			'slug'        => 'phrase-type-dialect',
-			'description' => __( 'Expressions and phrases specific to certain dialects and regions.', 'k2k' ),
-		),
-		'3' => array(
-			'name'        => __( 'Common', 'k2k' ),
-			'slug'        => 'phrase-type-common',
-			'description' => __( 'Commonly used expressions and phrases.', 'k2k' ),
-		),
-		'4' => array(
-			'name'        => __( 'Slang', 'k2k' ),
-			'slug'        => 'phrase-type-slang',
-			'description' => __( 'Slang expressions and phrases.', 'k2k' ),
+			'name'        => __( 'All Vocab', 'k2k' ),
+			'slug'        => 'vocab-group-all',
+			'description' => __( 'A basic starting point for ordering vocabulary.', 'k2k' ),
 		),
 	);
 
@@ -111,7 +92,6 @@ function k2k_register_new_terms_phrase_type() {
 		}
 	}
 }
-if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) && 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
-	add_action( 'init', 'k2k_register_new_terms_phrase_type' );
+if ( 'on' === k2k_get_option( 'k2k_use_default_terms' ) && 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
+	add_action( 'init', 'k2k_register_new_terms_vocab_group' );
 }
-*/

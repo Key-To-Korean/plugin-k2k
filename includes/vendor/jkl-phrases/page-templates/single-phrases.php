@@ -40,17 +40,6 @@ get_header(); ?>
 						?>
 					</hgroup>
 
-					<!-- Phrases Taxonomy Meta -->
-					<?php
-					if ( array_key_exists( 'expression', $meta ) || array_key_exists( 'topic', $meta ) ) :
-						?>
-						<div class="entry-meta phrases-meta">
-							<?php display_phrases_entry_meta( $meta ); ?>
-						</div><!-- .entry-meta -->
-						<?php
-					endif;
-					?>
-
 					<?php gaya_post_thumbnail(); ?>
 
 				</header><!-- .entry-header -->
@@ -63,6 +52,11 @@ get_header(); ?>
 					dynamic_sidebar( 'widget-ad-pre-post' );
 				endif;
 				?>
+
+				<!-- Phrases Taxonomy Meta -->
+				<div class="entry-meta phrases-meta">
+					<?php display_phrases_entry_meta( $meta ); ?>
+				</div><!-- .entry-meta -->
 
 				<!-- Phrases Post Content -->
 				<div class="entry-content">
@@ -119,9 +113,6 @@ get_header(); ?>
 					gaya_jp_related_posts();
 				}
 
-				// echo '<pre></pre><pre>';
-				// var_dump( $meta );
-				// echo '</pre>';
 				?>
 			</article><!-- #post-<?php the_ID(); ?> -->
 

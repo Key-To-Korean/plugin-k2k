@@ -88,14 +88,14 @@ add_filter( 'template_include', 'k2k_template', 1 );
  * Custom Taxonomy page
  *
  * @param string $tax_template The Taxonomy Template filename.
- */
 function k2k_custom_taxonomy_pages( $tax_template ) {
 	// if ( is_tax( 'level' ) ) {.
 		$tax_template = dirname( __FILE__ ) . '/taxonomy-level.php';
 	// }
 	return $tax_template;
 }
-// add_filter( 'taxonomy_template', 'k2k_custom_taxonomy_pages' );.
+// add_filter( 'taxonomy_template', 'k2k_custom_taxonomy_pages' );
+ */
 
 /**
  * Enqueue ReactJS and other scripts
