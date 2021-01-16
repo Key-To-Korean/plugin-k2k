@@ -45,6 +45,7 @@ require_once 'includes/template-tags-phrases.php';
 /* Include Grammar Taxonomies */
 require_once 'includes/admin/taxonomy-register-phrase-type.php';
 require_once 'includes/admin/taxonomy-register-phrase-topic.php';
+require_once 'includes/admin/taxonomy-register-phrase-keywords.php';
 
 /* Post Type management */
 require_once 'includes/admin/post-type-register-phrases.php';

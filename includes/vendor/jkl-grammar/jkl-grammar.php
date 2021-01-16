@@ -47,10 +47,10 @@ require_once 'includes/template-tags-grammar.php';
  * @link https://cnpagency.com/blog/the-right-way-to-do-wordpress-custom-taxonomy-rewrites/
  */
 require_once 'includes/admin/taxonomy-register-grammar-level.php';
-require_once 'includes/admin/taxonomy-register-grammar-part-of-speech.php';
-require_once 'includes/admin/taxonomy-register-grammar-expression.php';
 require_once 'includes/admin/taxonomy-register-grammar-book.php';
+require_once 'includes/admin/taxonomy-register-grammar-part-of-speech.php';
 require_once 'includes/admin/taxonomy-register-grammar-tenses.php';
+require_once 'includes/admin/taxonomy-register-grammar-expression.php';
 require_once 'includes/admin/taxonomy-register-grammar-usage.php';
 
 /* Post Type management */

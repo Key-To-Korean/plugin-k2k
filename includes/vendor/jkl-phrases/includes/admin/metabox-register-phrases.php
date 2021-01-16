@@ -114,4 +114,18 @@ function k2k_register_metabox_phrases() {
 		)
 	);
 
+	/**
+	 * Info - Keywords
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Keywords', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'keywords',
+			'type'     => 'taxonomy_radio_inline',
+			'taxonomy' => 'k2k-phrase-keywords', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
 }

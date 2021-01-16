@@ -87,7 +87,8 @@ function jkl_phrases_get_meta_data() {
 	$term_prefix        = 'k2k_taxonomy_';
 	$phrases_taxonomies = array( // Taxonomy Data.
 		'k2k-phrase-topic',        // Book (multiple).
-		'k2k-phrase-type',         // Phrase Type.
+		'k2k-phrase-type',         // Phrase Type (1).
+		'k2k-phrase-keywords',     // Keywords (multiple).
 	);
 
 	foreach ( $phrases_taxonomies as $taxonomy ) {

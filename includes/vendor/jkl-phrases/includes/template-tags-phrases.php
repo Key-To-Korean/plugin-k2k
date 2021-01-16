@@ -93,11 +93,19 @@ function display_phrases_entry_meta( $meta ) {
 		echo '</ul>';
 	}
 
-	// Expression.
+	// Type.
 	if ( array_key_exists( 'phrase-type', $meta ) ) {
 		echo '<ul class="k2k-taxonomy-list type-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Phrase Type: ', 'k2k' ) . '</li>';
 		display_meta_buttons( $meta, 'k2k-phrase-type' );
+		echo '</ul>';
+	}
+
+	// Keywords.
+	if ( array_key_exists( 'phrase-keywords', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list type-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Keywords: ', 'k2k' ) . '</li>';
+		display_meta_buttons( $meta, 'k2k-phrase-keywords' );
 		echo '</ul>';
 	}
 

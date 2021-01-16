@@ -132,33 +132,6 @@ function k2k_scripts() {
 		}
 	}
 
-	/* Phrases Scripts */
-	if ( 'k2k-phrases' === get_post_type() ) {
-		wp_enqueue_style( 'k2k-phrases-style', plugins_url( 'vendor/jkl-phrases/css/phrases.css', __FILE__ ), array(), '20191008' );
-
-		if ( is_singular( 'k2k-phrases' ) ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-phrases-script', plugins_url( 'vendor/jkl-phrases/js/phrases.js', __FILE__ ), array(), '20191008', true );
-		}
-	}
-
-	/* Reading Scripts */
-	if ( 'k2k-reading' === get_post_type() ) {
-		wp_enqueue_style( 'k2k-reading-style', plugins_url( 'vendor/jkl-reading/css/reading.css', __FILE__ ), array(), '20191008' );
-
-		if ( is_singular( 'k2k-reading' ) ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-reading-script', plugins_url( 'vendor/jkl-reading/js/reading.js', __FILE__ ), array(), '20191008', true );
-		}
-	}
-
-	/* Writing Scripts */
-	if ( 'k2k-writing' === get_post_type() ) {
-		wp_enqueue_style( 'k2k-writing-style', plugins_url( 'vendor/jkl-writing/css/writing.css', __FILE__ ), array(), '20191008' );
-
-		if ( is_singular( 'k2k-writing' ) ) { // Still loading on archive pages though...
-			wp_enqueue_script( 'k2k-writing-script', plugins_url( 'vendor/jkl-writing/js/writing.js', __FILE__ ), array(), '20191008', true );
-		}
-	}
-
 }
 add_action( 'wp_enqueue_scripts', 'k2k_scripts' );
 
