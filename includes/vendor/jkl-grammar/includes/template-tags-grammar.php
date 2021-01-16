@@ -32,7 +32,7 @@ function display_grammar_search_form() {
  *
  * @param string $taxonomy The taxonomy to display post navigation for.
  */
-function display_grammar_navigation( $taxonomy = 'k2k-level' ) {
+function display_grammar_navigation( $taxonomy = 'k2k-grammar-level' ) {
 	?>
 	<nav id="nav-above" class="navigation post-navigation grammar-navigation" role="navigation">
 		<p class="screen-reader-text"><?php esc_html_e( 'Grammar Navigation', 'k2k' ); ?></p>

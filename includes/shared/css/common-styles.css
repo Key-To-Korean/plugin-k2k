@@ -2,17 +2,17 @@
   /* display: block !important; */
 }
 
+.k2k-vocabulary .entry-meta,
+.k2k-grammar .entry-meta,
+.k2k-phrases .entry-meta,
+.k2k-reading .entry-meta,
+.k2k-writing .entry-meta {
+  padding-top: 1rem;
+}
+
 .archive-posts-grid .post-thumbnail .post-edit-link {
   padding-top: 5px;
   padding-bottom: 5px;
-}
-
-.level-stars {
-  font-size: 0.6rem;
-  color: #cf8031;
-  position: absolute;
-  top: 1rem;
-  left: 2rem;
 }
 
 span.part-of-speech,
@@ -70,6 +70,20 @@ li.part-of-speech a {
 .k2k-taxonomy-item-stars {
   background: transparent;
   padding: 0;
+}
+
+.level-stars {
+  font-size: 0.6rem;
+  color: #cf8031;
+  position: absolute;
+  top: 1rem;
+  left: 2rem;
+}
+
+.entry-meta .level-stars {
+  position: absolute;
+  left: 0;
+  top: -6px;
 }
 
 .k2k-taxonomy-item-title {

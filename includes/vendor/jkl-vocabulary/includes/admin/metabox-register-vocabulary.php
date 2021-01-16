@@ -31,7 +31,7 @@ function k2k_register_metabox_vocabulary() {
 			'tabs'         => array(
 				array(
 					'id'     => 'tab-info',
-					'icon'   => 'dashicons-editor-alignleft',
+					'icon'   => 'dashicons-info',
 					'title'  => esc_html__( 'Info', 'k2k' ),
 					'fields' => array(
 						$prefix . 'subtitle',

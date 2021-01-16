@@ -75,7 +75,9 @@ define(
 		'k2k-reading-length',
 		'k2k-reading-genre',
 		'k2k-reading-topic',
+		'k2k-reading-type',
 		'k2k-reading-source',
+		'k2k-reading-author',
 
 		// Writing.
 		'k2k-writing-level',
@@ -175,8 +177,7 @@ if ( 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
  * Reading (LWT) Post Type.
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_reading' ) ) {
-	require_once K2K_PATH . 'includes/vendor/jkl-reading/post-type-reading-register.php';
-	// require_once K2K_PATH . 'includes/vendor/jkl-reading/metabox-reading-register.php';.
+	require_once K2K_PATH . 'includes/vendor/jkl-reading/jkl-reading.php';
 }
 
 /**
