@@ -120,26 +120,47 @@ function k2k_index_header() {
 
 /**
  * Output HTML stars based on Difficulty Level.
+ *
+ * @param String $cpt_type The Custom Post Type we need stars for.
  */
-function display_level_stars() {
+function display_level_stars( $cpt_type = 'grammar' ) {
 
-	$level = get_the_terms( get_the_ID(), 'k2k-level' )[0]; // Translation, Image.
+	$level = get_the_terms( get_the_ID(), 'k2k-' . $cpt_type . '-level' )[0]; // Translation, Image.
+
+	// Get out if this item doesn't have a level set.
+	if ( null === $level ) {
+		return;
+	}
+
 	$stars = '';
 
-	switch ( $level->slug ) {
-		case 'level-advanced':
-			$stars  = '<div class="level-stars" title="' . esc_html__( 'Advanced Level', 'k2k' ) . '">';
+	$level_arr   = explode( '-', $level->slug );
+	$level_cpt   = $level_arr[0];
+	$level_value = $level_arr[1];
+
+	switch ( $level_value ) {
+		case 'advanced':
+			/* translators: %s is the Custom Post Type */
+			$stars  = '<div class="level-stars" title="' . sprintf( esc_html__( 'Advanced %s Level', 'k2k' ), esc_attr( $level_cpt ) ) . '">';
 			$stars .= '<i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>';
 			$stars .= '</div>';
 			break;
-		case 'level-intermediate':
-			$stars  = '<div class="level-stars" title="' . esc_html__( 'Intermediate Level', 'k2k' ) . '">';
+		case 'intermediate':
+			/* translators: %s is the Custom Post Type */
+			$stars  = '<div class="level-stars" title="' . sprintf( esc_html__( 'Intermediate %s Level', 'k2k' ), esc_attr( $level_cpt ) ) . '">';
 			$stars .= '<i class="fas fa-star"></i><i class="fas fa-star"></i>';
 			$stars .= '</div>';
 			break;
-		case 'level-beginner':
-			$stars  = '<div class="level-stars" title="' . esc_html__( 'Beginner Level', 'k2k' ) . '">';
+		case 'beginner':
+			/* translators: %s is the Custom Post Type */
+			$stars  = '<div class="level-stars" title="' . sprintf( esc_html__( 'Beginner %s Level', 'k2k' ), esc_attr( $level_cpt ) ) . '">';
 			$stars .= '<i class="fas fa-star"></i>';
+			$stars .= '</div>';
+			break;
+		case 'true':
+			/* translators: %s is the Custom Post Type */
+			$stars  = '<div class="level-stars" title="' . sprintf( esc_html__( 'True Beginner %s Level', 'k2k' ), esc_attr( $level_cpt ) ) . '">';
+			$stars .= '<i class="fas fa-half-star"></i>';
 			$stars .= '</div>';
 			break;
 		default:
@@ -175,9 +196,28 @@ function get_custom_meta( $meta_key ) {
  */
 function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link' ) {
 
-	$taxonomy = substr( $taxonomy, 4 );
+	// Get the Current Post Type (ex: 'k2k-grammar').
+	$post_type_here = substr( get_post_type( get_the_ID() ), 4 ); // Remove 'k2k-'.
+	if ( 'vocabulary' === $post_type_here ) {
+		$post_type_here = 'vocab';
+	}
+	$taxonomy = substr( $taxonomy, 4 ); // Remove 'k2k-'.
+
+	// Get out of here if the meta we are seeking doesn't exist.
+	if ( ! array_key_exists( $taxonomy, $meta ) ) {
+		return;
+	}
+
 	$count    = 0;
 	$tax_term = $single ? $meta[ $taxonomy ] : $meta[ $taxonomy ][ $count ];
+
+	// Useful for debugging.
+	$meta_data = array(
+		'meta'     => $meta,
+		'taxonomy' => $taxonomy,
+		'cpt_here' => $post_type_here,
+		'tax_term' => $tax_term,
+	);
 
 	if ( ! array_key_exists( $taxonomy, $meta ) ) {
 		return;
@@ -186,7 +226,10 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 	// If there is only one item.
 	if ( $single || count( $meta[ $taxonomy ] ) === 1 ) {
 
-		$classnames = 'button' === $type ? 'btn button' : 'k2k-part-of-speech' === $taxonomy ? 'tag-button' : '';
+		$classnames = 'button' === $type ? 'btn button'
+										: 'k2k-grammar-part-of-speech' === $taxonomy ? 'tag-button'
+										: 'k2k-vocab-part-of-speech' === $taxonomy ? 'tag-button'
+										: '';
 		$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
 									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
 

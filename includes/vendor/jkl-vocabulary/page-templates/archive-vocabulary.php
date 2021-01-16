@@ -23,7 +23,7 @@ get_header(); ?>
 
 		/* Start the "Official" Loop */
 		$count = 0;
-		while ( have_posts() && $count < 100 ) :
+		while ( have_posts() && $count < 40 ) :
 			the_post();
 
 			/*
@@ -39,15 +39,19 @@ get_header(); ?>
 			 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
 			 */
 			?>
-			<li class="vocabulary-item">
+			<li class="vocabulary-item" style="grid-columns: span 4;">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-					<?php $part_of_speech = get_part_of_speech(); ?>
+					<?php
+					$part_of_speech = get_vocab_part_of_speech();
 
-					<a class="part-of-speech part-of-speech-circle <?php echo esc_attr( strtolower( $part_of_speech['name'] ) ); ?>"
-						href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
-						<?php echo esc_attr( $part_of_speech['letter'] ); ?>
-					</a>
+					if ( '' !== $part_of_speech ) {
+						?>
+						<a class="part-of-speech part-of-speech-circle <?php echo esc_attr( strtolower( $part_of_speech['name'] ) ); ?>"
+							href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
+							<?php echo esc_attr( $part_of_speech['letter'] ); ?>
+						</a>
+					<?php } ?>
 
 					<header class="entry-header">
 						<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
@@ -83,8 +87,7 @@ get_header(); ?>
 		/*
 			Finally a Posts Navigation
 		*/
-		the_posts_navigation();
-		// // gaya_paging_nav();
+		gaya_paging_nav();
 
 		else :
 

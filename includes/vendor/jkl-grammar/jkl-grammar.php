@@ -9,7 +9,7 @@
  * Plugin Name: JKL Grammar
  * Plugin URI: https://github.com/jekkilekki/plugin-k2k
  * Description: Custom plugin to manage Grammar Post Types and Taxonomies.
- * Version: 1.0.0
+ * Version: 1.2.0
  * Author: jekkilekki
  * Author URI: https://aaron.kr
  * License: GPL v2 or later
@@ -42,12 +42,20 @@ if ( ! defined( 'ABSPATH' ) ) {
 require_once 'includes/functions-grammar.php';
 require_once 'includes/template-tags-grammar.php';
 
+/*
+ * Include Grammar Taxonomies BEFORE Post Type to be sure of the right permalink structure
+ * @link https://cnpagency.com/blog/the-right-way-to-do-wordpress-custom-taxonomy-rewrites/
+ */
+require_once 'includes/admin/taxonomy-register-grammar-level.php';
+require_once 'includes/admin/taxonomy-register-grammar-part-of-speech.php';
+require_once 'includes/admin/taxonomy-register-grammar-expression.php';
+require_once 'includes/admin/taxonomy-register-grammar-book.php';
+require_once 'includes/admin/taxonomy-register-grammar-tenses.php';
+require_once 'includes/admin/taxonomy-register-grammar-usage.php';
+
 /* Post Type management */
 require_once 'includes/admin/post-type-register-grammar.php';
 require_once 'includes/admin/metabox-register-grammar.php';
 
-/* Include Grammar Taxonomies */
-require_once 'includes/admin/taxonomy-register-grammar-book.php';
-require_once 'includes/admin/taxonomy-register-grammar-tenses.php';
-require_once 'includes/admin/taxonomy-register-grammar-usage.php';
+/* Additional meta - only for Grammar books */
 require_once 'includes/admin/metabox-taxonomy-weblinks.php';

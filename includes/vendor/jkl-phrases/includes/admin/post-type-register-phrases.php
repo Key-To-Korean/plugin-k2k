@@ -109,7 +109,7 @@ add_filter( 'manage_k2k-phrases_posts_columns', 'k2k_change_post_list_column_phr
 function k2k_remove_taxonomy_meta_boxes_phrases() {
 
 	remove_meta_box( 'tagsdiv-k2k-expression', 'k2k-phrases', 'side' );
-	remove_meta_box( 'tagsdiv-k2k-topic', 'k2k-phrases', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-phrase-topic', 'k2k-phrases', 'side' );
 
 }
 add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_phrases' );

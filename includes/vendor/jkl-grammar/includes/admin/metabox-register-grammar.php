@@ -100,7 +100,7 @@ function k2k_register_metabox_grammar() {
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
 			'id'       => $prefix . 'level',
 			'type'     => 'taxonomy_radio_inline',
-			'taxonomy' => 'k2k-level', // Taxonomy Slug.
+			'taxonomy' => 'k2k-grammar-level', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
 		)
 	);
@@ -125,7 +125,7 @@ function k2k_register_metabox_grammar() {
 			'name'     => esc_html__( 'Part of Speech', 'k2k' ),
 			'id'       => $prefix . 'part_of_speech',
 			'type'     => 'taxonomy_multicheck_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-part-of-speech', // Taxonomy Slug.
+			'taxonomy' => 'k2k-grammar-part-of-speech', // Taxonomy Slug.
 		)
 	);
 
@@ -137,7 +137,7 @@ function k2k_register_metabox_grammar() {
 			'name'     => esc_html__( 'Tenses', 'k2k' ),
 			'id'       => $prefix . 'tenses',
 			'type'     => 'taxonomy_multicheck_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-tenses', // Taxonomy Slug.
+			'taxonomy' => 'k2k-grammar-tenses', // Taxonomy Slug.
 		)
 	);
 
@@ -178,7 +178,7 @@ function k2k_register_metabox_grammar() {
 			'name'     => esc_html__( 'Usage type', 'k2k' ),
 			'id'       => $prefix . 'usage_tax',
 			'type'     => 'taxonomy_multicheck_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-usage', // Taxonomy Slug.
+			'taxonomy' => 'k2k-grammar-usage', // Taxonomy Slug.
 		)
 	);
 	$k2k_metabox->add_group_field(
@@ -205,8 +205,8 @@ function k2k_register_metabox_grammar() {
 		array(
 			'name'     => esc_html__( 'Expression', 'k2k' ),
 			'id'       => $prefix . 'expression',
-			'type'     => 'taxonomy_radio', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-expression', // Taxonomy Slug.
+			'type'     => 'taxonomy_radio', // Or taxonomy_multicheck_inline/taxonomy_multicheck_hierarchical.
+			'taxonomy' => 'k2k-grammar-expression', // Taxonomy Slug.
 		)
 	);
 
@@ -520,7 +520,7 @@ function k2k_register_metabox_grammar() {
 			'name'     => esc_html__( 'Found in these Books', 'k2k' ),
 			'id'       => $prefix . 'book',
 			'type'     => 'taxonomy_multicheck_hierarchical', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-book', // Taxonomy Slug.
+			'taxonomy' => 'k2k-grammar-book', // Taxonomy Slug.
 		)
 	);
 

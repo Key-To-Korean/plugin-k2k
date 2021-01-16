@@ -17,13 +17,7 @@
 			$taxonomies   = [];
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-expression',
-					'hide_empty' => false,
-				)
-			);
-			$taxonomies[] = get_terms(
-				array(
-					'taxonomy'   => 'k2k-topic',
+					'taxonomy'   => 'k2k-phrase-topic',
 					'hide_empty' => false,
 				)
 			);
@@ -34,7 +28,7 @@
 				)
 			);
 
-			$icons = [ '🗣', '👐', '🏷' ];
+			$icons = [ '🏷', '🗣' ];
 
 			if ( ! empty( $taxonomies ) ) :
 				?>
@@ -70,7 +64,7 @@
 							$t = $category->taxonomy;
 							?>
 
-							<option value="<?php echo esc_url( get_home_url() ) . '/' . esc_attr( substr( $t, 4 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
+							<option value="<?php echo esc_url( get_home_url() ) . '/phrases/' . esc_attr( substr( $t, 11 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
 								<?php echo esc_html( $category->name ) . ' (' . esc_attr( $category->count ) . ')'; ?>
 							</option>
 
@@ -96,9 +90,11 @@
 
 				<!-- Search -->
 				<div class="k2k-index-search">
-					<span class="k2k-index-link"><a href="<?php echo esc_url( home_url() ); ?>/phrases/">
-						<i class="fas fa-bars" title="<?php esc_html_e( 'Phrases Index', 'k2k' ); ?>"></i>
-					</a></span>
+					<span class="k2k-index-link">
+						<a href="<?php echo esc_url( home_url() ); ?>/phrases/">
+							<span class="index-home phrases" title="<?php esc_html_e( 'Phrases Index', 'k2k' ); ?>">🏠</span>
+						</a>
+					</span>
 					<?php display_phrases_search_form(); ?>
 				</div>
 

@@ -54,7 +54,7 @@ function k2k_register_taxonomy_phrase_type() {
 		'meta_box_cb'           => false, // Working on removing metabox in the sidebar.
 	);
 
-	register_taxonomy( 'k2k-phrase-type', array( 'k2k-grammar', 'k2k-phrases' ), $args );
+	register_taxonomy( 'k2k-phrase-type', 'k2k-phrases', $args );
 
 }
 add_action( 'init', 'k2k_register_taxonomy_phrase_type' );

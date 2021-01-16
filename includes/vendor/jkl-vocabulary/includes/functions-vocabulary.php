@@ -17,7 +17,7 @@ if ( ! defined( 'ABSPATH' ) ) {
  */
 function jkl_vocabulary_more_archive_posts( $query ) {
 	if ( $query->is_main_query() && is_archive() && is_post_type_archive( 'k2k-vocabulary' ) ) {
-		$query->set( 'posts_per_page', '100' );
+		$query->set( 'posts_per_page', '60' );
 	}
 }
 add_action( 'pre_get_posts', 'jkl_vocabulary_more_archive_posts' );
@@ -57,13 +57,13 @@ function get_vocab_subtitle() {
 	return get_post_meta( get_the_ID(), 'k2k_vocab_meta_subtitle', true );
 }
 
-if ( ! function_exists( 'get_part_of_speech' ) ) {
+if ( ! function_exists( 'get_vocab_part_of_speech' ) ) {
 	/**
 	 * Function to retrieve the (first letter of the) Part of Speech.
 	 */
-	function get_part_of_speech() {
+	function get_vocab_part_of_speech() {
 
-		$ps = get_the_terms( get_the_ID(), 'k2k-part-of-speech' );
+		$ps = get_the_terms( get_the_ID(), 'k2k-vocab-part-of-speech' );
 
 		if ( ! $ps ) {
 			return '';
@@ -129,11 +129,11 @@ function jkl_vocabulary_get_meta_data() {
 
 	// Term Meta.
 	$term_prefix      = 'k2k_taxonomy_';
-	$vocab_taxonomies = array( // Taxonomy Data.
-		'k2k-level',             // Level (1).
-		'k2k-part-of-speech',    // Part of Speech (1).
-		'k2k-topic',             // Topic.
-		'k2k-vocab-group',       // Vocab Group.
+	$vocab_taxonomies = array(    // Taxonomy Data.
+		'k2k-vocab-level',          // Level (1).
+		'k2k-vocab-part-of-speech', // Part of Speech (1).
+		'k2k-vocab-topic',          // Topic.
+		'k2k-vocab-group',          // Vocab Group.
 	);
 
 	foreach ( $vocab_taxonomies as $taxonomy ) {

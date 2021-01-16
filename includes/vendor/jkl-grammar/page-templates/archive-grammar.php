@@ -65,12 +65,12 @@ get_header(); ?>
 		<hr />
 		<section class="page-section archive-taxonomies grammar-taxonomies-list">
 			<?php
-				display_taxonomy_list( 'k2k-level', __( 'All Levels', 'k2k' ) );
-				display_taxonomy_list( 'k2k-book', __( 'All Books', 'k2k' ) );
-				display_taxonomy_list( 'k2k-part-of-speech', __( 'All Parts of Speech', 'k2k' ) );
-				display_taxonomy_list( 'k2k-expression', __( 'All Expressions', 'k2k' ) );
-				display_taxonomy_list( 'k2k-usage', __( 'All Usages', 'k2k' ) );
-				display_taxonomy_list( 'k2k-phrase-type', __( 'All Phrase Types', 'k2k' ) );
+				display_taxonomy_list( 'k2k-grammar-level', __( 'All Levels', 'k2k' ) );
+				display_taxonomy_list( 'k2k-grammar-book', __( 'All Books', 'k2k' ) );
+				display_taxonomy_list( 'k2k-grammar-part-of-speech', __( 'All Parts of Speech', 'k2k' ) );
+				display_taxonomy_list( 'k2k-grammar-expressionression', __( 'All Expressions', 'k2k' ) );
+				display_taxonomy_list( 'k2k-grammar-usage', __( 'All Usages', 'k2k' ) );
+				display_taxonomy_list( 'k2k-grammar-tenses', __( 'All Tenses', 'k2k' ) );
 			?>
 		</section>
 
@@ -83,6 +83,7 @@ get_header(); ?>
 					'before_page_number' => '<span class="meta-nav screen-reader-text">' . __( 'Page', 'k2k' ) . ' </span>',
 				)
 			);
+			gaya_paging_nav();
 
 			// If no content, include the "No posts found" template.
 			else :

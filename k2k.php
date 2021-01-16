@@ -47,17 +47,44 @@ define( 'K2K_POST_TYPES', array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases',
 define(
 	'K2K_TAXES', // Used in /includes/shared/metaboxes/metabox-taxonomy-extras.php.
 	array(
+		// WordPress.
 		'category',
 		'post_tag',
-		'k2k-expression',
-		'k2k-book',
-		'k2k-tenses',
-		'k2k-usage',
-		'k2k-level',
-		'k2k-part-of-speech',
-		'k2k-phrase-type',
-		'k2k-topic',
+
+		// Vocabulary.
+		'k2k-vocab-level',
+		'k2k-vocab-part-of-speech',
+		'k2k-vocab-topic',
 		'k2k-vocab-group',
+
+		// Grammar.
+		'k2k-grammar-level',
+		'k2k-grammar-part-of-speech',
+		'k2k-grammar-expression',
+		'k2k-grammar-book',
+		'k2k-grammar-tenses',
+		'k2k-grammar-usage',
+
+		// Phrases.
+		'k2k-phrase-topic',
+		'k2k-phrase-type',
+		'k2k-phrase-source',
+
+		// Reading.
+		'k2k-reading-level',
+		'k2k-reading-length',
+		'k2k-reading-genre',
+		'k2k-reading-topic',
+		'k2k-reading-type',
+		'k2k-reading-source',
+		'k2k-reading-author',
+
+		// Writing.
+		'k2k-writing-level',
+		'k2k-writing-length',
+		'k2k-writing-topic',
+		'k2k-writing-type',
+		'k2k-writing-source',
 	)
 );
 define(
@@ -123,10 +150,10 @@ if ( k2k_any_cpt_enabled() ) {
 	require_once K2K_PATH . 'includes/template-tags.php';
 
 	// Include Shared Taxonomies.
-	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
-	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
-	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
-	require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-topic.php';          // Vocabulary, Phrases.
+	// require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-level.php';          // Grammar, Vocabulary, Phrases.
+	// require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-part-of-speech.php'; // Grammar, Vocabulary.
+	// require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-expression.php';     // Grammar, Phrases.
+	// require_once K2K_PATH . 'includes/shared/taxonomies/taxonomy-register-topic.php';          // Vocabulary, Phrases.
 	require_once K2K_PATH . 'includes/shared/metaboxes/metabox-taxonomy-term-color.php';
 
 }
@@ -150,8 +177,7 @@ if ( 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
  * Reading (LWT) Post Type.
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_reading' ) ) {
-	require_once K2K_PATH . 'includes/vendor/jkl-reading/post-type-reading-register.php';
-	// require_once K2K_PATH . 'includes/vendor/jkl-reading/metabox-reading-register.php';.
+	require_once K2K_PATH . 'includes/vendor/jkl-reading/jkl-reading.php';
 }
 
 /**
@@ -195,9 +221,44 @@ function k2k_register_everything() {
  */
 function k2k_remove_everything() {
 
+	// Unregister Post Types.
 	unregister_post_type( 'k2k-vocabulary' );
 	unregister_post_type( 'k2k-grammar' );
 	unregister_post_type( 'k2k-phrases' );
+
+	// Unregister Taxonomies.
+	// Vocabulary.
+	unregister_taxonomy( 'k2k-vocab-level' );
+	unregister_taxonomy( 'k2k-vocab-part-of-speech' );
+	unregister_taxonomy( 'k2k-vocab-topic' );
+	unregister_taxonomy( 'k2k-vocab-group' );
+
+	// Grammar.
+	unregister_taxonomy( 'k2k-grammar-level' );
+	unregister_taxonomy( 'k2k-grammar-part-of-speech' );
+	unregister_taxonomy( 'k2k-grammar-expression' );
+	unregister_taxonomy( 'k2k-grammar-book' );
+	unregister_taxonomy( 'k2k-grammar-tenses' );
+	unregister_taxonomy( 'k2k-grammar-usage' );
+
+	// Phrases.
+	unregister_taxonomy( 'k2k-phrase-topic' );
+	unregister_taxonomy( 'k2k-phrase-type' );
+	unregister_taxonomy( 'k2k-phrase-source' );
+
+	// Reading.
+	unregister_taxonomy( 'k2k-reading-level' );
+	unregister_taxonomy( 'k2k-reading-length' );
+	unregister_taxonomy( 'k2k-reading-genre' );
+	unregister_taxonomy( 'k2k-reading-topic' );
+	unregister_taxonomy( 'k2k-reading-source' );
+
+	// Writing.
+	unregister_taxonomy( 'k2k-writing-level' );
+	unregister_taxonomy( 'k2k-writing-length' );
+	unregister_taxonomy( 'k2k-writing-topic' );
+	unregister_taxonomy( 'k2k-writing-type' );
+	unregister_taxonomy( 'k2k-writing-source' );
 
 	flush_rewrite_rules();
 

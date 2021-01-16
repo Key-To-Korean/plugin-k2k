@@ -86,18 +86,18 @@ function display_phrase_subtitle( $meta = [] ) {
 function display_phrases_entry_meta( $meta ) {
 
 	// Topic.
-	if ( array_key_exists( 'topic', $meta ) ) {
+	if ( array_key_exists( 'phrase-topic', $meta ) ) {
 		echo '<ul class="k2k-taxonomy-list topic-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Topic: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-topic' );
+		display_meta_buttons( $meta, 'k2k-phrase-topic' );
 		echo '</ul>';
 	}
 
 	// Expression.
-	if ( array_key_exists( 'expression', $meta ) ) {
-		echo '<ul class="k2k-taxonomy-list expression-taxonomy">';
-		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Expression: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-expression' );
+	if ( array_key_exists( 'phrase-type', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list type-taxonomy">';
+		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Phrase Type: ', 'k2k' ) . '</li>';
+		display_meta_buttons( $meta, 'k2k-phrase-type' );
 		echo '</ul>';
 	}
 

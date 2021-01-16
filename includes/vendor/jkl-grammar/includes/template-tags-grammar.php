@@ -32,7 +32,7 @@ function display_grammar_search_form() {
  *
  * @param string $taxonomy The taxonomy to display post navigation for.
  */
-function display_grammar_navigation( $taxonomy = 'k2k-level' ) {
+function display_grammar_navigation( $taxonomy = 'k2k-grammar-level' ) {
 	?>
 	<nav id="nav-above" class="navigation post-navigation grammar-navigation" role="navigation">
 		<p class="screen-reader-text"><?php esc_html_e( 'Grammar Navigation', 'k2k' ); ?></p>
@@ -104,45 +104,45 @@ function display_grammar_video( $url ) {
 function display_grammar_entry_meta( $meta ) {
 
 	// Level.
-	if ( array_key_exists( 'level', $meta ) ) {
-		echo '<ul class="k2k-taxonomy-list level-taxonomy">';
+	if ( array_key_exists( 'grammar-level', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list grammar-level-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Level: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-level' );
+		display_meta_buttons( $meta, 'k2k-grammar-level' );
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-stars">';
-		display_level_stars();
+		display_level_stars( 'grammar' );
 		echo '</li>';
 		echo '</ul>';
 	}
 
 	// Book.
-	if ( array_key_exists( 'book', $meta ) ) {
-		echo '<ul class="k2k-taxonomy-list book-taxonomy">';
+	if ( array_key_exists( 'grammar-book', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list grammar-book-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Book: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-book' );
+		display_meta_buttons( $meta, 'k2k-grammar-book' );
 		echo '</ul>';
 	}
 
 	// Expression.
-	if ( array_key_exists( 'expression', $meta ) ) {
-		echo '<ul class="k2k-taxonomy-list expression-taxonomy">';
+	if ( array_key_exists( 'grammar-expression', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list grammar-expression-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Expressing: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-expression' );
+		display_meta_buttons( $meta, 'k2k-grammar-expression' );
 		echo '</ul>';
 	}
 
 	// Part of Speech.
-	if ( array_key_exists( 'part-of-speech', $meta ) ) {
-		echo '<ul class="k2k-taxonomy-list part-of-speech-taxonomy">';
+	if ( array_key_exists( 'grammar-part-of-speech', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list grammar-part-of-speech-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Parts of Speech: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-part-of-speech' );
+		display_meta_buttons( $meta, 'k2k-grammar-part-of-speech' );
 		echo '</ul>';
 	}
 
 	// Usage.
-	if ( array_key_exists( 'usage', $meta ) ) {
-		echo '<ul class="k2k-taxonomy-list usage-taxonomy">';
+	if ( array_key_exists( 'grammar-usage', $meta ) ) {
+		echo '<ul class="k2k-taxonomy-list grammar-usage-taxonomy">';
 		echo '<li class="k2k-taxonomy-item k2k-taxonomy-item-title">' . esc_html__( 'Usage: ', 'k2k' ) . '</li>';
-		display_meta_buttons( $meta, 'k2k-usage' );
+		display_meta_buttons( $meta, 'k2k-grammar-usage' );
 		echo '</ul>';
 	}
 

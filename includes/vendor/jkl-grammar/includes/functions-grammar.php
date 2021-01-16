@@ -63,13 +63,13 @@ function get_grammar_subtitle() {
 	return get_post_meta( get_the_ID(), 'k2k_grammar_meta_subtitle', true );
 }
 
-if ( ! function_exists( 'get_part_of_speech' ) ) {
+if ( ! function_exists( 'get_grammar_part_of_speech' ) ) {
 	/**
 	 * Function to retrieve the (first letter of the) Part of Speech.
 	 */
-	function get_part_of_speech() {
+	function get_grammar_part_of_speech() {
 
-		$ps = get_the_terms( get_the_ID(), 'k2k-part-of-speech' );
+		$ps = get_the_terms( get_the_ID(), 'k2k-gramamr-part-of-speech' );
 
 		if ( ! $ps ) {
 			return '';
@@ -110,7 +110,7 @@ if ( ! function_exists( 'get_part_of_speech' ) ) {
 }
 
 /**
- * Function to return all Post and Meta data for JKL grammar Post Types in a single array.
+ * Function to return all Post and Meta data for JKL Grammar Post Types in a single array.
  *
  * @return array All the Post and Meta data.
  */
@@ -156,13 +156,12 @@ function jkl_grammar_get_meta_data() {
 	// Term Meta.
 	$term_prefix        = 'k2k_taxonomy_';
 	$grammar_taxonomies = array( // Taxonomy Data.
-		'k2k-level',             // Level (1).
-		'k2k-part-of-speech',    // Part of Speech (multiple).
-		'k2k-expression',        // Expression (1).
-		'k2k-book',              // Book (multiple).
-		'k2k-tenses',            // Tenses (multiple).
-		'k2k-usage',             // Usage (multiple?).
-		'k2k-phrase-type',       // Phrase Type.
+		'k2k-grammar-level',          // Level (1).
+		'k2k-grammar-part-of-speech', // Part of Speech (multiple).
+		'k2k-grammar-expression',     // Expression (1).
+		'k2k-grammar-book',           // Book (multiple).
+		'k2k-grammar-tenses',         // Tenses (multiple).
+		'k2k-grammar-usage',          // Usage (multiple).
 	);
 
 	foreach ( $grammar_taxonomies as $taxonomy ) {
@@ -256,7 +255,7 @@ function jkl_has_related_grammar_meta( $meta = [] ) {
 function get_part_of_speech_term_color() {
 
 	$parts_of_speech = array();
-	$tax_terms       = get_terms( array( 'taxonomy' => 'k2k-part-of-speech' ) ); // Get ALL part of speech colors, not just for current post.
+	$tax_terms       = get_terms( array( 'taxonomy' => 'k2k-grammar-part-of-speech' ) ); // Get ALL part of speech colors, not just for current post.
 	// get_the_terms( get_the_ID(), 'k2k-part-of-speech' ); // Translation, Image, Weblink, or Term Color.
 
 	// If there are no terms saved for this taxonomy, move on to the next one.

@@ -17,19 +17,19 @@
 			$taxonomies   = [];
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-level',
+					'taxonomy'   => 'k2k-vocab-level',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-part-of-speech',
+					'taxonomy'   => 'k2k-vocab-part-of-speech',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-topic',
+					'taxonomy'   => 'k2k-vocab-topic',
 					'hide_empty' => false,
 				)
 			);
@@ -40,7 +40,7 @@
 				)
 			);
 
-			$icons = [ '⚡️', '🗣', '📗', '⚙️', '', '👐', '🏷' ];
+			$icons = [ '⚡️', '🗣', '🏷', '📗' ];
 
 			if ( ! empty( $taxonomies ) ) :
 				?>
@@ -51,7 +51,11 @@
 				$i = 0;
 				foreach ( $taxonomies as $t ) :
 
-					$tax_name = ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( substr( $t[0]->taxonomy, 3 ) ) ) );
+					if ( empty( $t ) ) {
+						continue;
+					}
+
+					$tax_name = ucwords( str_replace( array( '-', '_' ), ' ', esc_attr( substr( $t[0]->taxonomy, 9 ) ) ) );
 					?>
 
 					<div class="k2k-filter">
@@ -76,7 +80,7 @@
 							$t = $category->taxonomy;
 							?>
 
-							<option value="<?php echo esc_url( get_home_url() ) . '/' . esc_attr( substr( $t, 4 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
+							<option value="<?php echo esc_url( get_home_url() ) . '/vocabulary/' . esc_attr( substr( $t, 10 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
 								<?php echo esc_html( $category->name ) . ' (' . esc_attr( $category->count ) . ')'; ?>
 							</option>
 
@@ -102,9 +106,11 @@
 
 				<!-- Search -->
 				<div class="k2k-index-search">
-					<span class="k2k-index-link"><a href="<?php echo esc_url( home_url() ); ?>/vocabulary/">
-						<i class="fas fa-bars" title="<?php esc_html_e( 'Vocabulary Index', 'k2k' ); ?>"></i>
-					</a></span>
+					<span class="k2k-index-link">
+						<a href="<?php echo esc_url( home_url() ); ?>/vocabulary/">
+							<span class="index-home vocabulary" title="<?php esc_html_e( 'Vocabulary Index', 'k2k' ); ?>">🏠</span>
+						</a>
+					</span>
 					<?php display_vocabulary_search_form(); ?>
 				</div>
 

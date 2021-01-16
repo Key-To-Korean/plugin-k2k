@@ -21,7 +21,11 @@ if ( ! defined( 'ABSPATH' ) ) {
 function k2k_filters( $post_type, $which ) {
 
 	// Apply this only on a specific post type.
-	if ( ! ( 'k2k-grammar' === $post_type || 'k2k-vocabulary' === $post_type || 'k2k-phrases' === $post_type ) ) {
+	if ( ! ( 'k2k-grammar' === $post_type
+				|| 'k2k-vocabulary' === $post_type
+				|| 'k2k-phrases' === $post_type )
+				|| 'k2k-reading' === $post_type
+				|| 'k2k-writing' === $post_type ) {
 		return;
 	}
 

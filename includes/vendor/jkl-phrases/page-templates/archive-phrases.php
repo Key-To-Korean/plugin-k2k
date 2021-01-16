@@ -41,7 +41,7 @@ get_header(); ?>
 			<li class="phrases-post">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-				<?php gaya_archive_thumbnails(); ?>
+				<?php /* gaya_archive_thumbnails(); */ ?>
 
 				<header class="entry-header">
 					<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
@@ -66,8 +66,7 @@ get_header(); ?>
 		<hr />
 		<section class="page-section archive-taxonomies phrases-taxonomies-list">
 			<?php
-				display_taxonomy_list( 'k2k-expression', __( 'All Expressions', 'k2k' ) );
-				display_taxonomy_list( 'k2k-topic', __( 'All Topics', 'k2k' ) );
+				display_taxonomy_list( 'k2k-phrase-topic', __( 'All Topics', 'k2k' ) );
 				display_taxonomy_list( 'k2k-phrase-type', __( 'All Phrase Types', 'k2k' ) );
 			?>
 		</section>

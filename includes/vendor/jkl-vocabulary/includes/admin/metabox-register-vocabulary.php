@@ -31,7 +31,7 @@ function k2k_register_metabox_vocabulary() {
 			'tabs'         => array(
 				array(
 					'id'     => 'tab-info',
-					'icon'   => 'dashicons-editor-alignleft',
+					'icon'   => 'dashicons-info',
 					'title'  => esc_html__( 'Info', 'k2k' ),
 					'fields' => array(
 						$prefix . 'subtitle',
@@ -80,7 +80,7 @@ function k2k_register_metabox_vocabulary() {
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
 			'id'       => $prefix . 'level',
 			'type'     => 'taxonomy_radio_inline',
-			'taxonomy' => 'k2k-level', // Taxonomy Slug.
+			'taxonomy' => 'k2k-vocab-level', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
 		)
 	);
@@ -93,7 +93,7 @@ function k2k_register_metabox_vocabulary() {
 			'name'     => esc_html__( 'Part of Speech', 'k2k' ),
 			'id'       => $prefix . 'part_of_speech',
 			'type'     => 'taxonomy_radio_inline', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-part-of-speech', // Taxonomy Slug.
+			'taxonomy' => 'k2k-vocab-part-of-speech', // Taxonomy Slug.
 		)
 	);
 
@@ -163,7 +163,7 @@ function k2k_register_metabox_vocabulary() {
 			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
 			'id'       => $prefix . 'topic',
 			'type'     => 'taxonomy_multicheck_inline',
-			'taxonomy' => 'k2k-topic', // Taxonomy Slug.
+			'taxonomy' => 'k2k-vocab-topic', // Taxonomy Slug.
 			// 'inline'   => true, // Toggles display to inline.
 		)
 	);

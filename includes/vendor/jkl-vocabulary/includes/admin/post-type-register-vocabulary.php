@@ -108,9 +108,9 @@ add_filter( 'manage_k2k-vocabulary_posts_columns', 'k2k_change_post_list_column_
  */
 function k2k_remove_taxonomy_meta_boxes_vocab() {
 
-	remove_meta_box( 'k2k-leveldiv', 'k2k-vocabulary', 'side' );
-	remove_meta_box( 'tagsdiv-k2k-part-of-speech', 'k2k-vocabulary', 'side' );
-	remove_meta_box( 'tagsdiv-k2k-topic', 'k2k-vocabulary', 'side' );
+	remove_meta_box( 'k2k-vocab-leveldiv', 'k2k-vocabulary', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-vocab-part-of-speech', 'k2k-vocabulary', 'side' );
+	remove_meta_box( 'tagsdiv-k2k-vocab-topic', 'k2k-vocabulary', 'side' );
 
 }
 add_action( 'admin_menu', 'k2k_remove_taxonomy_meta_boxes_vocab' );

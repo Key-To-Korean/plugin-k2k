@@ -76,7 +76,7 @@ function get_unlinked_terms( $meta ) {
 		return $output;
 
 	} else {
-		return '<li>' . $meta . '</li>';
+		return '<li class="related-term unlinked">' . $meta . '</li>';
 	}
 
 }

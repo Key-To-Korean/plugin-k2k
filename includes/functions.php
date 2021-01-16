@@ -52,6 +52,7 @@ function k2k_template( $template_path ) {
 		return $template_path;
 	}
 
+	// Remove 'k2k-' from Post Type name.
 	$post_type_slug = explode( '-', $post_type_here )[1];
 
 	if ( is_single() ) {
@@ -68,27 +69,13 @@ function k2k_template( $template_path ) {
 		}
 	} elseif ( is_archive() ) {
 
-		if ( is_tax() ) {
-			$theme_template_archive  = locate_template( array( 'taxonomy-' . $post_type_slug . '.php' ), false );
-			$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/taxonomy-' . $post_type_slug . '.php';
-			$shared_template_archive = plugin_dir_path( __FILE__ ) . 'shared/page-templates/taxonomy-k2k.php';
+		$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
+		$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
 
-			if ( $theme_template_archive ) {
-				$template_path = $theme_template_archive;
-			} elseif ( file_exists( $plugin_template_archive ) ) {
-				$template_path = $plugin_template_archive;
-			} else {
-				$template_path = $shared_template_archive;
-			}
-		} else {
-			$theme_template_archive  = locate_template( array( 'archive-' . $post_type_slug . '.php' ), false );
-			$plugin_template_archive = plugin_dir_path( __FILE__ ) . 'vendor/jkl-' . $post_type_slug . '/page-templates/archive-' . $post_type_slug . '.php';
-
-			if ( $theme_template_archive ) {
-				$template_path = $theme_template_archive;
-			} elseif ( file_exists( $plugin_template_archive ) ) {
-				$template_path = $plugin_template_archive;
-			}
+		if ( $theme_template_archive ) {
+			$template_path = $theme_template_archive;
+		} elseif ( file_exists( $plugin_template_archive ) ) {
+			$template_path = $plugin_template_archive;
 		}
 	}
 
@@ -101,14 +88,14 @@ add_filter( 'template_include', 'k2k_template', 1 );
  * Custom Taxonomy page
  *
  * @param string $tax_template The Taxonomy Template filename.
- */
 function k2k_custom_taxonomy_pages( $tax_template ) {
 	// if ( is_tax( 'level' ) ) {.
 		$tax_template = dirname( __FILE__ ) . '/taxonomy-level.php';
 	// }
 	return $tax_template;
 }
-// add_filter( 'taxonomy_template', 'k2k_custom_taxonomy_pages' );.
+// add_filter( 'taxonomy_template', 'k2k_custom_taxonomy_pages' );
+ */
 
 /**
  * Enqueue ReactJS and other scripts
@@ -239,3 +226,50 @@ function k2k_get_wysiwyg_output( $meta_key, $post_id = 0 ) {
 	return $content;
 
 }
+
+/**
+ * Customize Taxonomy Query using Post Meta.
+ *
+ * @param Object $query The main WordPress query.
+ */
+function k2k_filter_taxonomy_archive_query( $query ) {
+
+	// Check that we're in a taxonomy archive and using the main query.
+	if ( is_tax() ) {
+
+		// Check that our Custom Post Type filter is set.
+		if ( isset( $_GET['tax-cpt'], $_POST['tax-filter-nonce'] )
+				&& wp_verify_nonce( sanitize_key( $_POST['tax-filter-nonce'] ), $filter_nonce ) ) :
+
+			$filter_post_type = array();
+			$filter_nonce     = wp_create_nonce( 'tax-filter-nonce' );
+
+			// Add the Vocabulary CPT to the WP_Query.
+			if ( 'vocab' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-vocabulary';
+			}
+			// Add the Grammar CPT to the WP_Query.
+			if ( 'grammar' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-grammar';
+			}
+			// Add the Phrases CPT to the WP_Query.
+			if ( 'phrases' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-phrases';
+			}
+			// Add the Reading CPT to the WP_Query.
+			if ( 'reading' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-reading';
+			}
+			// Add the Writing CPT to the WP_Query.
+			if ( 'writing' === $_GET['tax-cpt'] ) {
+				$filter_post_type[] = 'k2k-writing';
+			}
+
+			$query->set( 'post_type', $filter_post_type );
+
+		endif;
+	}
+	$query->set( 'posts_per_page', 50 );
+
+}
+add_action( 'pre_get_posts', 'k2k_filter_taxonomy_archive_query' );
