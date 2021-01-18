@@ -43,8 +43,6 @@ It is visible anew every morning on the homepage in a dark box, and adds checkbo
 
 Therefore, individual users are tracked with browser cookies on a daily basis. There is also an option to "Reset Daily Challenge" if the user accidentally completes it too early.
 
----
-
 <div style="display: flex;"><div style="background: #ff8f00; width: 20px; height: 20px;"></div><div style="background: #ffab00; width: 20px; height: 20px;"></div></div>
 
 ### [JKL Vocabulary](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-vocabulary)
@@ -55,8 +53,6 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 - Part of Speech
 - Topics
 - Groups (Vocabulary Lists)
-
----
 
 <div style="display: flex;"><div style="background: #e91e63; width: 20px; height: 20px;"></div><div style="background: #ff4081; width: 20px; height: 20px;"></div></div>
 
@@ -71,8 +67,6 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 - Expressing
 - Usage
 
----
-
 <div style="display: flex;"><div style="background: #9c27b0; width: 20px; height: 20px;"></div><div style="background: #e040fb; width: 20px; height: 20px;"></div></div>
 
 ### [JKL Phrases](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-phrases)
@@ -82,8 +76,6 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 - Type
 - Topic
 - Keywords
-
----
 
 <div style="display: flex;"><div style="background: #0277bd; width: 20px; height: 20px;"></div><div style="background: #00b0ff; width: 20px; height: 20px;"></div></div>
 
@@ -99,8 +91,6 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 - Author
 - Length
 
----
-
 <div style="display: flex;"><div style="background: #00897b; width: 20px; height: 20px;"></div><div style="background: #00bfa5; width: 20px; height: 20px;"></div></div>
 
 ### [JKL Writing](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-writing)
@@ -111,9 +101,7 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 - Topic
 - Type
 - Length
-- Source
-
----
+- Sourc
 
 <div style="display: flex;"><div style="background: #8795A1; width: 20px; height: 20px;"></div><div style="background: #A9BAC9; width: 20px; height: 20px;"></div></div>
 
@@ -126,8 +114,6 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 - Type
 - Length
 - Source
-
----
 
 ## Details
 

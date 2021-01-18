@@ -38,11 +38,6 @@ li.part-of-speech a {
   display: block;
 }
 
-.k2k-filter select {
-  max-width: 125px;
-  min-width: 100px;
-}
-
 .k2k-taxonomy-list {
   margin: 0;
   padding: 0;
@@ -121,7 +116,8 @@ li.part-of-speech a {
   margin-bottom: 0.5rem;
   font-size: 0.8rem;
   height: 30px;
-  max-width: 150px;
+  max-width: 125px;
+  min-width: 100px;
   overflow: visible;
 }
 
@@ -202,7 +198,7 @@ li.part-of-speech a {
   list-style: none;
   margin: 0 auto 1.5rem;
   padding: 0;
-  max-width: 60rem;
+  /* max-width: 60rem; */
 }
 
 .sentences li {

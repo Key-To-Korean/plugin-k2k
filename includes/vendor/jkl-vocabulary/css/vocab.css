@@ -76,6 +76,13 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 }
 
 /* Single Pages */
+.k2k-vocabulary .entry-meta .level-stars {
+  position: static;
+  left: auto;
+  top: auto;
+  text-align: left;
+}
+
 .entry-header {
   position: relative;
 }
@@ -87,7 +94,10 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 
 .entry-meta {
   border-radius: 20px;
-  box-shadow: rgba(100, 108, 116, 0.2) 0px 1px 1px, rgba(100, 108, 116, 0.2) 0px 1px 1px, rgba(100, 108, 116, 0.2) 0px 2px 2px, rgba(100, 108, 116, 0.2) 0px 4px 4px, rgba(100, 108, 116, 0.2) 0px 8px 8px, rgba(100, 108, 116, 0.2) 0px 16px 16px;
+  box-shadow: rgba(100, 108, 116, 0.2) 0px 1px 1px,
+    rgba(100, 108, 116, 0.2) 0px 1px 1px, rgba(100, 108, 116, 0.2) 0px 2px 2px,
+    rgba(100, 108, 116, 0.2) 0px 4px 4px, rgba(100, 108, 116, 0.2) 0px 8px 8px,
+    rgba(100, 108, 116, 0.2) 0px 16px 16px;
   padding: 2rem;
   text-align: center;
   max-width: 25rem;
@@ -100,11 +110,16 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 
 .entry-meta:hover {
   transform: scale(1.05);
-  box-shadow: rgba(100, 108, 116, 0.2) 0px 2px 2px, rgba(100, 108, 116, 0.2) 0px 4px 4px, rgba(100, 108, 116, 0.2) 0px 8px 8px, rgba(100, 108, 116, 0.2) 0px 16px 16px, rgba(100, 108, 116, 0.2) 0px 32px 32px, rgba(100, 108, 116, 0.2) 0px 64px 64px;
+  box-shadow: rgba(100, 108, 116, 0.2) 0px 2px 2px,
+    rgba(100, 108, 116, 0.2) 0px 4px 4px, rgba(100, 108, 116, 0.2) 0px 8px 8px,
+    rgba(100, 108, 116, 0.2) 0px 16px 16px,
+    rgba(100, 108, 116, 0.2) 0px 32px 32px,
+    rgba(100, 108, 116, 0.2) 0px 64px 64px;
 }
 
 .entry-meta img {
-  max-width: 300px;
+  /* max-width: 300px; */
+  margin-top: -1rem !important;
 }
 
 .vocabulary-meta {
@@ -154,7 +169,7 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 
 .related-terms li:not(.related-terms-title),
 .post-part-of-speech {
-  background: rgba(135, 149, 161, .2);
+  background: rgba(135, 149, 161, 0.2);
   padding: 0 10px;
   border-radius: 30px;
   display: inline-block;

@@ -96,15 +96,15 @@ function display_vocabulary_top_meta( $meta = [] ) {
 		?>
 		<ul class="vocabulary-meta">
 		<?php
-			echo array_key_exists( 'level', $meta )
-				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['level'], 'level' ) ) . '</li>'
+			echo array_key_exists( 'vocab-level', $meta )
+				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['vocab-level'], 'level' ) ) . '</li>'
 				: '';
-			echo array_key_exists( 'part-of-speech', $meta )
-				? '<li class="k2k-taxonomy-item part-of-speech ' . esc_attr( strtolower( $meta['part-of-speech']['name'] ) ) . '">'
-					. wp_kses_post( get_vocabulary_meta_buttons( $meta['part-of-speech'], 'part-of-speech' ) ) . '</li>'
+			echo array_key_exists( 'vocab-part-of-speech', $meta )
+				? '<li class="k2k-taxonomy-item part-of-speech ' . esc_attr( strtolower( $meta['vocab-part-of-speech']['name'] ) ) . '">'
+					. wp_kses_post( get_vocabulary_meta_buttons( $meta['vocab-part-of-speech'], 'part-of-speech' ) ) . '</li>'
 				: '';
-			echo array_key_exists( 'topic', $meta )
-				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['topic'], 'topic' ) ) . '</li>'
+			echo array_key_exists( 'vocab-topic', $meta )
+				? '<li>' . wp_kses_post( get_vocabulary_meta_buttons( $meta['vocab-topic'], 'topic' ) ) . '</li>'
 				: '';
 			echo array_key_exists( 'vocab-group', $meta )
 				? '<li class="vocab-group">' . wp_kses_post( get_vocabulary_meta_buttons( $meta['vocab-group'], 'vocab-group' ) ) . '</li>'
@@ -180,7 +180,7 @@ function display_vocabulary_search_form() {
  *
  * @param string $taxonomy The taxonomy to display post navigation for.
  */
-function display_vocabulary_navigation( $taxonomy = 'k2k-level' ) {
+function display_vocabulary_navigation( $taxonomy = 'k2k-vocab-level' ) {
 	?>
 	<nav id="nav-above" class="navigation post-navigation vocabulary-navigation" role="navigation">
 		<p class="screen-reader-text"><?php esc_html_e( 'Vocabulary Navigation', 'k2k' ); ?></p>

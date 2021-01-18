@@ -123,12 +123,11 @@ function k2k_index_header() {
  *
  * @param String $cpt_type The Custom Post Type we need stars for.
  */
-function display_level_stars( $cpt_type = 'grammar' ) {
+function display_level_stars( $cpt_type = 'vocab' ) {
 
-	if ( 'k2k-vocabulary' === get_post_type( get_the_ID() ) ) {
-		$cpt_type = 'vocab';
-	}
-	$level = get_the_terms( get_the_ID(), 'k2k-' . $cpt_type . '-level' )[0]; // Translation, Image.
+	$post_type = get_post_type( get_the_ID() );
+	$meta_key  = 'vocabulary' === substr( $post_type, 4 ) ? 'vocab' : substr( $post_type, 4 );
+	$level     = get_the_terms( get_the_ID(), 'k2k-' . $meta_key . '-level' )[0]; // Translation, Image.
 
 	// Get out if this item doesn't have a level set.
 	if ( null === $level ) {
