@@ -125,6 +125,9 @@ function k2k_index_header() {
  */
 function display_level_stars( $cpt_type = 'grammar' ) {
 
+	if ( 'k2k-vocabulary' === get_post_type( get_the_ID() ) ) {
+		$cpt_type = 'vocab';
+	}
 	$level = get_the_terms( get_the_ID(), 'k2k-' . $cpt_type . '-level' )[0]; // Translation, Image.
 
 	// Get out if this item doesn't have a level set.

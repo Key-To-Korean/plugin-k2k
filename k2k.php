@@ -126,6 +126,7 @@ require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-tabs/cmb2-tabs.php';
 require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-attached-posts/cmb2-attached-posts-field.php';
 require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-switch-button/class-cmb2-switch-button.php';
 require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-grid/Cmb2GridPlugin.php';
+require_once K2K_PATH . 'includes/vendor/cmb2-extras/cmb2-field-type-tags/cmb2-field-type-tags.php';
 
 /*
  * Conditionally Load files to add additional meta data to WordPress.
@@ -184,7 +185,7 @@ if ( 'on' === k2k_get_option( 'k2k_enable_reading' ) ) {
  * Writing Post Type.
  */
 if ( 'on' === k2k_get_option( 'k2k_enable_writing' ) ) {
-	require_once K2K_PATH . 'includes/vendor/jkl-writing/post-type-writing-register.php';
+	require_once K2K_PATH . 'includes/vendor/jkl-writing/jkl-writing.php';
 	// require_once K2K_PATH . 'includes/vendor/jkl-writing/metabox-writing-register.php';.
 }
 

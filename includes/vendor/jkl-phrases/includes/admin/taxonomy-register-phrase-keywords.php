@@ -24,9 +24,9 @@ function k2k_register_taxonomy_phrases_keywords() {
 	$labels = array(
 		'name'                       => _x( 'Phrase Keywords', 'taxonomy general name', 'k2k' ),
 		'singular_name'              => _x( 'Phrase Keywords', 'taxonomy singular name', 'k2k' ),
-		'search_items'               => __( 'Search Phrase Keywordss', 'k2k' ),
-		'popular_items'              => __( 'Popular Phrase Keywordss', 'k2k' ),
-		'all_items'                  => __( 'All Phrase Keywordss', 'k2k' ),
+		'search_items'               => __( 'Search Phrase Keywords', 'k2k' ),
+		'popular_items'              => __( 'Popular Phrase Keywords', 'k2k' ),
+		'all_items'                  => __( 'All Phrase Keywords', 'k2k' ),
 		'parent_item'                => __( 'Parent Phrase Keywords', 'k2k' ),
 		'parent_item_colon'          => __( 'Parent Phrase Keywords:', 'k2k' ),
 		'edit_item'                  => __( 'Edit Phrase Keywords', 'k2k' ),
@@ -34,12 +34,12 @@ function k2k_register_taxonomy_phrases_keywords() {
 		'add_new_item'               => __( 'Add New Phrase Keywords', 'k2k' ),
 		'new_item_name'              => __( 'New Phrase Keywords Name', 'k2k' ),
 		'separate_items_with_commas' => __( 'Separate Phrase Keywordss with commas', 'k2k' ),
-		'add_or_remove_items'        => __( 'Add or remove Phrase Keywordss', 'k2k' ),
-		'choose_from_most_used'      => __( 'Choose from the most used Phrase Keywordss', 'k2k' ),
-		'not_found'                  => __( 'No Phrase Keywordss found.', 'k2k' ),
-		'menu_name'                  => __( 'Phrase Keywordss', 'k2k' ),
+		'add_or_remove_items'        => __( 'Add or remove Phrase Keywords', 'k2k' ),
+		'choose_from_most_used'      => __( 'Choose from the most used Phrase Keywords', 'k2k' ),
+		'not_found'                  => __( 'No Phrase Keywords found.', 'k2k' ),
+		'menu_name'                  => __( 'Phrase Keywords', 'k2k' ),
 		'view_item'                  => __( 'View Phrase Keywords', 'k2k' ),
-		'back_to_items'              => __( '← Back to Phrase Keywordss', 'k2k' ),
+		'back_to_items'              => __( '← Back to Phrase Keywords', 'k2k' ),
 	);
 
 	$args = array(

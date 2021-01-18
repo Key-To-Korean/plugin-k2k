@@ -2,7 +2,7 @@
 
 # K2K
 
-`Version 1.1.0`
+`Version 1.2.0`
 
 - [Plugin Page](https://github.com/jekkilekki/plugin-k2k)
 - [Author Page](https://aaron.kr/)
@@ -16,193 +16,143 @@ Requires WordPress 3.5 and PHP 5.5 or later.
 This plugin was built for my own Korean language learning site (keytokorean.com) to
 enable me to better organize the grammar points I'm studying. It includes the following helper plugins:
 
-1. CMB2 (Custom Metaboxes 2)
-	- CMB2 Tabs
-	- CMB2 Switch Button
-	- CMB2 Attached Posts
-	- [CMB2 Grid]
-	- [CMB2 Field Slider]
-2. JKL
-	- [JKL Vocabulary](#jkl-vocabulary)
-	- [JKL Grammar](#jkl-grammar)
-	- [JKL Phrases](#jkl-phrases)
-	- [JKL Writing](#jkl-writing)
-	- [JKL Reading](#jkl-reading)
+- <span style="display: inline-block; background: #22292f; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Daily Challenge](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-daily-challenge) (Coming)
+- <span style="display: inline-block; background: #ff8f00; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Vocabulary](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-vocabulary)
+- <span style="display: inline-block; background: #ff4081; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Grammar](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-grammar)
+- <span style="display: inline-block; background: #e040fb; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Phrases](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-phrases)
+- <span style="display: inline-block; background: #00b0ff; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Reading](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-reading)
+- <span style="display: inline-block; background: #00bfa5; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Writing](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-writing)
+- <span style="display: inline-block; background: #A9BAC9; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Speaking](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-speaking) (Coming)
 
 ## JKL Plugins
 
-### JKL Vocabulary
+<div style="display: flex;"><div style="background: #001628; width: 20px; height: 20px;"></div><div style="background: #22292f; width: 20px; height: 20px;"></div></div>
 
-This plugin adds a Vocabulary Custom Post Type and the following taxonomies are associated with it:
+### [JKL Daily Challenge](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-daily-challenge) (Coming)
 
-- Levels
-- Parts of Speech
+**Purpose:** An addition to the homepage, to daily present visitors with new Korean language challenges including:
+
+- 20-30 vocabulary words to review
+- 3 grammar points to learn
+- 3 new phrases to try out
+- 1 reading challenge
+- 1 writing challenge
+- 1 speaking challenge
+
+It is visible anew every morning on the homepage in a dark box, and adds checkboxes to each checklist item. After users complete each item, they check them off the list. After ALL are checked off the list, the dark box changes to reveal a congratulatory message for the day.
+
+Therefore, individual users are tracked with browser cookies on a daily basis. There is also an option to "Reset Daily Challenge" if the user accidentally completes it too early.
+
+---
+
+<div style="display: flex;"><div style="background: #ff8f00; width: 20px; height: 20px;"></div><div style="background: #ffab00; width: 20px; height: 20px;"></div></div>
+
+### [JKL Vocabulary](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-vocabulary)
+
+**Purpose:** A collection of individual words, organized into vocab groups (lists), arranged by topic, able to be pulled via the REST API for review / practice apps. Taxonomies include:
+
+- Level
+- Part of Speech
 - Topics
-- Vocabulary Group
+- Groups (Vocabulary Lists)
 
-The Vocabulary CPT includes a custom meta box (CMB2) that includes the following fields:
+---
 
-CMB2 `k2k_vocab_meta_metabox`
+<div style="display: flex;"><div style="background: #e91e63; width: 20px; height: 20px;"></div><div style="background: #ff4081; width: 20px; height: 20px;"></div></div>
 
-Info Tab
+### [JKL Grammar](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-grammar)
 
-| Name: Info Tab | ID: `tab_info` | Type: Tab |
-| --- | --- | --- |
-| Translation (EN) | `k2k_vocab_meta_subtitle` | Text |
-| Level |`k2k_vocab_meta_level` | Taxonomy |
-| Part of Speech | `k2k_vocab_meta_part_of_speech` | Taxonomy |
-| Definitions [array] | `k2k_vocab_meta_definitions` | Text (repeatable) |
-| Sentences [array] | `k2k_vocab_meta_sentences` | Group (repeatable) |
-| - Original (KO) | `k2k_vocab_meta_sentences_1` | Text |
-| - Translation (EN) | `k2k_vocab_meta_sentences_2` | Text |
-| Vocab Group | `k2k_vocab_meta_vocab_group` | Taxonomy |
+**Purpose:** A collection of Korean grammar rules, organized by level and usage, that includes related grammar points and practice exercises. To be used as a teaching tool, or quick reference guide. Taxonomies include:
 
-Related Tab
+- Level
+- Book
+- Part of Speech
+- Tenses
+- Expressing
+- Usage
 
-| Name: Related Tab | ID: `tab_related` | Type: Tab |
-| --- | --- | --- |
-| Topic | `k2k_vocab_meta_topic` | Taxonomy |
-| Related Words | `k2k_vocab_meta_related_group` | Group |
-| - Unlinked | `k2k_vocab_meta_related_unlinked` | Text |
-| - Linked | `k2k_vocab_meta_related_linked` | Attached Posts |
-| Synonyms | `k2k_vocab_meta_synonym_group` | Group |
-| - Unlinked | `k2k_vocab_meta_synonyms_unlinked` | Text |
-| - Linked | `k2k_vocab_meta_synonyms_linked` | Attached Posts |
-| Antonyms | `k2k_vocab_meta_antonym_group` | Group |
-| - Unlinked | `k2k_vocab_meta_antonyms_unlinked` | Text |
-| - Linked | `k2k_vocab_meta_antonyms_linked` | Attached Posts |
-| Hanja | `k2k_vocab_meta_hanja_group` | Group |
-| - Unlinked | `k2k_vocab_meta_hanja_unlinked` | Text |
-| - Linked | `k2k_vocab_meta_hanja_linked` | Attached Posts |
+---
 
-### JKL Grammar
+<div style="display: flex;"><div style="background: #9c27b0; width: 20px; height: 20px;"></div><div style="background: #e040fb; width: 20px; height: 20px;"></div></div>
 
-This plugin adds a Grammar Custom Post Type and the following taxonomies are associated with it:
+### [JKL Phrases](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-phrases)
+
+**Purpose:** A persona phrasebook that collects the best and most important phrases a user needs to concentrate on memorizing. Taxonomies include:
+
+- Type
+- Topic
+- Keywords
+
+---
+
+<div style="display: flex;"><div style="background: #0277bd; width: 20px; height: 20px;"></div><div style="background: #00b0ff; width: 20px; height: 20px;"></div></div>
+
+### [JKL Reading](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-reading)
+
+**Purpose:** Short and long passages collected from previous TOPIK tests and copyright free or Creative Commons sources that users can practice reading with. Also includes a popup dictionary whenever an unknown term is clicked. Taxonomies include:
 
 - Levels
-- Parts of Speech
-- Expressions
-- Books
-- Tenses
-- Usage
-- Phrase Type
+- Genres
+- Topic
+- Type
+- Source
+- Author
+- Length
 
-The Grammar CPT includes a custom meta box (CMB2) that includes the following fields:
+---
 
-CMB2 `k2k_grammar_meta_metabox`
+<div style="display: flex;"><div style="background: #00897b; width: 20px; height: 20px;"></div><div style="background: #00bfa5; width: 20px; height: 20px;"></div></div>
 
-Info Tab
+### [JKL Writing](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-writing)
 
-| Name: Info Tab | ID: `tab_info` | Type: Tab |
-| --- | --- | --- |
-| Translation (EN) | `k2k_grammar_meta_subtitle` | Text |
-| Level | `k2k_grammar_meta_level` | Taxonomy |
-| Detailed Explanation | `k2k_grammar_meta_wysiwyg` | Wysiwyg |
-| Usage | `k2k_grammar_meta_usage` | Group |
-| - Usage Type | `k2k_grammar_meta_usage_tax` | Taxonomy |
-| - Must Use | `k2k_grammar_meta_usage_mu` | Text |
-| - Prohibited | `k2k_grammar_meta_usage_no` | Text |
-| Expression | `k2k_grammar_meta_expression` | Taxonomy |
-| Book | `k2k_grammar_meta_book` | Taxonomy |
+**Purpose:** Writing topics and journal writing prompts taken from previous TOPIK or TOEIC tests. Includes suggested grammar points and phrases to include in the writing. Taxonomies include:
 
-Conjugations Tab
+- Level
+- Topic
+- Type
+- Length
+- Source
 
-| Name: Conjugations Tab | ID: `tab_conjugations` | Type: Tab |
-| --- | --- | --- |
-| Part of Speech | `k2k_grammar_meta_part_of_speech` | Taxonomy |
-| Tenses | `k2k_grammar_meta_tenses` | Taxonomy |
-| Adjective Conjugation | `k2k_grammar_meta_adjectives` | Group |
-| - Past | `k2k_grammar_meta_adjective_past` | Text |
-| - Present | `k2k_grammar_meta_adjective_present` | Text |
-| - Future | `k2k_grammar_meta_adjective_future` | Text |
-| - Supposition | `k2k_grammar_meta_adjective_supposition` | Text |
-| Verb Conjugation | `k2k_grammar_meta_verbs` | Group |
-| - Past | `k2k_grammar_meta_verb_past` | Text |
-| - Present | `k2k_grammar_meta_verb_present` | Text |
-| - Future | `k2k_grammar_meta_verb_future` | Text |
-| - Supposition | `k2k_grammar_meta_verb_supposition` | Text |
-| Noun Conjugation | `k2k_grammar_meta_nouns` | Group |
-| - Past | `k2k_grammar_meta_noun_past` | Text |
-| - Present | `k2k_grammar_meta_noun_present` | Text |
-| - Future | `k2k_grammar_meta_noun_future` | Text |
-| - Supposition | `k2k_grammar_meta_noun_supposition` | Text |
+---
 
-Sentences Tab
+<div style="display: flex;"><div style="background: #8795A1; width: 20px; height: 20px;"></div><div style="background: #A9BAC9; width: 20px; height: 20px;"></div></div>
 
-| Name: Sentences Tab | ID: `tab_sentences` | Type: Tab |
-| --- | --- | --- |
-| Past Tense Sentence | `k2k_grammar_meta_sentences_past` | Group (repeatable) |
-| - Original (KO) | `k2k_grammar_meta_sentence_1` | Text |
-| - Translation (EN) | `k2k_grammar_meta_sentence_2` | Text |
-| Present Tense Sentence | `k2k_grammar_meta_sentences_present` | Group (repeatable) |
-| - Original (KO) | `k2k_grammar_meta_sentence_1` | Text |
-| - Translation (EN) | `k2k_grammar_meta_sentence_2` | Text |
-| Future Tense Sentence | `k2k_grammar_meta_sentences_future` | Group (repeatable) |
-| - Original (KO) | `k2k_grammar_meta_sentence_1` | Text |
-| - Translation (EN) | `k2k_grammar_meta_sentence_2` | Text |
+### [JKL Speaking](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-speaking) (Coming)
 
-More Tab
+**Purpose:** Speaking topics and tips. Taxonomies include:
 
-| Name: More Tab | ID: `tab_more` | Type: Tab |
-| --- | --- | --- |
-| Practice Exercise | `k2k_grammar_meta_exercises` | Text (repeatable) |
-| Related Grammar | `k2k_grammar_meta_related_grammar` | Group |
-| - Needs Link | `k2k_grammar_meta_related_needs_link` | Checkbox |
-| - Related Grammar Points | `k2k_grammar_meta_related_grammar_points` | Attached Posts |
+- Level
+- Topic
+- Type
+- Length
+- Source
 
-### JKL Phrases
+---
 
-[Upcoming]
+## Details
 
-### JKL Writing
+**Developed for**
 
-[Upcoming]
+- [Gaya Theme](https://wordpress.org/themes/twentysixteen/) on [KeyToKorean.com](https://keytokorean.com)
 
-### JKL Reading
+**Depends on**
 
-[Upcoming]
+[CMB2](https://cmb2.io/) - Custom Meta Boxes 2 (and various add-ons) are used to build the Post Type Meta Boxes that gather data for each Vocabulary Word. See the [K2K plugin Readme](https://github.com/jekkilekki/plugin-k2k/blob/master/README.md) for more info.
 
-## Taxonomies
-
-1. Level (Beginner, etc)
-2. Book (Seoul University, Korean Grammar in Use, etc)
-3. Part of Speech (Verb, Noun, etc)
-4. Expression (frustation, excitement, etc)
-5. Usage (formal, written, spoken, etc)
-6. Tenses (past, present, future, supposition, etc)
-7. Phrase Type (prepositive, interrogative, idiom, slang, etc)
-8. Topics (Animals, Food, etc)
-9. Vocab Group (Intermediate Day 1, etc)
-
-**Tested with**
-
-- [TwentySixteen Theme](https://wordpress.org/themes/twentysixteen/)
-- [TwentySeventeen Theme](https://wordpress.org/themes/twentyseventeen/)
-
-**Supported plugins**
-
-- [WP Subtitle](https://wordpress.org/plugins/wp-subtitle/) - Changes metabox name from "Subtitle" to "Translation"
+- [CMB2 Tabs](https://github.com/rubengc/cmb2-tabs)
+- [CMB2 Switch Button](https://github.com/themevan/CMB2-Switch-Button)
+- [CMB2 Attached Posts](https://github.com/CMB2/cmb2-attached-posts)
+- \*[CMB2 Grid](https://github.com/origgami/CMB2-grid) _Not fully implemented yet_
+- \*[CMB2 Field Slider](https://github.com/mattkrupnik/cmb2-field-slider) _Under consideration_
+- \*[CMB2 Field Type Tags](https://github.com/florianbeck/cmb2-field-type-tags) _Under consideration_
 
 ### Screenshots
 
-1. Gutenberg editor screen
-
-![screenshot-1](https://github.com/jekkilekki/plugin-k2k/blob/master/assets/screenshot-1.png?raw=true)
-
-2. Classic editor screen
-
-![screenshot-2](https://github.com/jekkilekki/plugin-k2k/blob/master/assets/screenshot-2.png?raw=true)
-
-3. Archive Page
-
-![screenshot-3](https://github.com/jekkilekki/plugin-k2k/blob/master/assets/screenshot-3.png?raw=true)
+Coming soon
 
 ### Planned Upcoming Features
 
-I'm looking into adding "subtitle" support that would let me put the Title in Korean and the subtitle in English. But we'll use this for a while and see how I'm actually putting it to use and what kinds of things I feel are still needed before laying out a roadmap for future development.
-
 1. ReactJS Archive (index) page (filterable)
-2. Gutenberg block for (something?) sentences, or usage, or notes, or something?
 
 ### Translations
 
@@ -217,27 +167,27 @@ If you have created your own language pack, or have an update of an existing one
 you can send your [gettext .po or .mo file] to me so that I can bundle it in the
 plugin.
 
-### FAQs
+## FAQs
 
-#### Tips
+**Tips**
 
 As a general rule, it is always best to keep your WordPress installation and all
 Themes and Plugins fully updated in order to avoid problems with this or any other
 Themees or Plugins. I regularly update my site and test my Plugins and Themes with
 the latest version of WordPress.
 
-#### When I select something from the dropdown menus on the archive page, I get a 404 error.
+**When I select something from the dropdown menus on the archive page, I get a 404 error.**
 
 Please navigate to your WordPress Dashboard, go to `Settings -> Permalinks` and click the "Save"
 button. You just need to "flush" the permalink rewrite rules in this way.
 
-#### Can you ADD / REMOVE / CHANGE features of the plugin?
+**Can you ADD / REMOVE / CHANGE features of the plugin?**
 
 Sure, I'm always open to suggestions. Let me know what you're looking for. Feel
 free to open a GitHub Issue on the [plugin repository](https://github.com/jekkilekki/plugin-k2k/issues)
 to let me know the specific features or problems you're having.
 
-### Contact Me
+## Contact Me
 
 If you have questions about, problems with, or suggestions for improving this
 plugin, please let me know at the [WordPress.org support forums](http://wordpress.org/support/plugin/k2k)
@@ -258,6 +208,14 @@ program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fi
 Floor, Boston, MA 02110-1301 USA
 
 ## Changelog
+
+### 1.2.0 (Jan 16, 2021)
+
+- Added [CMB2](https://cmb2.io/) (managed by the [K2K plugin](https://github.com/jekkilekki/plugin-k2k/))
+- Added Phrases Custom Post Type and related taxonomies
+- Added Reading Custom Post Type and related taxonomies
+- Added Writing Custom Post Type and related taxonomies
+- Updated READMEs
 
 ### 1.1.0 (Nov 28, 2018)
 
