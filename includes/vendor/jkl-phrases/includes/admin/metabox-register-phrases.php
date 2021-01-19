@@ -48,11 +48,23 @@ function k2k_register_metabox_phrases() {
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'   => esc_html__( 'Meaning (optional)', 'k2k' ),
+			'name'   => esc_html__( 'Meaning (EN)', 'k2k' ),
 			'desc'   => esc_html__( 'If present, the meaning of the phrase will be used as the subtitle (not the literal translation above).', 'k2k' ),
 			'id'     => $prefix . 'meaning',
 			'type'   => 'text',
 			'column' => array( 'position' => 2 ),
+		)
+	);
+
+	/**
+	 * Info - Meaning (Korean)
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Meaning (KO)', 'k2k' ),
+			'desc' => esc_html__( 'The meaning in Korean, if applicable.', 'k2k' ),
+			'id'   => $prefix . 'meaning_ko',
+			'type' => 'text',
 		)
 	);
 
@@ -87,7 +99,7 @@ function k2k_register_metabox_phrases() {
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'            => esc_html__( 'Detailed Explanation', 'k2k' ),
+			'name'            => esc_html__( 'Detailed Explanation / Usage', 'k2k' ),
 			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
 			'id'              => $prefix . 'wysiwyg',
 			'type'            => 'wysiwyg',

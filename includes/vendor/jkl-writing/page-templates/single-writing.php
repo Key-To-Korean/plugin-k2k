@@ -1,8 +1,8 @@
 <?php
 /**
- * The template for displaying single Reading posts
+ * The template for displaying single Writing posts
  *
- * This is the template that displays all Reading posts.
+ * This is the template that displays all Writing posts.
  *
  * @package K2K
  */
@@ -19,20 +19,20 @@ get_header(); ?>
 			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
 
 			$this_tax = $wp_query->get_queried_object();
-			$meta     = jkl_reading_get_meta_data();
+			$meta     = jkl_writing_get_meta_data();
 			?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-				<!-- Reading Post Type Navigation -->
+				<!-- Writing Post Type Navigation -->
 				<header class="entry-header filter-nav-header">
 
-					<?php require_once 'sidebar-reading.php'; ?>
-					<?php display_reading_navigation(); ?>
+					<?php require_once 'sidebar-writing.php'; ?>
+					<?php display_writing_navigation(); var_dump( $meta ); ?>
 
 				</header>
 
-				<!-- Reading Post Content Header -->
+				<!-- Writing Post Content Header -->
 				<header class="entry-header content-header">
 
 					<div class="post-cats">
@@ -40,20 +40,12 @@ get_header(); ?>
 					</div>
 
 					<hgroup class="entry-titles">
-						<?php
-						the_title( '<h1 class="entry-title">', '</h1>' );
-
-						if ( array_key_exists( 'subtitle', $meta ) ) {
-							echo '<h2 class="entry-subtitle translation">' . esc_html( $meta['subtitle'] ) . '</h2>';
-						}
-						?>
+						<?php the_title( '<h1 class="entry-title">', '</h1>' ); ?>
 					</hgroup>
 
 					<?php
-					if ( array_key_exists( 'video', $meta ) ) {
-						display_reading_video( $meta['video'] );
-					} else {
-						display_reading_thumbnail();
+					if ( array_key_exists( 'featured_image', $meta ) ) {
+						display_writing_thumbnail();
 					}
 					?>
 
@@ -68,72 +60,60 @@ get_header(); ?>
 				endif;
 				?>
 
-				<!-- Reading Taxonomy Meta -->
-				<div class="entry-meta reading-meta">
+				<!-- Writing Taxonomy Meta -->
+				<div class="entry-meta writing-meta">
 					<?php
-					if ( array_key_exists( 'video', $meta ) ) {
-						display_reading_thumbnail();
+					if ( array_key_exists( 'featured_image', $meta ) ) {
+						display_writing_thumbnail();
 					}
-					display_reading_entry_meta( $meta );
+					display_writing_entry_meta( $meta );
 					?>
 				</div><!-- .entry-meta -->
 
-				<!-- Reading Post Content -->
+				<!-- Writing Post Content -->
 				<div class="entry-content">
 
-				<?php if ( array_key_exists( 'wysiwyg_ko', $meta ) ) { ?>
-
-					<div class="reading-passages">
-
-						<!-- Korean Text -->
-						<div class="korean-text-container">
-							<h2 class="post-content-title"><?php esc_html_e( 'Korean Text', 'k2k' ); ?>
-								<?php display_reading_needs_link( $meta ); ?>
-							</h2>
-							<div class="korean-text">
-								<?php echo wp_kses_post( wpautop( jkl_filter_content_with_span( $meta['wysiwyg_ko'] ) ) ); ?>
-							</div>
-
-							<?php if ( array_key_exists( 'wysiwyg_en', $meta ) ) { ?>
-								<small id="show-english-reading" class="show-hide"><?php esc_html_e( 'Show English Translation', 'k2k' ); ?></small>
-							<?php } ?>
-
-							<hr>
-
-						</div>
-
-					<?php } ?>
-
-					<?php if ( array_key_exists( 'wysiwyg_en', $meta ) ) { ?>
-
-						<!-- English Text -->
-						<div class="english-text-container">
-							<h2 class="post-content-title"><?php esc_html_e( 'English Text', 'k2k' ); ?>
-								<?php display_reading_needs_link( $meta ); ?>
-							</h2>
-							<div class="english-text">
-								<?php echo wp_kses_post( wpautop( $meta['wysiwyg_en'] ) ); ?>
-							</div>
-
-							<hr>
-
-						</div>
-
-					</div><!-- .reading-passages -->
-
-					<?php } ?>
-
 				<?php
-				if ( array_key_exists( 'questions', $meta ) ) :
-					display_reading_questions( $meta );
-				endif;
+				$count = 0;
+				if ( array_key_exists( 'short_group', $meta ) ) {
+					$count++;
+				}
+				if ( array_key_exists( 'medium_group', $meta ) ) {
+					$count++;
+				}
+				if ( array_key_exists( 'long_group', $meta ) ) {
+					$count++;
+				}
+
+				// If we have more than one group, then we should create tabs.
+				if ( $count > 1 ) {
+					?>
+					<div class="writing-tabs">
+					<?php
+				}
+
+				if ( array_key_exists( 'short_group', $meta ) ) {
+					display_writing_tab( $meta, 'short' );
+				}
+				if ( array_key_exists( 'medium_group', $meta ) ) {
+					display_writing_tab( $meta, 'medium' );
+				}
+				if ( array_key_exists( 'long_group', $meta ) ) {
+					display_writing_tab( $meta, 'long' );
+				}
+
+				if ( $count > 1 ) {
+					?>
+					</div><!-- .writing-tabs -->
+					<?php
+				}
 
 				/**
 				 * If there's any "Post Content" like from Gutenberg - which there shouldn't be.
 				 */
 				the_content(
 					sprintf( /* translators: %s: Name of current post */
-						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
+						__( 'Continue writing<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
 						get_the_title()
 					)
 				);

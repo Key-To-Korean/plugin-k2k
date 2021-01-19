@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Reading archive pages.
+ * The template for displaying Writing archive pages.
  *
  * @package K2K
  */
@@ -15,9 +15,9 @@ get_header(); ?>
 		/* Display the appropriate header when required. */
 		k2k_index_header();
 
-		require_once 'sidebar-reading.php';
+		require_once 'sidebar-writing.php';
 
-		echo '<ul class="reading-posts-grid archive-posts-grid">';
+		echo '<ul class="writing-posts-grid archive-posts-grid">';
 
 		/* Start the "Official" Loop */
 		$count = 0;
@@ -38,7 +38,7 @@ get_header(); ?>
 			 */
 			?>
 
-			<li class="reading-post">
+			<li class="writing-post">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
 				<?php gaya_archive_thumbnails(); ?>
@@ -47,7 +47,7 @@ get_header(); ?>
 					<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
 						<?php
 							display_level_stars();
-							the_title( '<h2 class="entry-title">', '<span class="entry-subtitle">' . esc_html( get_reading_subtitle() ) . '</span></h2>' );
+							the_title( '<h2 class="entry-title">', '<span class="entry-subtitle">' . esc_html( get_writing_subtitle() ) . '</span></h2>' );
 						?>
 					</a>
 				</header><!-- .entry-header -->
@@ -60,15 +60,15 @@ get_header(); ?>
 		endwhile;
 		?>
 
-		</ul><!-- .reading-list -->
+		</ul><!-- .writing-list -->
 
 		<hr />
-		<section class="page-section archive-taxonomies reading-taxonomies-list">
+		<section class="page-section archive-taxonomies writing-taxonomies-list">
 			<?php
-				display_taxonomy_list( 'k2k-reading-level', __( 'All Levels', 'k2k' ) );
-				display_taxonomy_list( 'k2k-reading-genre', __( 'All Genres', 'k2k' ) );
-				display_taxonomy_list( 'k2k-reading-topic', __( 'All Topics', 'k2k' ) );
-				// display_taxonomy_list( 'k2k-reading-source', __( 'All Sources', 'k2k' ) );.
+				display_taxonomy_list( 'k2k-writing-level', __( 'All Writing Levels', 'k2k' ) );
+				display_taxonomy_list( 'k2k-writing-type', __( 'All Writing Types', 'k2k' ) );
+				display_taxonomy_list( 'k2k-writing-topic', __( 'All Writing Topics', 'k2k' ) );
+				// display_taxonomy_list( 'k2k-writing-source', __( 'All Sources', 'k2k' ) );.
 			?>
 		</section>
 

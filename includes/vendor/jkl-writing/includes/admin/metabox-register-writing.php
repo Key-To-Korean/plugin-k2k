@@ -30,32 +30,53 @@ function k2k_register_metabox_writing() {
 			'closed'       => false,
 			'tabs'         => array(
 				array(
-					'id'     => 'tab-info',
-					'icon'   => 'dashicons-info',
-					'title'  => esc_html__( 'Info', 'k2k' ),
+					'id'     => 'tab-short',
+					'icon'   => 'dashicons-menu-alt2',
+					'title'  => esc_html__( 'Short', 'k2k' ),
 					'fields' => array(
-						$prefix . 'subtitle',
-						$prefix . 'author',
-						$prefix . 'level',
-						$prefix . 'length',
-						$prefix . 'video',
-						$prefix . 'genre',
-						$prefix . 'topic',
-						$prefix . 'wysiwyg_ko',
-						$prefix . 'wysiwyg_en',
-						$prefix . 'source',
-						$prefix . 'ref',
+						$prefix . 'short_group',
+						$prefix . 'short_image',
+						$prefix . 'short_prompt',
+						$prefix . 'short_solving',
+						$prefix . 'short_sample',
 					),
 				),
 				array(
-					'id'     => 'tab-questions',
-					'icon'   => 'dashicons-editor-help',
-					'title'  => esc_html__( 'Questions', 'k2k' ),
+					'id'     => 'tab-medium',
+					'icon'   => 'dashicons-menu-alt',
+					'title'  => esc_html__( 'Medium', 'k2k' ),
 					'fields' => array(
-						$prefix . 'questions',
-						$prefix . 'question_text',
-						$prefix . 'answers',
-						$prefix . 'correct_answer',
+						$prefix . 'medium_group',
+						$prefix . 'medium_image',
+						$prefix . 'medium_prompt',
+						$prefix . 'medium_solving',
+						$prefix . 'medium_sample',
+					),
+				),
+				array(
+					'id'     => 'tab-long',
+					'icon'   => 'dashicons-menu-alt3',
+					'title'  => esc_html__( 'Long', 'k2k' ),
+					'fields' => array(
+						$prefix . 'long_group',
+						$prefix . 'long_image',
+						$prefix . 'long_prompt',
+						$prefix . 'long_solving',
+						$prefix . 'long_sample',
+					),
+				),
+				array(
+					'id'     => 'tab-meta',
+					'icon'   => 'dashicons-info',
+					'title'  => esc_html__( 'Meta', 'k2k' ),
+					'fields' => array(
+						$prefix . 'level',
+						$prefix . 'topic',
+						$prefix . 'type',
+						$prefix . 'length',
+						$prefix . 'source',
+						$prefix . 'link',
+						$prefix . 'download',
 					),
 				),
 			),
@@ -63,34 +84,313 @@ function k2k_register_metabox_writing() {
 	);
 
 	/**
-	 * Info - Translation (Subtitle)
+	 * Short Group
 	 */
-	$k2k_metabox->add_field(
+	$short_group = $k2k_metabox->add_field(
 		array(
-			'name'   => esc_html__( 'Translation (EN)', 'k2k' ),
-			'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
-			'id'     => $prefix . 'subtitle',
-			'type'   => 'text',
-			'column' => array( 'position' => 2 ),
+			'id'          => $prefix . 'short_group',
+			'type'        => 'group',
+			'repeatable'  => true,
+			// 'description' => __( 'Noun Conjugations', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Short Writing Group', 'k2k' ),
+				'add_button'    => __( 'Add Another Short Writing Prompt', 'k2k' ),
+				'remove_button' => __( 'Remove Short Writing Prompt', 'k2k' ),
+			),
 		)
 	);
 
 	/**
-	 * Info - Author Selection
+	 * Short Image
 	 */
-	$k2k_metabox->add_field(
+	$k2k_metabox->add_group_field(
+		$short_group,
 		array(
-			'name'     => esc_html__( 'Author', 'k2k' ),
-			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
-			'id'       => $prefix . 'author',
-			'type'     => 'taxonomy_select',
-			'taxonomy' => 'k2k-writing-author', // Taxonomy Slug.
-			// 'inline'   => true, // Toggles display to inline.
+			'name'         => 'Short Prompt Image',
+			'desc'         => 'Upload an image or enter an URL related to the short writing prompt.',
+			'id'           => $prefix . 'short_image',
+			'type'         => 'file',
+			// Optional.
+			'options'      => array(
+				'url' => false, // Hide the text input for the url.
+			),
+			'text'         => array(
+				'add_upload_file_text' => 'Add File', // Change upload button text. Default: "Add or Upload File".
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args'   => array(
+				// 'type' => 'application/pdf', // Make library only display PDFs.
+				// Or only allow gif, jpg, or png images
+				'type' => array(
+					'image/gif',
+					'image/jpeg',
+					'image/png',
+				),
+			),
+			'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
 		)
 	);
 
 	/**
-	 * Info - Level Selection
+	 * Short Prompt - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$short_group,
+		array(
+			'name'    => esc_html__( 'Short Writing Prompt', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'short_prompt',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
+			),
+		)
+	);
+
+	/**
+	 * Short Solving - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$short_group,
+		array(
+			'name'    => esc_html__( 'Solving the Short Prompt', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'short_solving',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
+			),
+		)
+	);
+
+	/**
+	 * Short Sample - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$short_group,
+		array(
+			'name'    => esc_html__( 'Short Sample Answer', 'k2k' ),
+			'desc'    => esc_html__( 'Add translation text if available.', 'k2k' ),
+			'id'      => $prefix . 'short_sample',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
+			),
+		)
+	);
+
+	/**
+	 * Medium Group
+	 */
+	$medium_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'medium_group',
+			'type'        => 'group',
+			'repeatable'  => false,
+			// 'description' => __( 'Noun Conjugations', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Medium Writing Group', 'k2k' ),
+				'add_button'    => __( 'Add Another Medium Writing Prompt', 'k2k' ),
+				'remove_button' => __( 'Remove Medium Writing Prompt', 'k2k' ),
+			),
+		)
+	);
+
+	/**
+	 * Medium Image
+	 */
+	$k2k_metabox->add_group_field(
+		$medium_group,
+		array(
+			'name'         => 'Medium Prompt Image',
+			'desc'         => 'Upload an image or enter an URL related to the medium writing prompt.',
+			'id'           => $prefix . 'medium_image',
+			'type'         => 'file',
+			// Optional.
+			'options'      => array(
+				'url' => false, // Hide the text input for the url.
+			),
+			'text'         => array(
+				'add_upload_file_text' => 'Add File', // Change upload button text. Default: "Add or Upload File".
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args'   => array(
+				// 'type' => 'application/pdf', // Make library only display PDFs.
+				// Or only allow gif, jpg, or png images
+				'type' => array(
+					'image/gif',
+					'image/jpeg',
+					'image/png',
+				),
+			),
+			'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
+		)
+	);
+
+	/**
+	 * Medium Prompt - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$medium_group,
+		array(
+			'name'    => esc_html__( 'Medium Writing Prompt', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'medium_prompt',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 10 ),
+			),
+		)
+	);
+
+	/**
+	 * Medium Solving - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$medium_group,
+		array(
+			'name'    => esc_html__( 'Solving the Medium Prompt', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'medium_solving',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 10 ),
+			),
+		)
+	);
+
+	/**
+	 * Medium Sample - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$medium_group,
+		array(
+			'name'    => esc_html__( 'Medium Sample Answer', 'k2k' ),
+			'desc'    => esc_html__( 'Add translation text if available.', 'k2k' ),
+			'id'      => $prefix . 'medium_sample',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 10 ),
+			),
+		)
+	);
+
+	/**
+	 * Long Group
+	 */
+	$long_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'long_group',
+			'type'        => 'group',
+			'repeatable'  => false,
+			// 'description' => __( 'Noun Conjugations', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Long Writing Group', 'k2k' ),
+				'add_button'    => __( 'Add Another Long Writing Prompt', 'k2k' ),
+				'remove_button' => __( 'Remove Long Writing Prompt', 'k2k' ),
+			),
+		)
+	);
+
+	/**
+	 * Long Image
+	 */
+	$k2k_metabox->add_group_field(
+		$long_group,
+		array(
+			'name'         => 'Long Prompt Image',
+			'desc'         => 'Upload an image or enter an URL related to the long writing prompt.',
+			'id'           => $prefix . 'long_image',
+			'type'         => 'file',
+			// Optional.
+			'options'      => array(
+				'url' => false, // Hide the text input for the url.
+			),
+			'text'         => array(
+				'add_upload_file_text' => 'Add File', // Change upload button text. Default: "Add or Upload File".
+			),
+			// query_args are passed to wp.media's library query.
+			'query_args'   => array(
+				// 'type' => 'application/pdf', // Make library only display PDFs.
+				// Or only allow gif, jpg, or png images
+				'type' => array(
+					'image/gif',
+					'image/jpeg',
+					'image/png',
+				),
+			),
+			'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
+		)
+	);
+
+	/**
+	 * Long Prompt - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$long_group,
+		array(
+			'name'    => esc_html__( 'Long Writing Prompt', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'long_prompt',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 15 ),
+			),
+		)
+	);
+
+	/**
+	 * Long Solving - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$long_group,
+		array(
+			'name'    => esc_html__( 'Solving the Long Prompt', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'long_solving',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 15 ),
+			),
+		)
+	);
+
+	/**
+	 * Long Sample - Wysiwyg
+	 */
+	$k2k_metabox->add_group_field(
+		$long_group,
+		array(
+			'name'    => esc_html__( 'Long Sample Answer', 'k2k' ),
+			'desc'    => esc_html__( 'Add translation text if available.', 'k2k' ),
+			'id'      => $prefix . 'long_sample',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 15 ),
+			),
+		)
+	);
+
+	/**
+	 * Meta - Level Selection
 	 */
 	$k2k_metabox->add_field(
 		array(
@@ -104,7 +404,35 @@ function k2k_register_metabox_writing() {
 	);
 
 	/**
-	 * Info - Length Selection
+	 * Meta - Topic Selection
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Topic', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'topic',
+			'type'     => 'taxonomy_radio_inline',
+			'taxonomy' => 'k2k-writing-topic', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
+	/**
+	 * Meta - Type Selection
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'     => esc_html__( 'Type', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
+			'id'       => $prefix . 'type',
+			'type'     => 'taxonomy_radio_inline',
+			'taxonomy' => 'k2k-writing-type', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
+		)
+	);
+
+	/**
+	 * Meta - Length Selection
 	 */
 	$k2k_metabox->add_field(
 		array(
@@ -118,164 +446,58 @@ function k2k_register_metabox_writing() {
 	);
 
 	/**
-	 * Info - Video (YouTube)
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'   => esc_html__( 'YouTube video', 'k2k' ),
-			// 'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
-			'id'     => $prefix . 'video',
-			'type'   => 'text',
-		)
-	);
-
-	/**
-	 * Info - Genre
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'     => esc_html__( 'Genre', 'k2k' ),
-			'id'       => $prefix . 'genre',
-			'type'     => 'taxonomy_select', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-writing-genre', // Taxonomy Slug.
-		)
-	);
-
-	/**
-	 * Info - Topic
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'     => esc_html__( 'Topic', 'k2k' ),
-			'id'       => $prefix . 'topic',
-			'type'     => 'taxonomy_select', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
-			'taxonomy' => 'k2k-writing-topic', // Taxonomy Slug.
-		)
-	);
-
-	/**
-	 * Korean text - Wysiwyg
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'    => esc_html__( 'Full Korean Text', 'k2k' ),
-			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
-			'id'      => $prefix . 'wysiwyg_ko',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'wpautop'       => true,
-				'media_buttons' => true,
-				'textarea_rows' => get_option( 'default_post_edit_rows', 15 ),
-			),
-		)
-	);
-
-	/**
-	 * English text - Wysiwyg
-	 */
-	$k2k_metabox->add_field(
-		array(
-			'name'    => esc_html__( 'English Text', 'k2k' ),
-			'desc'    => esc_html__( 'Add translation text if available.', 'k2k' ),
-			'id'      => $prefix . 'wysiwyg_en',
-			'type'    => 'wysiwyg',
-			'options' => array(
-				'wpautop'       => true,
-				'media_buttons' => true,
-				'textarea_rows' => get_option( 'default_post_edit_rows', 15 ),
-			),
-		)
-	);
-
-	/**
-	 * Info - Source
+	 * Meta - Source Selection
 	 */
 	$k2k_metabox->add_field(
 		array(
 			'name'     => esc_html__( 'Source', 'k2k' ),
+			// 'desc'     => esc_html__( 'field description (optional)', 'k2k' ),
 			'id'       => $prefix . 'source',
-			'type'     => 'taxonomy_select', // Or `taxonomy_multicheck_inline`/`taxonomy_multicheck_hierarchical`.
+			'type'     => 'taxonomy_radio_inline',
 			'taxonomy' => 'k2k-writing-source', // Taxonomy Slug.
+			// 'inline'   => true, // Toggles display to inline.
 		)
 	);
 
 	/**
-	 * Info - Reference
+	 * Meta - External Link
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'   => esc_html__( 'Reference Link', 'k2k' ),
+			'name'   => esc_html__( 'External Link', 'k2k' ),
 			// 'desc'   => esc_html__( 'The translation will be used as the subtitle.', 'k2k' ),
-			'id'     => $prefix . 'ref',
-			'type'   => 'text',
+			'id'     => $prefix . 'link',
+			'type'   => 'text_url',
 		)
 	);
 
 	/**
-	 * Repeating text field for PAST TENSE sentences.
+	 * Short Image
 	 */
-	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
-	$practice_questions = $k2k_metabox->add_field(
+	$k2k_metabox->add_field(
 		array(
-			'id'          => $prefix . 'questions',
-			'type'        => 'group',
-			'name'        => __( 'Practice Questions', 'k2k' ),
-			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
-			'options'     => array(
-				'group_title'   => __( 'Practice Questions', 'k2k' ),
-				'add_button'    => __( 'Add Another Question', 'k2k' ),
-				'remove_button' => __( 'Remove Question', 'k2k' ),
-				'sortable'      => true,
+			'name'         => 'Download',
+			'desc'         => 'Select a file that the user can download.',
+			'id'           => $prefix . 'download',
+			'type'         => 'file',
+			// Optional.
+			'options'      => array(
+				'url' => false, // Hide the text input for the url.
 			),
-		)
-	);
-
-	$k2k_metabox->add_group_field(
-		$practice_questions,
-		array(
-			'id'              => $prefix . 'question_text',
-			'name'            => __( 'Question', 'k2k' ),
-			'type'            => 'text',
-			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
-		)
-	);
-
-	/**
-	 * Repeating text field for exercises.
-	 */
-	$k2k_metabox->add_group_field(
-		$practice_questions,
-		array(
-			'id'              => $prefix . 'answers',
-			'name'            => __( 'Answers', 'k2k' ),
-			'description'     => __( 'Add optional answers.', 'k2k' ),
-			'type'            => 'text',
-			'sortable'        => true,
-			'repeatable'      => true,
-			'repeatable_max'  => 10,
-			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
-			'text'            => array(
-				'add_row_text' => __( 'Add Answer', 'k2k' ),
+			'text'         => array(
+				'add_upload_file_text' => 'Add File', // Change upload button text. Default: "Add or Upload File".
 			),
-		)
-	);
-
-	/**
-	 * Number text input for the number of the correct answer.
-	 */
-	$k2k_metabox->add_group_field(
-		$practice_questions,
-		array(
-			'name'            => __( 'Correct Answer #', 'k2k' ),
-			'desc'            => __( 'Numbers only', 'k2k' ),
-			'id'              => $prefix . 'correct_answer',
-			'type'            => 'text',
-			'attributes'      => array(
-				'type'    => 'number',
-				'pattern' => '\d*',
-			),
-			'sanitization_cb' => 'absint',
-			'escape_cb'       => 'absint',
+			// query_args are passed to wp.media's library query.
+			// 'query_args'   => array(
+				// 'type' => 'application/pdf', // Make library only display PDFs.
+				// Or only allow gif, jpg, or png images
+				// 'type' => array(
+				// 'image/gif',
+				// 'image/jpeg',
+				// 'image/png'
+				// ),
+			// ).
+			'preview_size' => 'thumbnail', // Image size to use when previewing in the admin.
 		)
 	);
 

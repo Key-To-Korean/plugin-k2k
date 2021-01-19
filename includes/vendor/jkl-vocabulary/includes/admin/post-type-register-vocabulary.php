@@ -56,7 +56,7 @@ function k2k_register_post_type_vocabulary() {
 		'show_in_rest'       => true,
 		'rest_base'          => 'vocabulary',
 		'query_var'          => true,
-		'rewrite'            => array( 'slug' => 'vocabulary' ),
+		'rewrite'            => array( 'slug' => 'dictionary' ),
 		'capability_type'    => 'post',
 		'has_archive'        => true,
 		'hierarchical'       => false,

@@ -78,7 +78,7 @@ add_action( 'init', 'k2k_register_post_type_writing' );
  * @param object $post The Post object.
  *
  * @link https://wordpress.stackexchange.com/questions/213979/change-post-title-edit-box
- */
+
 function k2k_change_editor_title_writing( $title, $post ) {
 
 	if ( 'k2k-writing' === $post->post_type ) {
@@ -94,12 +94,13 @@ add_filter( 'enter_title_here', 'k2k_change_editor_title_writing', 10, 2 );
  * Change Post List Title Column Name.
  *
  * @param array $columns The array of Posts columns.
- */
+
 function k2k_change_post_list_column_writing( $columns ) {
 	$columns['title'] = 'Writing (KO)';
 	return $columns;
 }
 add_filter( 'manage_k2k-writing_posts_columns', 'k2k_change_post_list_column_writing' );
+ */
 
 /**
  * Remove Taxonomy Meta boxes from the side menu.

@@ -92,6 +92,16 @@ function k2k_register_new_terms_phrase_type() {
 			'slug'        => 'phrase-type-slang',
 			'description' => __( 'Slang expressions and phrases.', 'k2k' ),
 		),
+		'5' => array(
+			'name'        => __( 'Sino-Korean', 'k2k' ),
+			'slug'        => 'phrase-type-chinese-origin',
+			'description' => __( 'Phrases of Chinese origin, usually incuding hanja.', 'k2k' ),
+		),
+		'6' => array(
+			'name'        => __( 'Quotes', 'k2k' ),
+			'slug'        => 'phrase-type-quote',
+			'description' => __( 'Useful quotations from famous people, TV shows, music, etc.', 'k2k' ),
+		),
 	);
 
 	foreach ( $terms as $term ) {

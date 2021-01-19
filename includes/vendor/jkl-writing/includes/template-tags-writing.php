@@ -192,63 +192,16 @@ function display_writing_related_points( $meta ) {
 /**
  * Function to output the writing questions related to the post.
  *
- * @param array $meta The post meta data.
+ * @param array  $meta The post meta data.
+ * @param String $tab Which tab to render.
  */
-function display_writing_questions( $meta ) {
-
-	// Double-check that we actually have questions in this array.
-	if ( ! array_key_exists( 'k2k_writing_meta_question_text', $meta['questions'][0] ) ) {
-		return;
-	}
+function display_writing_tab( $meta, $tab ) {
 	?>
 
 	<!-- Writing Questions -->
-	<div class="questions-header">
-		<h3><?php esc_html_e( 'Writing Questions', 'k2k' ); ?></h3>
-		<div class="sentence-buttons">
-			<!-- <button class="expand-all" title="<?php // esc_html_e( 'Show all correct answers', 'k2k' );. ?>">
-				<i class="fas fa-caret-down"></i>
-			</button> -->
-		</div>
+	<div class="writing-tab-<?php echo esc_attr( $tab ); ?>">
+		<?php echo esc_attr( $tab ); ?>
 	</div>
-
-	<ol class="writing-questions">
-		<?php
-
-		/*
-		 * _questions (array)
-		 * _question_text (1)
-		 * _answers (array)
-		 * _correct_answer (1)
-		 */
-		foreach ( $meta['questions'] as $key => $question ) {
-			?>
-
-			<li class="writing-question-item"><?php echo esc_attr( $question['k2k_writing_meta_question_text'] ); ?>
-
-			<?php
-			if ( array_key_exists( 'k2k_writing_meta_answers', $question ) ) {
-				$correct = array_key_exists( 'k2k_writing_meta_correct_answer', $question ) ? $question['k2k_writing_meta_correct_answer'] : '';
-				?>
-
-				<ol class="writing-question-answers">
-
-				<?php
-				foreach ( $question['k2k_writing_meta_answers'] as $key => $answer ) {
-					?>
-						<li class="writing-question-answer-item <?php echo ++$key === $correct ? 'correct' : ''; ?>">
-							<?php echo esc_attr( $answer ); ?>
-						</li>
-					<?php
-				}
-				?>
-
-				</ol>
-				<?php
-			}
-		}
-		?>
-	</ol>
 
 	<?php
 }

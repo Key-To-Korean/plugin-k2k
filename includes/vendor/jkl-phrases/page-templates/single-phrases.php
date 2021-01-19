@@ -62,17 +62,28 @@ get_header(); ?>
 				<div class="entry-content">
 
 				<?php
-				if ( array_key_exists( 'wysiwyg', $meta ) ) :
+				if ( array_key_exists( 'wysiwyg', $meta ) || array_key_exists( 'meaning_ko', $meta ) ) :
 					?>
 
 					<h2 class="post-content-title"><?php esc_html_e( 'Detailed Explanation', 'k2k' ); ?></h2>
-
-					<!-- Detailed Explanation -->
-					<div class="detailed-explanation <?php echo array_key_exists( 'usage', $meta ) ? '' : 'no-usage'; ?>">
-						<?php echo k2k_get_wysiwyg_output( 'k2k_phrase_meta_wysiwyg' ); // phpcs:ignore ?>
-					</div>
+					<?php
+					if ( array_key_exists( 'meaning_ko', $meta ) ) {
+						?>
+						<p><strong><?php echo esc_html( get_the_title() . ' = ' . $meta['meaning_ko'] ); ?></strong></p>
+						<?php
+					}
+					?>
 
 					<?php
+					if ( array_key_exists( 'wysiwyg', $meta ) ) {
+						?>
+						<!-- Detailed Explanation -->
+						<div class="detailed-explanation">
+							<?php echo k2k_get_wysiwyg_output( 'k2k_phrase_meta_wysiwyg' ); // phpcs:ignore ?>
+						</div>
+						<?php
+					}
+
 				endif;
 
 				/**

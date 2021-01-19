@@ -1,6 +1,6 @@
 <?php
 /**
- * The sidebar containing the Reading Filters
+ * The sidebar containing the Writing Filters
  *
  * @link Inspiration: https://laracasts.com/search?refinement=type&name=series
  *
@@ -10,26 +10,26 @@
 ?>
 
 <!-- <aside id="secondary" class="primary-sidebar widget-area"> -->
-	<aside id="reading-filter-box" class="k2k-sidebar reading-sidebar <?php echo is_archive() ? 'archive-page' : ''; ?>">
+	<aside id="writing-filter-box" class="k2k-sidebar writing-sidebar <?php echo is_archive() ? 'archive-page' : ''; ?>">
 
 		<!-- Sortable / Filterable Terms Lists -->
 		<?php
 			$taxonomies   = [];
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-reading-level',
+					'taxonomy'   => 'k2k-writing-level',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-reading-genre',
+					'taxonomy'   => 'k2k-writing-type',
 					'hide_empty' => false,
 				)
 			);
 			$taxonomies[] = get_terms(
 				array(
-					'taxonomy'   => 'k2k-reading-topic',
+					'taxonomy'   => 'k2k-writing-topic',
 					'hide_empty' => false,
 				)
 			);
@@ -65,7 +65,7 @@
 
 							if ( 0 === $key ) {
 								?>
-								<option value="<?php echo esc_url( get_home_url() ) . '/reading/'; ?>">
+								<option value="<?php echo esc_url( get_home_url() ) . '/writing/'; ?>">
 									<?php echo esc_html( $icons[ $i ] . $tax_name ); ?>
 								</option>
 								<?php
@@ -74,7 +74,7 @@
 							$t = $category->taxonomy;
 							?>
 
-							<option value="<?php echo esc_url( get_home_url() ) . '/reading/' . esc_attr( substr( $t, 12 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
+							<option value="<?php echo esc_url( get_home_url() ) . '/writing/' . esc_attr( substr( $t, 12 ) ) . '/' . esc_attr( $category->slug ) . '/'; ?>">
 								<?php echo esc_html( $category->name ) . ' (' . esc_attr( $category->count ) . ')'; ?>
 							</option>
 
@@ -101,11 +101,11 @@
 				<!-- Search -->
 				<div class="k2k-index-search">
 					<span class="k2k-index-link">
-						<a href="<?php echo esc_url( home_url() ); ?>/reading/">
-							<span class="index-home reading" title="<?php esc_html_e( 'Reading Index', 'k2k' ); ?>">🏠</span>
+						<a href="<?php echo esc_url( home_url() ); ?>/writing/">
+							<span class="index-home writing" title="<?php esc_html_e( 'Writing Index', 'k2k' ); ?>">🏠</span>
 						</a>
 					</span>
-					<?php display_reading_search_form(); ?>
+					<?php display_writing_search_form(); ?>
 				</div>
 
 				<?php
@@ -113,19 +113,19 @@
 			?>
 
 		<!-- Add ReactJS -->
-		<!-- <div id="reading_root"></div> -->
+		<!-- <div id="writing_root"></div> -->
 		<!-- End ReactJS -->
 
-		<!-- <h4 class="reading-filter-heading">😤 Difficulty</h4> -->
+		<!-- <h4 class="writing-filter-heading">😤 Difficulty</h4> -->
 
 		<!-- Book -->
-		<!-- <h4 class="reading-filter-heading">😤 Book</h4> -->
+		<!-- <h4 class="writing-filter-heading">😤 Book</h4> -->
 
 		<!-- Usage -->
-		<!-- <h4 class="reading-filter-heading">😤 Usage</h4> -->
+		<!-- <h4 class="writing-filter-heading">😤 Usage</h4> -->
 
 		<!-- Expression -->
-		<!-- <h4 class="reading-filter-heading">😤 Expression</h4> -->
+		<!-- <h4 class="writing-filter-heading">😤 Expression</h4> -->
 
 	</aside>
 <!-- </aside>#secondary -->

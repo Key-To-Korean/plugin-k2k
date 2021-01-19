@@ -78,11 +78,9 @@ function jkl_writing_get_meta_data() {
 	// Get post meta data.
 	$meta_prefix = 'k2k_writing_meta_';
 
-	$meta['subtitle']   = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );        // Subtitle (translation).
-	$meta['video']      = get_post_meta( get_the_ID(), $meta_prefix . 'video', true );           // YouTube video lesson.
-	$meta['wysiwyg_ko'] = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg_ko', true );      // Korean Text (html).
-	$meta['wysiwyg_en'] = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg_en', true );      // English Translation (html).
-	$meta['questions']  = get_post_meta( get_the_ID(), $meta_prefix . 'questions', true ); // Questions (array).
+	$meta['short_group']  = get_post_meta( get_the_ID(), $meta_prefix . 'short_group', true );  // Short Group (array).
+	$meta['medium_group'] = get_post_meta( get_the_ID(), $meta_prefix . 'medium_group', true ); // Medium Group (array).
+	$meta['long_group']   = get_post_meta( get_the_ID(), $meta_prefix . 'long_group', true );   // Long Group (array).
 
 	// Term Meta.
 	$term_prefix        = 'k2k_taxonomy_';

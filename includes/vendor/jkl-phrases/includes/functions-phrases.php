@@ -80,6 +80,7 @@ function jkl_phrases_get_meta_data() {
 
 	$meta['translation'] = get_post_meta( get_the_ID(), $meta_prefix . 'translation', true );     // Translation.
 	$meta['meaning']     = get_post_meta( get_the_ID(), $meta_prefix . 'meaning', true );         // Meaning.
+	$meta['meaning_ko']  = get_post_meta( get_the_ID(), $meta_prefix . 'meaning_ko', true );      // Meaning (KO).
 	$meta['wysiwyg']     = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );         // Explanation (html).
 	// $meta['related_phrases'] = get_post_meta( get_the_ID(), $meta_prefix . 'related_phrases', true ); // Related Phrases (array).
 
