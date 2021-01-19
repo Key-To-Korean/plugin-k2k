@@ -1,122 +1,46 @@
-.dict-word:hover {
-  background: #efefef;
-  cursor: pointer;
-}
-
-#dict-lookup {
-  width: 45rem;
-  height: 30rem;
-  background: white;
-  box-shadow: 2px 4px 20px rgba(0, 0, 0, 0.32);
-  position: fixed;
-  bottom: -40rem;
-  transition: all 0.3s;
-  z-index: 9999999;
-  left: 50%;
-  transform: translateX(-50%);
-  padding: 2rem;
-  border-radius: 1.5rem 1.5rem 0 0;
-}
-
-#dict-close {
-  cursor: pointer;
-}
-
-.korean-text-container,
-.english-text-container {
-  position: relative;
-}
-
-.korean-text,
-.english-text {
+.writing-tabs-header {
+  border-bottom: 1px solid #cdcdcd;
   margin-bottom: 2rem;
+  margin-top: 0.25rem;
 }
 
-#show-english-reading {
-  color: silver;
+.writing-tab-tag {
+  padding: 6px 1rem;
+  border: 1px solid #cdcdcd;
+  background: #efefef;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  opacity: 0.7;
   cursor: pointer;
-  position: absolute;
-  top: 0rem;
 }
 
-.reading-passages {
-  /* display: grid;
-  grid-template-columns: 100% 0%;
-  grid-gap: 2rem;
-  box-sizing: border-box; */
-  transition: all 0.3s;
-  position: relative;
+.writing-tab-tag.active {
+  font-weight: bold;
+  background: #cdcdcd;
 }
 
-.reading-passages.active {
-  /* grid-template-columns: 46% 50%; */
-}
-
-.reading-passages .korean-text-container {
-  float: left;
-  width: 100%;
-  transition: all 0.3s;
-}
-
-.reading-passages.active .korean-text-container {
-  float: left;
-  width: calc(50% - 1rem);
-  margin-right: 1rem;
-  transition: all 0.3s;
-}
-
-.reading-passages .english-text-container {
-  /* display: none; */
-  float: right;
-  width: 0%;
-  transition: all 0.3s;
+.writing-tab {
   display: none;
-}
-
-.reading-passages.active .english-text-container {
-  /* display: block; */
-  float: right;
-  width: calc(50% - 1rem);
-  margin-left: 1rem;
+  height: 0;
   transition: all 0.3s;
 }
 
-/* .english-text-container {
-  transition: height 0.5s, opacity 0.2s;
+.writing-tab.active {
+  display: block;
+  height: auto;
+  transition: all 0.3s;
+}
+
+.hide-writing {
   height: 0;
   opacity: 0;
+  position: relative;
+  transition: all 0.3s;
 }
 
-.english-text-container.active {
-  transition: height 0.2s, opacity 0.5s;
+.show-writing {
   height: auto;
   opacity: 1;
-} */
-
-.reading-questions {
-  padding: 0 !important;
-}
-
-.reading-question-item,
-.reading-question-answer-item {
-  list-style-position: inside !important;
-}
-
-.reading-question-answers {
-  padding: 0 !important;
-  margin: 1rem 0 4rem;
-}
-
-.reading-question-answer-item {
-  background: #efefef;
-  border-radius: 10px;
-  padding: 0.5rem;
-  margin-bottom: 0.5rem;
-  cursor: pointer;
-}
-
-.reading-question-answer-item:hover,
-.reading-question-answer-item:focus,
-.reading-question-answer-item:active {
-  background: #e1e1e1;
+  transition: all 0.3s;
 }

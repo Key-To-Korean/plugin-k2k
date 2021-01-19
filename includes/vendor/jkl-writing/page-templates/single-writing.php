@@ -28,7 +28,7 @@ get_header(); ?>
 				<header class="entry-header filter-nav-header">
 
 					<?php require_once 'sidebar-writing.php'; ?>
-					<?php display_writing_navigation(); var_dump( $meta ); ?>
+					<?php display_writing_navigation(); ?>
 
 				</header>
 
@@ -74,32 +74,39 @@ get_header(); ?>
 				<div class="entry-content">
 
 				<?php
-				$count = 0;
+				$count        = 0;
+				$writing_tabs = '';
 				if ( array_key_exists( 'short_group', $meta ) ) {
 					$count++;
+					$writing_tabs .= '<span class="active short-tab-tag writing-tab-tag">Short</span>';
 				}
 				if ( array_key_exists( 'medium_group', $meta ) ) {
 					$count++;
+					$writing_tabs .= '<span class="medium-tab-tag writing-tab-tag">Medium</span>';
 				}
 				if ( array_key_exists( 'long_group', $meta ) ) {
 					$count++;
+					$writing_tabs .= '<span class="long-tab-tag writing-tab-tag">Long</span>';
 				}
 
 				// If we have more than one group, then we should create tabs.
 				if ( $count > 1 ) {
+					echo '<div class="writing-tabs-header">';
+					echo wp_kses_post( $writing_tabs );
+					echo '</div>';
 					?>
 					<div class="writing-tabs">
 					<?php
 				}
 
 				if ( array_key_exists( 'short_group', $meta ) ) {
-					display_writing_tab( $meta, 'short' );
+					display_writing_tab( $meta['short_group'], 'short', true );
 				}
 				if ( array_key_exists( 'medium_group', $meta ) ) {
-					display_writing_tab( $meta, 'medium' );
+					display_writing_tab( $meta['medium_group'], 'medium', false );
 				}
 				if ( array_key_exists( 'long_group', $meta ) ) {
-					display_writing_tab( $meta, 'long' );
+					display_writing_tab( $meta['long_group'], 'long', false );
 				}
 
 				if ( $count > 1 ) {
@@ -127,7 +134,7 @@ get_header(); ?>
 						'separator'   => '<span class="screen-reader-text">, </span>',
 					)
 				);
-				?>
+			?>
 
 				<footer class="entry-footer footer-edit-link">
 					<?php gaya_edit_post_link(); ?>

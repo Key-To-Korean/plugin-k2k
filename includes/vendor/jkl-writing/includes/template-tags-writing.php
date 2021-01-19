@@ -194,14 +194,72 @@ function display_writing_related_points( $meta ) {
  *
  * @param array  $meta The post meta data.
  * @param String $tab Which tab to render.
+ * @param bool   $active Whether or not to set the tab as active.
  */
-function display_writing_tab( $meta, $tab ) {
-	?>
+function display_writing_tab( $meta, $tab, $active ) {
+	$prefix = 'k2k_writing_meta_' . $tab;
+	$count  = 0;
 
-	<!-- Writing Questions -->
-	<div class="writing-tab-<?php echo esc_attr( $tab ); ?>">
-		<?php echo esc_attr( $tab ); ?>
-	</div>
+	foreach ( $meta as $key => $value ) :
+		if ( 1 === count( $meta ) || $count === $key ) :
+			?>
+			<!-- Writing Questions -->
+			<div class="writing-tab <?php echo esc_attr( $tab ); ?>-tab <?php echo $active ? 'active' : ''; ?>">
+			<?php
+		endif;
 
-	<?php
+		// Image.
+		if ( array_key_exists( $prefix . '_image', $value ) ) :
+			?>
+			<!-- <?php echo esc_attr( $tab ); ?> Image -->
+			<figure class="<?php echo esc_attr( $tab ); ?>-writing-image">
+				<img src="<?php echo esc_url( $value[ $prefix . '_image' ] ); ?>" />
+			</figure>
+			<?php
+		endif;
+
+		// Prompt.
+		if ( array_key_exists( $prefix . '_prompt', $value ) ) :
+			?>
+			<!-- <?php echo esc_attr( $tab ); ?> Prompt -->
+			<div class="<?php echo esc_attr( $tab ); ?>-writing-prompt">
+				<?php echo wp_kses_post( wpautop( $value[ $prefix . '_prompt' ] ) ); ?>
+			</div>
+			<?php
+		endif;
+
+		// Writing Area.
+		?>
+		<textarea class="<?php echo esc_attr( $tab ); ?>-writing-area writing-area"></textarea>
+		<?php
+		// Sample (hide it first, allow user to view if / when desired).
+		if ( array_key_exists( $prefix . '_sample', $value ) ) :
+			?>
+			<!-- <?php echo esc_attr( $tab ); ?> Sample -->
+			<span class="show-sample-writing">Show Sample Writing</span>
+			<div class="<?php echo esc_attr( $tab ); ?>-writing-sample sample-writing hide-writing">
+				<?php echo wp_kses_post( wpautop( $value[ $prefix . '_sample' ] ) ); ?>
+			</div>
+			<?php
+		endif;
+
+		// Solving (hide it first, allow user to view if / when desired).
+		if ( array_key_exists( $prefix . '_solving', $value ) ) :
+			?>
+			<!-- <?php echo esc_attr( $tab ); ?> Solving -->
+			<span class="show-writing-hints">Show Writing Hints</span>
+			<div class="<?php echo esc_attr( $tab ); ?>-solving-writing writing-hints hide-writing">
+				<?php echo wp_kses_post( wpautop( $value[ $prefix . '_solving' ] ) ); ?>
+			</div>
+			<?php
+		endif;
+
+		if ( 1 === count( $meta ) || $count < $key ) :
+			?>
+			</div><!-- <?php echo esc_attr( $tab ); ?> Tab -->
+			<?php
+		else :
+			echo '<hr>';
+		endif;
+	endforeach;
 }
