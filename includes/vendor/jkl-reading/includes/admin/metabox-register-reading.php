@@ -159,7 +159,7 @@ function k2k_register_metabox_reading() {
 	$k2k_metabox->add_field(
 		array(
 			'name'    => esc_html__( 'Full Korean Text', 'k2k' ),
-			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'desc'    => esc_html__( 'Do NOT surround Korean words with HTML tags that contain ANY attributes or it will mess up the front-end formatting.', 'k2k' ),
 			'id'      => $prefix . 'wysiwyg_ko',
 			'type'    => 'wysiwyg',
 			'options' => array(

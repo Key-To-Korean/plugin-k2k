@@ -32,6 +32,22 @@ function jkl_reading_enqueue_scripts() {
 				filemtime( plugin_dir_path( __DIR__ ) . 'js/reading.js' ),
 				true
 			);
+
+			wp_enqueue_script(
+				'k2k-papago-script',
+				plugins_url( 'js/papago.js', __DIR__ ),
+				array( 'jquery' ),
+				filemtime( plugin_dir_path( __DIR__ ) . 'js/papago.js' ),
+				true
+			);
+
+			wp_localize_script(
+				'k2k-papago-script',
+				'translationData',
+				array(
+					'ajaxurl' => 'admin-ajax.php',
+				)
+			);
 		}
 	}
 
@@ -197,3 +213,36 @@ function jkl_filter_content_with_span( $ko_content ) {
 	return $ko_content;
 }
 // add_filter( 'the_content', 'jkl_filter_content_with_span' );.
+
+/**
+ * Papago Dictionary Lookup.
+ *
+ * @param String $word The word to translate.
+ */
+function jkl_papago_dictionary_lookup( $word = '안녕하세요' ) {
+	$client_id     = ''; // Set these up elsewhere (secret).
+	$client_secret = '';           // Set these up elsewhere (secret).
+	$enc_text      = rawurlencode( $word );
+	$postvars      = 'source=ko&target=en&text=' . $enc_text;
+	$url           = 'https://openapi.naver.com/v1/papago/n2mt';
+	$is_post       = true;
+	$ch            = curl_init();
+	curl_setopt( $ch, CURLOPT_URL, $url );
+	curl_setopt( $ch, CURLOPT_POST, $is_post );
+	curl_setopt( $ch, CURLOPT_RETURNTRANSFER, true );
+	curl_setopt( $ch, CURLOPT_POSTFIELDS, $postvars );
+	$headers   = array();
+	$headers[] = 'X-Naver-Client-Id: ' . $client_id;
+	$headers[] = 'X-Naver-Client-Secret: ' . $client_secret;
+	curl_setopt( $ch, CURLOPT_HTTPHEADER, $headers );
+	$response    = curl_exec( $ch );
+	$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
+	$deco        = json_decode( $response, false );
+	curl_close( $ch );
+	if ( 200 === $status_code ) {
+		print_r( $deco->message->result->translatedText );
+		var_dump( $deco );
+	} else {
+		echo 'Error 내용:' . esc_attr( $response );
+	}
+}

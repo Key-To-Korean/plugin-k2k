@@ -1,5 +1,7 @@
 /**
+ * =========================================================
  * Deal with active writing tabs.
+ * =========================================================
  */
 let writingTabs = document.getElementsByClassName( 'writing-tab' );
 let writingTabsBtns = document.getElementsByClassName( 'writing-tab-tag' );
@@ -9,8 +11,6 @@ for ( let i = 0; i < writingTabsBtns.length; i++ ) {
 }
 
 function switchActiveTab() {
-	console.log(this.className);
-	console.log(this);
 	// Remove 'active' class from EVERYTHING.
 	for ( let i = 0; i < writingTabsBtns.length; i++ ) {
 		writingTabsBtns[i].className = writingTabsBtns[i].className.replace( /\bactive\b/, '' );
@@ -35,7 +35,9 @@ function switchActiveTab() {
 }
 
 /**
+ * =========================================================
  * Deal with sample writing and writing hints.
+ * =========================================================
  */
 let sampleWritingBtns = document.getElementsByClassName( 'show-sample-writing' );
 let sampleWriting = document.getElementsByClassName( 'sample-writing' );
@@ -53,8 +55,29 @@ function showWriting() {
 	if ( this.nextSibling.nextSibling.classList.contains( 'hide-writing' ) ) {
 		this.nextSibling.nextSibling.className = this.nextSibling.nextSibling.className.replace( 'hide', 'show' );
 		this.innerHTML = this.innerHTML.replace( 'Show', 'Hide' );
+		this.childNodes[1].className = 'fas fa-caret-up';
 	} else {
 		this.nextSibling.nextSibling.className = this.nextSibling.nextSibling.className.replace( 'show', 'hide' );
 		this.innerHTML = this.innerHTML.replace( 'Hide', 'Show' );
+		this.childNodes[1].className = 'fas fa-caret-down';
 	}
+}
+
+/**
+ * =========================================================
+ * Count the number of characters in the <textarea> fields.
+ * =========================================================
+ */
+let textBoxes = document.getElementsByClassName( 'writing-area' );
+let textCounters = document.getElementsByClassName( 'writing-area-counter' );
+
+for ( let i = 0; i < textBoxes.length; i++ ) {
+	textBoxes[i].addEventListener( 'input', countChars );
+}
+
+function countChars(e) {
+	const target = e.target;
+	const currentLength = target.value.length;
+
+	this.nextSibling.nextSibling.childNodes[1].innerHTML = currentLength + ' characters';
 }

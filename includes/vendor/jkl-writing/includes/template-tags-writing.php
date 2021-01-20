@@ -207,7 +207,10 @@ function display_writing_tab( $meta, $tab, $active ) {
 			<div class="writing-tab <?php echo esc_attr( $tab ); ?>-tab <?php echo $active ? 'active' : ''; ?>">
 			<?php
 		endif;
+		?>
 
+		<h3>Writing Prompt</h3>
+		<?php
 		// Image.
 		if ( array_key_exists( $prefix . '_image', $value ) ) :
 			?>
@@ -231,29 +234,42 @@ function display_writing_tab( $meta, $tab, $active ) {
 		// Writing Area.
 		?>
 		<textarea class="<?php echo esc_attr( $tab ); ?>-writing-area writing-area"></textarea>
+		<div class="writing-area-helpers">
+			<div class="writing-area-counter">0 characters</div>
+			<?php
+			// Sample (hide it first, allow user to view if / when desired).
+			if ( array_key_exists( $prefix . '_sample', $value ) ) :
+				?>
+				<!-- <?php echo esc_attr( $tab ); ?> Sample -->
+				<span class="show-sample-writing">
+					Show Sample
+					<i class="fas fa-caret-down"></i>
+				</span>
+				<div class="<?php echo esc_attr( $tab ); ?>-writing-sample sample-writing hide-writing">
+					<h3>Sample</h3>
+					<?php echo wp_kses_post( wpautop( $value[ $prefix . '_sample' ] ) ); ?>
+				</div>
+				<?php
+			endif;
+
+			// Solving (hide it first, allow user to view if / when desired).
+			if ( array_key_exists( $prefix . '_solving', $value ) ) :
+				?>
+				<!-- <?php echo esc_attr( $tab ); ?> Solving -->
+				<span class="show-writing-hints">
+					Show Hints
+					<i class="fas fa-caret-down"></i>
+				</span>
+				<div class="<?php echo esc_attr( $tab ); ?>-solving-writing writing-hints hide-writing">
+					<h3>Hints</h3>
+					<?php echo wp_kses_post( wpautop( $value[ $prefix . '_solving' ] ) ); ?>
+				</div>
+				<?php
+			endif;
+			?>
+		</div><!-- .writing-area-helpers -->
+
 		<?php
-		// Sample (hide it first, allow user to view if / when desired).
-		if ( array_key_exists( $prefix . '_sample', $value ) ) :
-			?>
-			<!-- <?php echo esc_attr( $tab ); ?> Sample -->
-			<span class="show-sample-writing">Show Sample Writing</span>
-			<div class="<?php echo esc_attr( $tab ); ?>-writing-sample sample-writing hide-writing">
-				<?php echo wp_kses_post( wpautop( $value[ $prefix . '_sample' ] ) ); ?>
-			</div>
-			<?php
-		endif;
-
-		// Solving (hide it first, allow user to view if / when desired).
-		if ( array_key_exists( $prefix . '_solving', $value ) ) :
-			?>
-			<!-- <?php echo esc_attr( $tab ); ?> Solving -->
-			<span class="show-writing-hints">Show Writing Hints</span>
-			<div class="<?php echo esc_attr( $tab ); ?>-solving-writing writing-hints hide-writing">
-				<?php echo wp_kses_post( wpautop( $value[ $prefix . '_solving' ] ) ); ?>
-			</div>
-			<?php
-		endif;
-
 		if ( 1 === count( $meta ) || $count < $key ) :
 			?>
 			</div><!-- <?php echo esc_attr( $tab ); ?> Tab -->

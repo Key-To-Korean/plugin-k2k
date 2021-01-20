@@ -1,3 +1,38 @@
+/* Archive Pages */
+.reading-taxonomies-list {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-gap: 2rem;
+}
+
+.archive .entry-title {
+  margin-top: 0;
+  margin-bottom: 0.25rem;
+  font-size: 1.125rem;
+}
+
+.archive .entry-header .entry-subtitle {
+  font-size: 0.9rem;
+  display: block;
+  border-top: 1px solid rgba(169, 186, 201, 0.5);
+  padding-top: 0.25rem;
+  margin-top: 0.25rem;
+  opacity: 0.6;
+  font-style: italic;
+}
+
+/* Single Pages */
+.entry-header .entry-subtitle {
+  margin-top: 0;
+  font-style: italic;
+  font-weight: normal;
+  opacity: 0.6;
+}
+
+.dict-word {
+  /* margin-right: 3px; */
+}
+
 .dict-word:hover {
   background: #efefef;
   cursor: pointer;

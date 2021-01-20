@@ -91,7 +91,8 @@ get_header(); ?>
 								<?php display_reading_needs_link( $meta ); ?>
 							</h2>
 							<div class="korean-text">
-								<?php echo wp_kses_post( wpautop( jkl_filter_content_with_span( $meta['wysiwyg_ko'] ) ) ); ?>
+								<?php // echo wp_kses_post( wpautop( jkl_filter_content_with_span( $meta['wysiwyg_ko'] ) ) );. ?>
+								<?php echo wp_kses_post( wpautop( $meta['wysiwyg_ko'] ) ); ?>
 							</div>
 
 							<?php if ( array_key_exists( 'wysiwyg_en', $meta ) ) { ?>
@@ -201,8 +202,9 @@ get_header(); ?>
 
 	<div id="dict-lookup-container">
 		<div id="dict-lookup">
-			<i id="dict-close" class="fas fa-close">x</i>
+			<i id="dict-close" class="fas fa-times"></i>
 			<h2>Dictionary Lookup</h2>
+			<?php jkl_papago_dictionary_lookup(); ?>
 		</div>
 	</div>
 

@@ -186,12 +186,5 @@ get_header(); ?>
 
 	</main><!-- #primary -->
 
-	<div id="dict-lookup-container">
-		<div id="dict-lookup">
-			<i id="dict-close" class="fas fa-close">x</i>
-			<h2>Dictionary Lookup</h2>
-		</div>
-	</div>
-
 <?php
 get_footer();

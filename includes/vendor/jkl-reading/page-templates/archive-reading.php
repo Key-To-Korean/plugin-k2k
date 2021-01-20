@@ -46,8 +46,12 @@ get_header(); ?>
 				<header class="entry-header">
 					<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
 						<?php
-							display_level_stars();
-							the_title( '<h2 class="entry-title">', '<span class="entry-subtitle">' . esc_html( get_reading_subtitle() ) . '</span></h2>' );
+						display_level_stars();
+						the_title( '<h2 class="entry-title">', '</h2>' );
+
+						if ( get_reading_subtitle() ) {
+							echo '<h3 class="entry-subtitle">' . esc_html( get_reading_subtitle() ) . '</h3>';
+						}
 						?>
 					</a>
 				</header><!-- .entry-header -->

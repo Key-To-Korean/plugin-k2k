@@ -4,6 +4,22 @@
  * @link Dev Guide: https://developers.naver.com/docs/nmt/reference/
  * @link Sample Code: https://developers.naver.com/docs/nmt/examples/#php
  */
+let koreanText = document.getElementsByClassName( 'korean-text' )[0];
+const koRegex = /(([\uAC00-\uD7AF]+)\s?)/g;
+let koreanTextArr = koreanText.innerHTML.split( /(\s+)/ );
+console.log(koreanText.children);
+
+let newStuff = '';
+
+for ( let i = 0; i < koreanTextArr.length; i++ ) {
+	if ( koreanTextArr[i].match( koRegex ) ) {
+		newStuff = newStuff + '<span class="dict-word">' + koreanTextArr[i] + '</span>';
+	} else {
+		newStuff = newStuff + koreanTextArr[i];
+	}
+}
+console.log( newStuff );
+koreanText.innerHTML = newStuff;
 
 let words = document.getElementsByClassName( 'dict-word' );
 let overlay = document.getElementsByClassName( 'site-modal' )[0];
@@ -59,24 +75,39 @@ function removeHighlight() {
 }
 
 
-var client_id = 'GWOb896dIGIFUwHFiimd';
-var client_secret = 'tLZGH0tcVV';
-var query = "번역할 문장을 입력하세요.";
-app.get('/translate', function (req, res) {
-   var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
-   var request = require('request');
-   var options = {
-       url: api_url,
-       form: {'source':'ko', 'target':'en', 'text':query},
-       headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-    };
-   request.post(options, function (error, response, body) {
-     if (!error && response.statusCode == 200) {
-       res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
-       res.end(body);
-     } else {
-       res.status(response.statusCode).end();
-       console.log('error = ' + response.statusCode);
+// var client_id = 'GWOb896dIGIFUwHFiimd';
+// var client_secret = 'tLZGH0tcVV';
+// var query = "번역할 문장을 입력하세요.";
+// app.get('/translate', function (req, res) {
+//    var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
+//    var request = require('request');
+//    var options = {
+//        url: api_url,
+//        form: {'source':'ko', 'target':'en', 'text':query},
+//        headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
+//     };
+//    request.post(options, function (error, response, body) {
+//      if (!error && response.statusCode == 200) {
+//        res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
+//        res.end(body);
+//      } else {
+//        res.status(response.statusCode).end();
+//        console.log('error = ' + response.statusCode);
+//      }
+//    });
+//  });
+
+function translate() {
+  const data = $("#accel_form").serialize(); // 
+    $.ajax({
+     type: "POST", //전송방식
+     url: "/ajax_test.php", //호출 URL
+     data: data, //넘겨줄 데이터
+     success: function(args){
+       $("#result_string").html(args); //통신에 성공했을시 실행되는 함수  
+     },
+     error:function(e){
+       alert(e.responseText); //통신에 실패했을시 실행되는 함수
      }
    });
- });
+  }   
