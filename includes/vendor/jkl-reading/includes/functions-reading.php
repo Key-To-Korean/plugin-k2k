@@ -43,9 +43,11 @@ function jkl_reading_enqueue_scripts() {
 
 			wp_localize_script(
 				'k2k-papago-script',
-				'translationData',
+				'translate',
 				array(
-					'ajaxurl' => 'admin-ajax.php',
+					'ajaxurl' => admin_url( 'admin-ajax.php' ),
+					'action'  => 'jkl_papago_dictionary_lookup',
+					'nonce'   => wp_create_nonce( 'translate_nonce' ),
 				)
 			);
 		}
@@ -217,11 +219,20 @@ function jkl_filter_content_with_span( $ko_content ) {
 /**
  * Papago Dictionary Lookup.
  *
- * @param String $word The word to translate.
+ * Using wp_localize_script (above) and an AJAX call in the papago.js file.
  */
-function jkl_papago_dictionary_lookup( $word = '안녕하세요' ) {
-	$client_id     = ''; // Set these up elsewhere (secret).
-	$client_secret = '';           // Set these up elsewhere (secret).
+function jkl_papago_dictionary_lookup() {
+
+	// Make sure our nonce (created in wp_localize_script above) matches, or die.
+	if ( ! check_ajax_referer( 'translate_nonce', 'nonce' ) ) {
+		wp_send_json_error();
+		die();
+	}
+
+	// This is the variable we are sending through JavaScript AJAX to PHP.
+	$word = isset( $_POST['word'] ) ? $_POST['word'] : ''; // phpcs:ignore
+
+
 	$enc_text      = rawurlencode( $word );
 	$postvars      = 'source=ko&target=en&text=' . $enc_text;
 	$url           = 'https://openapi.naver.com/v1/papago/n2mt';
@@ -239,10 +250,14 @@ function jkl_papago_dictionary_lookup( $word = '안녕하세요' ) {
 	$status_code = curl_getinfo( $ch, CURLINFO_HTTP_CODE );
 	$deco        = json_decode( $response, false );
 	curl_close( $ch );
+
+	// This is the response we send back to JavaScript.
+	// When we do console.log(res) in JS, this is what we see.
 	if ( 200 === $status_code ) {
-		print_r( $deco->message->result->translatedText );
-		var_dump( $deco );
+		echo esc_html( $deco->message->result->translatedText );
 	} else {
 		echo 'Error 내용:' . esc_attr( $response );
 	}
 }
+add_action( 'wp_ajax_jkl_papago_dictionary_lookup', 'jkl_papago_dictionary_lookup' );
+add_action( 'wp_ajax_nopriv_jkl_papago_dictionary_lookup', 'jkl_papago_dictionary_lookup' );

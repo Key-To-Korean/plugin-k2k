@@ -204,7 +204,52 @@ get_header(); ?>
 		<div id="dict-lookup">
 			<i id="dict-close" class="fas fa-times"></i>
 			<h2>Dictionary Lookup</h2>
-			<?php jkl_papago_dictionary_lookup(); ?>
+			<div class="dict-spinner">
+				<div class="bounce1"></div>
+				<div class="bounce2"></div>
+				<div class="bounce3"></div>
+			</div>
+			<small>
+			<ul class="translate-buttons">Check on:
+				<li>
+					<a id="open-papago" target="_blank" href="https://papago.naver.com/?sk=ko&tk=en&st=">
+						<img
+							src="<?php echo esc_url( plugin_dir_url( dirname( __FILE__ ) ) . 'img/papago_logo.png' ); ?>"
+							alt="Papago"
+							title="Papago"
+						/>
+					</a>
+				</li>
+				<li>
+					<a id="open-google" target="_blank" href="https://translate.google.com/?sl=ko&tl=en&text=">
+						<img
+							src="<?php echo esc_url( plugin_dir_url( dirname( __FILE__ ) ) . 'img/Google_Translate_Icon.png' ); ?>"
+							alt="Google Translate"
+							title="Google Translate"
+						/>
+					</a>
+				</li>
+				<li>
+					<a id="open-naver" target="_blank" href="https://dict.naver.com/search.nhn?dicQuery=">
+						<img
+							src="<?php echo esc_url( plugin_dir_url( dirname( __FILE__ ) ) . 'img/naver_dict_icon.webp' ); ?>"
+							alt="Naver Dictionary"
+							title="Naver Dictionary"
+						/>
+					</a>
+				</li>
+			</ul>
+			</small>
+			<p id="dict-translation"></p>
+			<footer class="dict-lookup-footer">
+				<small class="dict-clear-all" title="Reset Dictionary Lookup">Clear all</small>
+				<small class="dict-credits">Dictionary Lookup powered by: <a
+					href="https://papago.naver.com" target="_blank" title="Papago"><img
+						src="<?php echo esc_url( plugin_dir_url( dirname( __FILE__ ) ) . 'img/papago_logo.png' ); ?>"
+						alt="Papago"
+						title="Papago"
+					/></a></small>
+			</footer>
 		</div>
 	</div>
 
