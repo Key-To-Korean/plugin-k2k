@@ -53,6 +53,7 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'adjectives',
 						$prefix . 'verbs',
 						$prefix . 'nouns',
+						$prefix . 'conjugation_note',
 					),
 				),
 				array(
@@ -63,6 +64,7 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'sentences_past',
 						$prefix . 'sentences_present',
 						$prefix . 'sentences_future',
+						$prefix . 'sentences_note',
 					),
 				),
 				array(
@@ -71,6 +73,7 @@ function k2k_register_metabox_grammar() {
 					'title'  => esc_html__( 'More', 'k2k' ),
 					'fields' => array(
 						$prefix . 'exercises',
+						$prefix . 'exercises_note',
 						$prefix . 'related_grammar',
 					),
 				),
@@ -379,6 +382,18 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
+	 * Conjugations - Note
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Conjugation Note', 'k2k' ),
+			'desc' => esc_html__( 'Anything special to remember? Leave a note here. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;. You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'id'   => $prefix . 'conjugation_note',
+			'type' => 'text',
+		)
+	);
+
+	/**
 	 * Repeating text field for PAST TENSE sentences.
 	 */
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
@@ -387,7 +402,7 @@ function k2k_register_metabox_grammar() {
 			'id'          => $prefix . 'sentences_past',
 			'type'        => 'group',
 			'name'        => __( 'Example Sentences.', 'k2k' ),
-			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'description' => __( 'Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.<br>To add a Part of Speech icon, type the Part of Speech as a single letter, followed by a colon (i.e. "V:").', 'k2k' ),
 			'options'     => array(
 				'group_title'   => __( 'Past Tense Sentence', 'k2k' ),
 				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
@@ -494,21 +509,45 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
+	 * Sentences - Note
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Sentences Note', 'k2k' ),
+			'desc' => esc_html__( 'Anything special to remember? Leave a note here. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;. You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'id'   => $prefix . 'sentences_note',
+			'type' => 'text',
+		)
+	);
+
+	/**
 	 * Repeating text field for exercises.
 	 */
 	$k2k_metabox->add_field(
 		array(
 			'id'              => $prefix . 'exercises',
 			'name'            => __( 'Practice Exercise', 'k2k' ),
-			'description'    => __( 'Add optional practice exercises. Use ... to create a fill-in-the-blank.', 'k2k' ),
+			'description'     => __( 'Add optional practice exercises. Use ... to create a fill-in-the-blank.', 'k2k' ),
 			'type'            => 'text',
-			'sortable'       => true,
+			'sortable'        => true,
 			'repeatable'      => true,
-			'repeatable_max' => 10,
+			'repeatable_max'  => 10,
 			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
-			'text'           => array(
+			'text'            => array(
 				'add_row_text' => __( 'Add Practice', 'k2k' ),
 			),
+		)
+	);
+
+	/**
+	 * Exercises - Note
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Exercises Note', 'k2k' ),
+			'desc' => esc_html__( 'Anything special to remember? Leave a note here. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;. You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'id'   => $prefix . 'exercises_note',
+			'type' => 'text',
 		)
 	);
 
@@ -553,7 +592,22 @@ function k2k_register_metabox_grammar() {
 			),
 		)
 	);
-
+	$k2k_metabox->add_group_field(
+		$related_grammar,
+		array(
+			'name' => esc_html__( 'Unlinked Similar Grammar', 'k2k' ),
+			'id'   => $prefix . 'ul_similar_related',
+			'type' => 'text',
+		)
+	);
+	$k2k_metabox->add_group_field(
+		$related_grammar,
+		array(
+			'name' => esc_html__( 'Unlinked Opposite Grammar', 'k2k' ),
+			'id'   => $prefix . 'ul_opposite_related',
+			'type' => 'text',
+		)
+	);
 	$k2k_metabox->add_group_field(
 		$related_grammar,
 		array(

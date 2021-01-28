@@ -202,6 +202,51 @@ function k2k_any_cpt_enabled() {
 	);
 }
 
+/**
+ * Modify the main WP_Query to include our custom Post Types.
+ *
+ * This function modifies the main WordPress query to include an array of
+ * post types including of the default 'post' post type.
+ *
+ * @param object $query The main WordPress query.
+ */
+function k2k_include_custom_post_types_in_main_query( $query ) {
+	// First, figure out which post types are enabled, and so which to include.
+	$post_types = array( 'post' ); // Start with the default.
+
+	// Add k2k-vocabulary if enabled.
+	if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
+		$post_types[] = 'k2k-vocabulary';
+	}
+	// Add k2k-grammar if enabled.
+	if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
+		$post_types[] = 'k2k-grammar';
+	}
+	// Add k2k-phrases if enabled.
+	if ( 'on' === k2k_get_option( 'k2k_enable_phrases' ) ) {
+		$post_types[] = 'k2k-phrases';
+	}
+	// Add k2k-reading if enabled.
+	if ( 'on' === k2k_get_option( 'k2k_enable_reading' ) ) {
+		$post_types[] = 'k2k-reading';
+	}
+	// Add k2k-writing if enabled.
+	if ( 'on' === k2k_get_option( 'k2k_enable_writing' ) ) {
+		$post_types[] = 'k2k-writing';
+	}
+
+	// Include custom post types on the Home Page.
+	if ( $query->is_main_query() && $query->is_home() ) {
+		$query->set( 'post_type', $post_types );
+	}
+
+	// Include custom post types in Search Results.
+	if ( $query->is_main_query() && $query->is_search() && ! is_admin() ) {
+			$query->set( 'post_type', $post_types );
+	}
+}
+add_action( 'pre_get_posts', 'k2k_include_custom_post_types_in_main_query' );
+
 // Register everything on plugin activation.
 register_activation_hook( __FILE__, 'k2k_register_everything' );
 

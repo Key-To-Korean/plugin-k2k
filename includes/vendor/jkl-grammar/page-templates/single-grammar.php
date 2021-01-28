@@ -137,6 +137,13 @@ get_header(); ?>
 				?>
 
 				<footer class="entry-footer footer-edit-link">
+					<?php
+					if ( array_key_exists( 'related_grammar', $meta ) ) {
+						echo '<!-- Usage rules -->';
+						display_grammar_related( $meta );
+					}
+					?>
+
 					<?php gaya_edit_post_link(); ?>
 				</footer>
 

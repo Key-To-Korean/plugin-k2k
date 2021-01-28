@@ -232,7 +232,8 @@ function jkl_papago_dictionary_lookup() {
 	// This is the variable we are sending through JavaScript AJAX to PHP.
 	$word = isset( $_POST['word'] ) ? $_POST['word'] : ''; // phpcs:ignore
 
-
+	$client_id     = 'GWOb896dIGIFUwHFiimd'; // Set these up elsewhere (secret).
+	$client_secret = 'tLZGH0tcVV';           // Set these up elsewhere (secret).
 	$enc_text      = rawurlencode( $word );
 	$postvars      = 'source=ko&target=en&text=' . $enc_text;
 	$url           = 'https://openapi.naver.com/v1/papago/n2mt';

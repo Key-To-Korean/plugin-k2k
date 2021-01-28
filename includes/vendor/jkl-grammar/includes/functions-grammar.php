@@ -124,20 +124,34 @@ function jkl_grammar_get_meta_data() {
 	// Get post meta data.
 	$meta_prefix = 'k2k_grammar_meta_';
 
-	$meta['subtitle']        = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );        // Subtitle (translation).
-	$meta['video']           = get_post_meta( get_the_ID(), $meta_prefix . 'video', true );           // YouTube video lesson.
-	$meta['wysiwyg']         = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );         // Explanation (html).
-	$meta['adjectives']      = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );      // Adjective Conjugations (array).
-	$meta['verbs']           = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );           // Verb Conjugations (array).
-	$meta['nouns']           = get_post_meta( get_the_ID(), $meta_prefix . 'nouns', true );           // Noun Conjugations (array).
-	$meta['exercises']       = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );       // Exercises (array).
-	$meta['related_grammar'] = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true ); // Related Grammar Points (array).
+	$meta['subtitle']         = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );         // Subtitle (translation).
+	$meta['video']            = get_post_meta( get_the_ID(), $meta_prefix . 'video', true );            // YouTube video lesson.
+	$meta['wysiwyg']          = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );          // Explanation (html).
+	$meta['adjectives']       = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );       // Adjective Conjugations (array).
+	$meta['verbs']            = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );            // Verb Conjugations (array).
+	$meta['nouns']            = get_post_meta( get_the_ID(), $meta_prefix . 'nouns', true );            // Noun Conjugations (array).
+	$meta['exercises']        = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );        // Exercises (array).
+	$meta['related_grammar']  = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true );  // Related Grammar Points (array).
+	$meta['conjugation_note'] = get_post_meta( get_the_ID(), $meta_prefix . 'conjugation_note', true ); // Conjugation Note.
+	$meta['sentences_note']   = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_note', true );   // Sentences Note.
+	$meta['exercises_note']   = get_post_meta( get_the_ID(), $meta_prefix . 'exercises_note', true );   // Exercises Note.
 
+	// Get the Related Grammar Points.
 	$related_needs_link = get_post_meta( get_the_ID(), $meta_prefix . 'related_needs_link', true ); // Needs Link.
+	$similar_grammar    = get_post_meta( get_the_ID(), $meta_prefix . 'ul_similar_grammar', true ); // Similar Grammar (unlinked).
+	$opposite_grammar   = get_post_meta( get_the_ID(), $meta_prefix . 'ul_opposite_grammar', true ); // Opposite Grammar (unlinked).
+
 	if ( '' !== $related_needs_link ) {
 		$meta['related_grammar']['needs_link'] = $related_needs_link;
 	}
+	if ( '' !== $similar_grammar ) {
+		$meta['related_grammar']['similar'] = $$similar_grammar;
+	}
+	if ( '' !== $opposite_grammar ) {
+		$meta['related_grammar']['opposite'] = $opposite_grammar;
+	}
 
+	// Get the Sentences.
 	$sent_past = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_past', true );    // Sentences Past (array).
 	$sent_pres = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_present', true ); // Sentences Present (array).
 	$sent_futr = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_future', true );  // Sentences Future (array).

@@ -173,7 +173,7 @@ function display_grammar_related_points( $meta ) {
 		?>
 		<div class="entry-meta">
 			<ul class="related-grammar">
-				<li class="related-grammar-title"><?php esc_html_e( 'Related Grammar:', 'k2k' ); ?></li>
+				<li class="related-grammar-title"><?php esc_html_e( 'See also:', 'k2k' ); ?></li>
 				<?php
 				foreach ( $meta['related_grammar'][0]['k2k_grammar_meta_related_grammar_points'] as $related ) {
 					$related_post = get_post( $related );
@@ -187,6 +187,23 @@ function display_grammar_related_points( $meta ) {
 		<?php
 	}
 
+}
+
+/**
+ * Function to add Notes under various areas.
+ *
+ * @param array  $meta Array containing post meta data.
+ * @param String $note The string of the array key for the note.
+ */
+function add_grammar_note( $meta, $note ) {
+	if ( array_key_exists( $note, $meta ) ) {
+		?>
+		<p class="grammar-note <?php echo esc_attr( str_replace( '_', '-', $note ) ); ?>">
+			<span class="note-text"><span class="red-text">* </span><?php esc_attr_e( 'Note: ', 'k2k' ); ?></span>
+			<?php echo wp_kses_post( $meta[ $note ] ); ?>
+		</p>
+		<?php
+	}
 }
 
 /**
@@ -253,6 +270,9 @@ function build_conjugation_table( $meta ) {
 	endforeach;
 
 	echo '</table>';
+
+	// Add Conjugation Note if one exists.
+	add_grammar_note( $meta, 'conjugation_note' );
 
 }
 
@@ -338,6 +358,7 @@ function display_grammar_sentences( $meta ) {
 			<button class="expand-all" title="<?php esc_html_e( 'Show all English sentences', 'k2k' ); ?>">
 				<i class="fas fa-caret-down"></i>
 			</button>
+			<small id="switch-sentence-language" class="korean"><?php esc_html_e( 'Change to: EN', 'k2k' ); ?></small>
 		</div>
 	</div>
 
@@ -398,6 +419,8 @@ function display_grammar_sentences( $meta ) {
 	</ol>
 
 	<?php
+	// Add Sentence Note if one exists.
+	add_grammar_note( $meta, 'sentences_note' );
 }
 
 /**
@@ -435,4 +458,43 @@ function display_grammar_exercises( $meta ) {
 	</footer>
 
 	<?php
+	// Add Exercises Note if one exists.
+	add_grammar_note( $meta, 'exercises_note' );
+}
+
+/**
+ * Function to output the related grammar points.
+ *
+ * @param array $meta An array of grammar meta data.
+ */
+function display_grammar_related( $meta ) {
+
+	if ( ! array_key_exists( 'related_grammar', $meta ) ) {
+		return;
+	}
+
+	$related      = $meta['related_grammar'][0];
+	$prefix       = 'k2k_grammar_meta_';
+	$related_list = [];
+
+	if ( array_key_exists( $prefix . 'ul_similar_related', $related ) ) {
+		$related_list['similar'] = $related[ $prefix . 'ul_similar_related' ];
+	}
+	if ( array_key_exists( $prefix . 'ul_opposite_related', $related ) ) {
+		$related_list['opposite'] = $related[ $prefix . 'ul_opposite_related' ];
+	}
+
+	echo '<h3 class="related-title">' . esc_html__( 'Related Grammar', 'k2k' ) . '</h3>';
+
+	foreach ( $related_list as $key => $value ) {
+		?>
+
+		<ul class="related-grammar usage-rules related-grammar-<?php echo esc_attr( $key ); ?>">
+			<li class="related-grammar-title usage-rules-title"><?php echo esc_html( str_replace( '_', ' ', ucwords( $key ) ) ); ?>:</li>
+			<?php echo wp_kses_post( get_unlinked_usages( $value ) ); ?>
+		</ul>
+
+		<?php
+	}
+
 }

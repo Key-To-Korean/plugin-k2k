@@ -1,33 +1,45 @@
 /**
- * Function to lookup a vocab word from Papago.
+ * Functions to lookup a vocab word from Papago.
  *
  * @link Dev Guide: https://developers.naver.com/docs/nmt/reference/
  * @link Sample Code: https://developers.naver.com/docs/nmt/examples/#php
  */
+
+/**
+ * Function to split the Korean reading text into an array of Korean words
+ * surrounded by clickable <span> tags.
+ */
 let koreanText = document.getElementsByClassName( 'korean-text' )[0];
 const koRegex = /(([\uAC00-\uD7AF]+)\s?)/g; // This regex tests for ONLY Korean characters.
-let koreanTextArr = koreanText.innerHTML.split( /(\s+)/ );
-console.log(koreanText.children);
 
+// Split the whole text by spaces and HTML tags.
+let allTextArr = koreanText.innerHTML.split( /\s+|(<[^>]*>)/g );
+// Remove undefined array items.
+let koreanTextArr = allTextArr.filter(function(x) {
+	return x !== undefined;
+})
+
+// Create a new String to hold our output.
 let newStuff = '';
 
+// Go through every item in the array and surround ONLY the Korean words with <span> tags.
 for ( let i = 0; i < koreanTextArr.length; i++ ) {
 	// Make sure the text is in Korean (not numbers, symbols, emoji, English, etc).
 	if ( koreanTextArr[i].match( koRegex ) ) {
-		// Some Korean words are getting looped up with their HTML tags. This if/else prevents that.
-		let htmlTagIndex = koreanTextArr[i].indexOf( '>' );
-		if ( htmlTagIndex !== 0 ) {
-			newStuff = newStuff + koreanTextArr[i].substr( 0, htmlTagIndex + 1 ) + '<span class="dict-word">' + koreanTextArr[i].substr( htmlTagIndex + 1 ) + '</span>';
-		} else {
-			newStuff = newStuff + '<span class="dict-word">' + koreanTextArr[i] + '</span>';
-		}
+		newStuff = newStuff + '<span class="dict-word">' + koreanTextArr[i] + '</span>';
 	} else { // In non-Korean words are found, we don't surround them with span tags.
 		newStuff = newStuff + koreanTextArr[i];
 	}
+	newStuff += ' ';
 }
-console.log( newStuff );
+
+// Reset the reading text with our new version
+// where every Korean word has a <span> tag that can be clicked.
 koreanText.innerHTML = newStuff;
 
+/**
+ * Get ready to open the dictionary lookup window on word click.
+ */
 let words = document.getElementsByClassName( 'dict-word' );
 let overlay = document.getElementsByClassName( 'site-modal' )[0];
 let drawer = document.getElementsByClassName( 'drawer' )[0];
@@ -54,6 +66,9 @@ function openDict(e) {
 	// overlay.addEventListener( 'click', closeDict );
 }
 
+/**
+ * Get ready to close the dictionary lookup window on 'x' click.
+ */
 document.getElementById( 'dict-close' ).addEventListener( 'click', closeDict );
 
 function closeDict() {
@@ -74,6 +89,9 @@ function closeDict() {
 	
 }
 
+/**
+ * Remove all highlights from any highlighted words.
+ */
 function removeHighlight() {
 	// Remove any possible highlights.
 	for ( let i = 0; i < words.length; i++ ) {
@@ -81,34 +99,20 @@ function removeHighlight() {
 	}
 }
 
-// var client_id = 'GWOb896dIGIFUwHFiimd';
-// var client_secret = 'tLZGH0tcVV';
-// var query = "번역할 문장을 입력하세요.";
-// app.get('/translate', function (req, res) {
-//    var api_url = 'https://openapi.naver.com/v1/papago/n2mt';
-//    var request = require('request');
-//    var options = {
-//        url: api_url,
-//        form: {'source':'ko', 'target':'en', 'text':query},
-//        headers: {'X-Naver-Client-Id':client_id, 'X-Naver-Client-Secret': client_secret}
-//     };
-//    request.post(options, function (error, response, body) {
-//      if (!error && response.statusCode == 200) {
-//        res.writeHead(200, {'Content-Type': 'text/json;charset=utf-8'});
-//        res.end(body);
-//      } else {
-//        res.status(response.statusCode).end();
-//        console.log('error = ' + response.statusCode);
-//      }
-//    });
-//  });
-
+/**
+ * JQuery AJAX function to actually perform the Papago lookup.
+ */
 ( function($) {
 	$( '.dict-clear-all' ).on( 'click', function() {
 		$( '#dict-translation' ).html( '' );
 		removeHighlight();
 	});
 
+	/**
+	 * The function that listens for an Event click on each Korean word.
+	 * It handles the AJAX call to Papago and PHP to display the translation,
+	 * and also handles the dynamic links to the various dictionary sites.
+	 */
 	$( '.dict-word' ).on( 'click', function() {
 
 		// Turn ON the "loading" spinner.
