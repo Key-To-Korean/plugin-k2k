@@ -204,7 +204,7 @@ function k2k_get_wysiwyg_output( $meta_key, $post_id = 0 ) {
  * Customize Taxonomy Query using Post Meta.
  *
  * @param Object $query The main WordPress query.
- */
+
 function k2k_filter_taxonomy_archive_query( $query ) {
 
 	// Check that we're in a taxonomy archive and using the main query.
@@ -246,3 +246,4 @@ function k2k_filter_taxonomy_archive_query( $query ) {
 
 }
 add_action( 'pre_get_posts', 'k2k_filter_taxonomy_archive_query' );
+*/

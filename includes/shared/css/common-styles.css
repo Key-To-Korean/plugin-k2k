@@ -1,9 +1,12 @@
+*[title] {
+  cursor: help;
+}
+
 .single .hentry {
   /* display: block !important; */
 }
 
 .k2k-vocabulary .entry-meta,
-.k2k-grammar .entry-meta,
 .k2k-phrases .entry-meta,
 .k2k-reading .entry-meta,
 .k2k-writing .entry-meta {

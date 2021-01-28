@@ -214,10 +214,8 @@ function k2k_include_custom_post_types_in_main_query( $query ) {
 	// First, figure out which post types are enabled, and so which to include.
 	$post_types = array( 'post' ); // Start with the default.
 
-	// Add k2k-vocabulary if enabled.
-	if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
-		$post_types[] = 'k2k-vocabulary';
-	}
+	// Add k2k-vocabulary if enabled. (Removed for now due to potential for too many posts).
+
 	// Add k2k-grammar if enabled.
 	if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
 		$post_types[] = 'k2k-grammar';
@@ -236,7 +234,7 @@ function k2k_include_custom_post_types_in_main_query( $query ) {
 	}
 
 	// Include custom post types on the Home Page.
-	if ( $query->is_main_query() && $query->is_home() ) {
+	if ( $query->is_main_query() && ( $query->is_home() || $query->is_front_page() ) ) {
 		$query->set( 'post_type', $post_types );
 	}
 
@@ -244,8 +242,17 @@ function k2k_include_custom_post_types_in_main_query( $query ) {
 	if ( $query->is_main_query() && $query->is_search() && ! is_admin() ) {
 			$query->set( 'post_type', $post_types );
 	}
+
+	// Include custom post types in Archive Pages.
+	if ( $query->is_main_query() && (
+		$query->is_date() || $query->is_author() || $query->is_category() || $query->is_tag() || $query->is_tax()
+	) ) {
+		$query->set( 'post_type', $post_types );
+	}
+
+	$query->set( 'post_type', $post_types );
 }
-add_action( 'pre_get_posts', 'k2k_include_custom_post_types_in_main_query' );
+add_action( 'pre_get_posts', 'k2k_include_custom_post_types_in_main_query', 10, 1 );
 
 // Register everything on plugin activation.
 register_activation_hook( __FILE__, 'k2k_register_everything' );

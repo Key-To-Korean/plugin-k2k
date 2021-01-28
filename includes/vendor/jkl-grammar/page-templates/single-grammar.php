@@ -59,6 +59,15 @@ get_header(); ?>
 
 				</header><!-- .entry-header -->
 
+				<?php if ( is_singular() && has_excerpt() ) : ?>
+					<h3 class="section-title" title="<?php esc_attr_e( 'Too Long; Didn\'t Read', 'k2k' ); ?>">
+						<?php echo esc_attr_x( 'TL;DR', 'Stands for "Too Long; Didn\'t Read" or "Too Long; Don\'t Read"', 'k2k' ); ?>
+					</h3>
+					<div class="entry-excerpt">
+						<?php the_excerpt(); ?>
+					</div>
+				<?php endif; ?>
+
 				<?php
 				/* Ad Above Post */
 				if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
