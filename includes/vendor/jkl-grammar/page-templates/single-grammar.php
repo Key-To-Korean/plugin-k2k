@@ -116,7 +116,7 @@ get_header(); ?>
 				<?php build_conjugation_table( $meta ); ?>
 
 				<?php
-				if ( array_key_exists( 'sentences', $meta ) ) :
+				if ( array_key_exists( 'sentences', $meta ) || array_key_exists( 'special_dialogue', $meta ) ) :
 					display_grammar_sentences( $meta );
 				endif;
 
@@ -148,7 +148,6 @@ get_header(); ?>
 				<footer class="entry-footer footer-edit-link">
 					<?php
 					if ( array_key_exists( 'related_grammar', $meta ) ) {
-						echo '<!-- Usage rules -->';
 						display_grammar_related( $meta );
 					}
 					?>

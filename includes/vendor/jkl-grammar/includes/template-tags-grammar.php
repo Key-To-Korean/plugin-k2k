@@ -230,6 +230,12 @@ function build_conjugation_table( $meta ) {
 	}
 
 	echo '<h3 class="conjugations-title">' . esc_html__( 'Conjugation Table', 'k2k' ) . '</h3>';
+
+	// Check where the Note is (if it exists).
+	if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position', true ) ) {
+		add_grammar_note( $meta, 'conjugation_note' );
+	}
+
 	echo '<table class="grammar-conjugations">';
 	$ps_keys = array_keys( $conjugations );
 
@@ -271,8 +277,14 @@ function build_conjugation_table( $meta ) {
 
 	echo '</table>';
 
+	if ( array_key_exists( 'special_conjugations', $meta ) ) {
+		echo wp_kses_post( $meta['special_conjugations'] );
+	}
+
 	// Add Conjugation Note if one exists.
-	add_grammar_note( $meta, 'conjugation_note' );
+	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position', true ) ) {
+		add_grammar_note( $meta, 'conjugation_note' );
+	}
 
 }
 
@@ -349,6 +361,11 @@ function display_grammar_usage_rules( $meta ) {
  * @param array $meta The post meta data.
  */
 function display_grammar_sentences( $meta ) {
+	$image = wp_get_attachment_image( get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_image_id', 1 ), 'full' );
+
+	if ( $image ) {
+		echo '<figure class="sentences-image">' . wp_kses_post( $image ) . '</figure>';
+	}
 	?>
 
 	<!-- Sentences -->
@@ -362,7 +379,25 @@ function display_grammar_sentences( $meta ) {
 		</div>
 	</div>
 
-	<ol class="sentences">
+	<?php
+	// Check where the Note is (if it exists).
+	if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_note_position', true ) ) {
+		add_grammar_note( $meta, 'sentences_note' );
+	}
+
+	// Will this be a dialogue?
+	if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_dialogue', true ) ) {
+		$dialogue        = true;
+		$sentences_class = 'dialogue';
+	} else {
+		$dialogue        = false;
+		$sentences_class = '';
+	}
+
+	if ( array_key_exists( 'sentences', $meta ) ) :
+		?>
+
+	<ol class="sentences <?php echo esc_attr( $sentences_class ); ?>">
 		<?php
 		// Swap out words surrounded in ** with italic markup.
 		$italic_pattern     = '/\*\*(.*?)\*\*/';
@@ -381,11 +416,29 @@ function display_grammar_sentences( $meta ) {
 		$part_of_speech_noun_r = '<span class="part-of-speech noun">$1</span>';
 
 		foreach ( $meta['sentences'] as $key => $array ) {
-			?>
+			$titles = get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_titles', true )[0];
+			$prefix = 'k2k_grammar_meta_sentences_titles_';
 
-			<h4 class="sentence-tense-title"><?php echo esc_html( ucwords( $key ) ) . esc_html__( ' Tense', 'k2k' ); ?></h4>
+			// If we have new titles, and have chosen to replace the originals.
+			if ( '' !== $titles[ $prefix . $key ] && '' !== $titles[ $prefix . 'replace' ] ) :
+				?>
+				<h4 class="sentence-tense-title">
+					<?php echo esc_attr( $titles[ $prefix . $key ] ); ?>
+				</h4>
+				<?php
+			else :
+				?>
+				<h4 class="sentence-tense-title">
+					<?php
+					echo esc_html( ucwords( $key ) ) . esc_html__( ' Tense', 'k2k' );
+					if ( '' !== $titles[ $prefix . $key ] ) {
+						echo '<span>&mdash; ' . esc_attr( $titles[ $prefix . $key ] ) . '</span>';
+					}
+					?>
+				</h4>
+				<?php
+			endif;
 
-			<?php
 			foreach ( $array as $sentence ) {
 				// Add <em> tags.
 				$italicize_ko = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_grammar_meta_sentences_1'] );
@@ -397,19 +450,19 @@ function display_grammar_sentences( $meta ) {
 
 				// Add <span> tags.
 				$ps_ko = preg_replace( $part_of_speech_a, $part_of_speech_adj_r, $bold_ko );
-				$ps_en = preg_replace( $part_of_speech_a, $part_of_speech_adj_r, $bold_en );
+				// $ps_en = preg_replace( $part_of_speech_a, $part_of_speech_adj_r, $bold_en );
 				$ps_ko = preg_replace( $part_of_speech_v, $part_of_speech_verb_r, $ps_ko );
-				$ps_en = preg_replace( $part_of_speech_v, $part_of_speech_verb_r, $ps_en );
+				// $ps_en = preg_replace( $part_of_speech_v, $part_of_speech_verb_r, $ps_en );
 				$ps_ko = preg_replace( $part_of_speech_n, $part_of_speech_noun_r, $ps_ko );
-				$ps_en = preg_replace( $part_of_speech_n, $part_of_speech_noun_r, $ps_en );
+				// $ps_en = preg_replace( $part_of_speech_n, $part_of_speech_noun_r, $ps_en );
 				?>
 
 				<li class="sentence">
 					<button class="expand" title="<?php esc_html_e( 'Show English sentence', 'k2k' ); ?>">
 						<i class="fas fa-caret-down"></i>
 					</button>
-					<p class="ko"><?php echo wp_kses_post( str_replace( ':', '', $ps_ko ) ); ?></p>
-					<p class="en"><?php echo wp_kses_post( str_replace( ':', '', $ps_en ) ); ?></p>
+					<p class="ko"><?php echo wp_kses_post( $dialogue ? $ps_ko : implode( '', explode( ':', $ps_ko, 2 ) ) ); // Remove only the first colon ":". ?></p>
+					<p class="en"><?php echo wp_kses_post( implode( '', explode( ':', $bold_en, 1 ) ) ); // Remove no colons. ?></p>
 				</li>
 
 				<?php
@@ -418,9 +471,17 @@ function display_grammar_sentences( $meta ) {
 		?>
 	</ol>
 
-	<?php
+		<?php
+	endif;
+
+	if ( array_key_exists( 'special_dialogue', $meta ) ) {
+		echo wp_kses_post( $meta['special_dialogue'] );
+	}
+
 	// Add Sentence Note if one exists.
-	add_grammar_note( $meta, 'sentences_note' );
+	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_note_position', true ) ) {
+		add_grammar_note( $meta, 'sentences_note' );
+	}
 }
 
 /**
@@ -434,6 +495,14 @@ function display_grammar_exercises( $meta ) {
 	<footer class="entry-footer exercises-box">
 
 		<h3><?php esc_html_e( 'Practice Exercises', 'k2k' ); ?></h3>
+
+		<?php
+		// Check where the Note is (if it exists).
+		if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_exercises_note_position', true ) ) {
+			add_grammar_note( $meta, 'exercises_note' );
+		}
+		?>
+
 		<ol class="practice-exercises">
 
 			<?php
@@ -459,7 +528,9 @@ function display_grammar_exercises( $meta ) {
 
 	<?php
 	// Add Exercises Note if one exists.
-	add_grammar_note( $meta, 'exercises_note' );
+	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_exercises_note_position', true ) ) {
+		add_grammar_note( $meta, 'exercises_note' );
+	}
 }
 
 /**
@@ -484,6 +555,7 @@ function display_grammar_related( $meta ) {
 		$related_list['opposite'] = $related[ $prefix . 'ul_opposite_related' ];
 	}
 
+	echo '<!-- Related Grammar -->';
 	echo '<h3 class="related-title">' . esc_html__( 'Related Grammar', 'k2k' ) . '</h3>';
 
 	foreach ( $related_list as $key => $value ) {

@@ -136,6 +136,10 @@ function jkl_grammar_get_meta_data() {
 	$meta['sentences_note']   = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_note', true );   // Sentences Note.
 	$meta['exercises_note']   = get_post_meta( get_the_ID(), $meta_prefix . 'exercises_note', true );   // Exercises Note.
 
+	// Special stuff.
+	$meta['special_conjugations'] = get_post_meta( get_the_ID(), $meta_prefix . 'special_conjugations', true ); // Special Conjugations (Wysiwyg).
+	$meta['special_dialogue']     = get_post_meta( get_the_ID(), $meta_prefix . 'special_dialogue', true );     // Special Dialogue (Wysiwyg).
+
 	// Get the Related Grammar Points.
 	$related_needs_link = get_post_meta( get_the_ID(), $meta_prefix . 'related_needs_link', true ); // Needs Link.
 	$similar_grammar    = get_post_meta( get_the_ID(), $meta_prefix . 'ul_similar_grammar', true ); // Similar Grammar (unlinked).
@@ -145,7 +149,7 @@ function jkl_grammar_get_meta_data() {
 		$meta['related_grammar']['needs_link'] = $related_needs_link;
 	}
 	if ( '' !== $similar_grammar ) {
-		$meta['related_grammar']['similar'] = $$similar_grammar;
+		$meta['related_grammar']['similar'] = $similar_grammar;
 	}
 	if ( '' !== $opposite_grammar ) {
 		$meta['related_grammar']['opposite'] = $opposite_grammar;

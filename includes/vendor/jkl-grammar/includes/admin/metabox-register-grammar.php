@@ -37,6 +37,7 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'subtitle',
 						$prefix . 'level',
 						$prefix . 'wysiwyg',
+						$prefix . 'unlinked_related_grammar',
 						$prefix . 'video',
 						$prefix . 'expression',
 						$prefix . 'usage',
@@ -54,6 +55,7 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'verbs',
 						$prefix . 'nouns',
 						$prefix . 'conjugation_note',
+						$prefix . 'conjugation_note_position',
 					),
 				),
 				array(
@@ -61,10 +63,14 @@ function k2k_register_metabox_grammar() {
 					'icon'   => 'dashicons-editor-alignleft',
 					'title'  => esc_html__( 'Sentences', 'k2k' ),
 					'fields' => array(
+						$prefix . 'sentences_dialogue',
 						$prefix . 'sentences_past',
 						$prefix . 'sentences_present',
 						$prefix . 'sentences_future',
+						$prefix . 'sentences_titles',
+						$prefix . 'sentences_image',
 						$prefix . 'sentences_note',
+						$prefix . 'sentences_note_position',
 					),
 				),
 				array(
@@ -74,7 +80,17 @@ function k2k_register_metabox_grammar() {
 					'fields' => array(
 						$prefix . 'exercises',
 						$prefix . 'exercises_note',
+						$prefix . 'exercises_note_position',
 						$prefix . 'related_grammar',
+					),
+				),
+				array(
+					'id'     => 'tab-special',
+					'icon'   => 'dashicons-warning',
+					'title'  => esc_html__( 'Special', 'k2k' ),
+					'fields' => array(
+						$prefix . 'special_conjugations',
+						$prefix . 'special_dialogue',
 					),
 				),
 			),
@@ -158,6 +174,37 @@ function k2k_register_metabox_grammar() {
 				'media_buttons' => true,
 				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
 			),
+		)
+	);
+
+	/**
+	 * Info - Unlinked Related Grammar
+	 */
+	$unlinked_related_grammar = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'unlinked_related_grammar',
+			'type'        => 'group',
+			'repeatable' => false,
+			// 'description' => __( 'Adjective Conjugations', 'k2k' ),
+			'options'     => array(
+				'group_title' => __( 'Unlinked Related Grammar', 'k2k' ),
+			),
+		)
+	);
+	$k2k_metabox->add_group_field(
+		$unlinked_related_grammar,
+		array(
+			'name' => esc_html__( 'Similar Grammar', 'k2k' ),
+			'id'   => $prefix . 'ul_similar_related',
+			'type' => 'text',
+		)
+	);
+	$k2k_metabox->add_group_field(
+		$unlinked_related_grammar,
+		array(
+			'name' => esc_html__( 'Opposite Grammar', 'k2k' ),
+			'id'   => $prefix . 'ul_opposite_related',
+			'type' => 'text',
 		)
 	);
 
@@ -393,6 +440,24 @@ function k2k_register_metabox_grammar() {
 		)
 	);
 
+	$k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'conjugation_note_position',
+			'name' => __( 'Show note at the Top?', 'k2k' ),
+			'type' => 'checkbox',
+		)
+	);
+
+	/** Create Sentences Dialogue */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Create dialogue?', 'k2k' ),
+			'desc' => esc_html__( 'Change Sentence Headings below, and check the box to "Replace original titles" if so.', 'k2k' ),
+			'id'   => $prefix . 'sentences_dialogue',
+			'type' => 'checkbox',
+		)
+	);
+
 	/**
 	 * Repeating text field for PAST TENSE sentences.
 	 */
@@ -476,10 +541,10 @@ function k2k_register_metabox_grammar() {
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
 	$sentence_future_group = $k2k_metabox->add_field(
 		array(
-			'id'          => $prefix . 'sentences_future',
-			'type'        => 'group',
+			'id'      => $prefix . 'sentences_future',
+			'type'    => 'group',
 			// 'description' => __( 'Example Sentences.<br />Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;.<br />You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
-			'options'     => array(
+			'options' => array(
 				'group_title'   => __( 'Future Tense Sentence', 'k2k' ),
 				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
 				'remove_button' => __( 'Remove Sentence', 'k2k' ),
@@ -509,6 +574,68 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
+	 * Optional sentences titles.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$sentences_titles = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'sentences_titles',
+			'type'        => 'group',
+			'name'        => __( 'Sentences Headings', 'k2k' ),
+			'description' => __( 'The following options add additional text to the Sentence Headings. Or you can choose to replace them entirely by checking the box below.', 'k2k' ),
+			'repeatable'  => false,
+			'options'     => array(
+				'group_title' => __( 'Sentences Headings', 'k2k' ),
+			),
+		)
+	);
+	/** Sentence Titles - PAST */
+	$k2k_metabox->add_group_field(
+		$sentences_titles,
+		array(
+			'name' => esc_html__( 'Past Tense title extras', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_past',
+			'type' => 'text',
+		)
+	);
+	/** Sentence Titles - PRESENT */
+	$k2k_metabox->add_group_field(
+		$sentences_titles,
+		array(
+			'name' => esc_html__( 'Present Tense title extras', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_present',
+			'type' => 'text',
+		)
+	);
+	/** Sentence Titles - FUTURE */
+	$k2k_metabox->add_group_field(
+		$sentences_titles,
+		array(
+			'name' => esc_html__( 'Future Tense title extras', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_future',
+			'type' => 'text',
+		)
+	);
+	/** Replace Titles */
+	$k2k_metabox->add_group_field(
+		$sentences_titles,
+		array(
+			'name' => esc_html__( 'Replace original titles?', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_replace',
+			'type' => 'checkbox',
+		)
+	);
+
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Sentences Image (optional)', 'k2k' ),
+			'desc' => esc_html__( 'Add an extra image to highlight the sentences if you want.', 'k2k' ),
+			'id'   => $prefix . 'sentences_image',
+			'type' => 'file',
+		)
+	);
+
+	/**
 	 * Sentences - Note
 	 */
 	$k2k_metabox->add_field(
@@ -520,13 +647,21 @@ function k2k_register_metabox_grammar() {
 		)
 	);
 
+	$k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'sentences_note_position',
+			'name' => __( 'Show note at the Top?', 'k2k' ),
+			'type' => 'checkbox',
+		)
+	);
+
 	/**
 	 * Repeating text field for exercises.
 	 */
 	$k2k_metabox->add_field(
 		array(
 			'id'              => $prefix . 'exercises',
-			'name'            => __( 'Practice Exercise', 'k2k' ),
+			'name'            => __( 'Practice Exercises', 'k2k' ),
 			'description'     => __( 'Add optional practice exercises. Use ... to create a fill-in-the-blank.', 'k2k' ),
 			'type'            => 'text',
 			'sortable'        => true,
@@ -551,6 +686,14 @@ function k2k_register_metabox_grammar() {
 		)
 	);
 
+	$k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'exercises_note_position',
+			'name' => __( 'Show note at the Top?', 'k2k' ),
+			'type' => 'checkbox',
+		)
+	);
+
 	/**
 	 * More - Book Selection
 	 */
@@ -571,11 +714,10 @@ function k2k_register_metabox_grammar() {
 	$related_grammar = $k2k_metabox->add_field(
 		array(
 			'id'         => $prefix . 'related_grammar',
-			// 'name' => __( 'Related', 'k2k' ),
 			'type'       => 'group',
 			'repeatable' => false,
 			'options'    => array(
-				'group_title' => __( 'Related Grammar', 'k2k' ),
+				'group_title' => __( 'Related Grammar (See also)', 'k2k' ),
 			),
 		)
 	);
@@ -583,31 +725,16 @@ function k2k_register_metabox_grammar() {
 	$k2k_metabox->add_group_field(
 		$related_grammar,
 		array(
-			'id'   => $prefix . 'related_needs_link',
-			'name' => __( 'Needs link', 'k2k' ),
-			'type' => 'checkbox',
+			'id'     => $prefix . 'related_needs_link',
+			'name'   => __( 'Needs link', 'k2k' ),
+			'type'   => 'checkbox',
 			'column' => array(
 				'position' => 2,
 				'name'     => __( 'Needs Link', 'k2k' ),
 			),
 		)
 	);
-	$k2k_metabox->add_group_field(
-		$related_grammar,
-		array(
-			'name' => esc_html__( 'Unlinked Similar Grammar', 'k2k' ),
-			'id'   => $prefix . 'ul_similar_related',
-			'type' => 'text',
-		)
-	);
-	$k2k_metabox->add_group_field(
-		$related_grammar,
-		array(
-			'name' => esc_html__( 'Unlinked Opposite Grammar', 'k2k' ),
-			'id'   => $prefix . 'ul_opposite_related',
-			'type' => 'text',
-		)
-	);
+
 	$k2k_metabox->add_group_field(
 		$related_grammar,
 		array(
@@ -622,6 +749,40 @@ function k2k_register_metabox_grammar() {
 					'posts_per_page' => 10,
 					'post_type'      => 'k2k-grammar',
 				),
+			),
+		)
+	);
+
+	/**
+	 * Special - Wysiwyg Special Conjugations
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'    => esc_html__( 'Special Conjugations', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'special_conjugations',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
+			),
+		)
+	);
+
+	/**
+	 * Special - Wysiwyg Special Dialogue
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name'    => esc_html__( 'Special Dialogue', 'k2k' ),
+			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'id'      => $prefix . 'special_dialogue',
+			'type'    => 'wysiwyg',
+			'options' => array(
+				'wpautop'       => true,
+				'media_buttons' => true,
+				'textarea_rows' => get_option( 'default_post_edit_rows', 5 ),
 			),
 		)
 	);

@@ -41,4 +41,13 @@ function k2k_register_taxonomy_weblink_metabox() {
 		)
 	);
 
+	$k2k_tax_term->add_field(
+		array(
+			'name' => esc_html__( 'Affiliate link?', 'k2k' ),
+			'desc' => esc_html__( 'If the link is an affiliate link, output a small notice.', 'k2k' ),
+			'id'   => $prefix . 'term_affiliate',
+			'type' => 'checkbox',
+		)
+	);
+
 }

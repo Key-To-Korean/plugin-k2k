@@ -250,7 +250,7 @@ function k2k_include_custom_post_types_in_main_query( $query ) {
 		$query->set( 'post_type', $post_types );
 	}
 
-	$query->set( 'post_type', $post_types );
+	// $query->set( 'post_type', $post_types );
 }
 add_action( 'pre_get_posts', 'k2k_include_custom_post_types_in_main_query', 10, 1 );
 

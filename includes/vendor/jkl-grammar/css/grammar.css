@@ -115,10 +115,20 @@
 
 .grammar-note .note-text {
   font-weight: bold;
+  margin: 0;
 }
 
 .grammar-note .red-text {
   color: red;
+  margin: 0;
+}
+
+.sentence-tense-title span {
+  margin-left: 0.5rem;
+  /* font-weight: normal; */
+  font-style: italic;
+  font-size: 90%;
+  opacity: 0.9;
 }
 
 .sentence .part-of-speech {
@@ -146,6 +156,37 @@
   margin-left: 0.25rem;
   cursor: pointer;
   color: #cf8031;
+}
+
+/* Creating a dialogue */
+.dialogue li:before {
+  content: "A";
+  margin-right: 0.5rem;
+  color: white;
+  background: blue;
+  float: left;
+  width: 25px;
+  height: 25px;
+  text-align: center;
+  position: relative;
+  top: 3px;
+  border-radius: 25px;
+  font-size: 0.8rem;
+}
+
+/* First, third, etc */
+.dialogue li:nth-child(2n):before {
+  background: #00b0ff;
+}
+
+/* Second, fourth, etc */
+.dialogue li:nth-child(2n + 1) {
+  margin-left: 1rem;
+}
+
+.dialogue li:nth-child(2n + 1):before {
+  content: "B";
+  background: #e040fb;
 }
 
 .fill-in-the-blank {
