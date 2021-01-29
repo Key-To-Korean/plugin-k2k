@@ -194,11 +194,12 @@ function display_grammar_related_points( $meta ) {
  *
  * @param array  $meta Array containing post meta data.
  * @param String $note The string of the array key for the note.
+ * @param String $location The location of the note (top or bottom). Defaults to 'top'.
  */
-function add_grammar_note( $meta, $note ) {
+function add_grammar_note( $meta, $note, $location = 'top' ) {
 	if ( array_key_exists( $note, $meta ) ) {
 		?>
-		<p class="grammar-note <?php echo esc_attr( str_replace( '_', '-', $note ) ); ?>">
+		<p class="grammar-note <?php echo esc_attr( str_replace( '_', '-', $note ) ) . ' ' . esc_attr( $location ); ?>">
 			<span class="note-text"><span class="red-text">* </span><?php esc_attr_e( 'Note: ', 'k2k' ); ?></span>
 			<?php echo wp_kses_post( $meta[ $note ] ); ?>
 		</p>
@@ -233,7 +234,7 @@ function build_conjugation_table( $meta ) {
 
 	// Check where the Note is (if it exists).
 	if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position', true ) ) {
-		add_grammar_note( $meta, 'conjugation_note' );
+		add_grammar_note( $meta, 'conjugation_note', 'top' );
 	}
 
 	echo '<table class="grammar-conjugations">';
@@ -277,13 +278,239 @@ function build_conjugation_table( $meta ) {
 
 	echo '</table>';
 
+	// Add Conjugation Note if one exists.
+	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position', true ) ) {
+		add_grammar_note( $meta, 'conjugation_note', 'bottom' );
+	}
+
+	if ( array_key_exists( 'special', $meta ) ) {
+		build_special_conjugation_table( $meta );
+	}
+
 	if ( array_key_exists( 'special_conjugations', $meta ) ) {
 		echo wp_kses_post( $meta['special_conjugations'] );
 	}
 
+}
+
+/**
+ * Remove null values from a multidimensional array, recursively.
+ *
+ * @param array $input An array (or multidimensional array) to remove null values from.
+ */
+function array_filter_recursive( $input ) {
+	foreach ( $input as &$value ) {
+		if ( is_array( $value ) ) {
+			$value = array_filter_recursive( $value );
+		}
+	}
+
+	return array_filter( $input );
+}
+
+/**
+ * Function to construct a simple table with verb conjugations.
+ *
+ * @param array $meta Array containing post meta data.
+ */
+function build_special_conjugation_table( $meta ) {
+
+	$conjugations = array(
+		'titles'     => array(),
+		'adjectives' => array(),
+		'verbs'      => array(),
+		'nouns'      => array(),
+	);
+
+	// Get the Declaratives (Sentences).
+	if ( array_key_exists( 'declaratives', $meta['special'] ) ) {
+		// Add the title.
+		$conjugations['titles'][] = 'sentences [.]';
+
+		// Find Declarative Adjectives.
+		$conjugations['adjectives']['past']['declaratives']    = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_a_past']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_a_past'] : null;
+		$conjugations['adjectives']['present']['declaratives'] = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_a_present']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_a_present'] : null;
+		$conjugations['adjectives']['future']['declaratives']  = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_a_future']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_a_future'] : null;
+
+		$conjugations['adjectives'] = array_filter( $conjugations['adjectives'] );
+
+		// Find Declarative Verbs.
+		$conjugations['verbs']['past']['declaratives']    = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_v_past']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_v_past'] : null;
+		$conjugations['verbs']['present']['declaratives'] = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_v_present']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_v_present'] : null;
+		$conjugations['verbs']['future']['declaratives']  = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_v_future']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_v_future'] : null;
+
+		// Find Declarative Nouns.
+		$conjugations['nouns']['past']['declaratives']    = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_n_past']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_n_past'] : null;
+		$conjugations['nouns']['present']['declaratives'] = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_n_present']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_n_present'] : null;
+		$conjugations['nouns']['future']['declaratives']  = isset(
+			$meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_n_future']
+		) ? $meta['special']['declaratives'][0]['k2k_grammar_meta_declarative_n_future'] : null;
+	}
+
+	// Get the Interrogatives (Questions).
+	if ( array_key_exists( 'interrogatives', $meta['special'] ) ) {
+		$conjugations['titles'][] = 'questions [?]';
+
+		// Find Interrogative Adjectives.
+		$conjugations['adjectives']['past']['interrogatives']    = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_a_past']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_a_past'] : null;
+		$conjugations['adjectives']['present']['interrogatives'] = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_a_present']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_a_present'] : null;
+		$conjugations['adjectives']['future']['interrogatives']  = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_a_future']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_a_future'] : null;
+
+		// Find Interrogative Verbs.
+		$conjugations['verbs']['past']['interrogatives']    = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_v_past']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_v_past'] : null;
+		$conjugations['verbs']['present']['interrogatives'] = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_v_present']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_v_present'] : null;
+		$conjugations['verbs']['future']['interrogatives']  = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_v_future']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_v_future'] : null;
+
+		// Find Interrogative Nouns.
+		$conjugations['nouns']['past']['interrogatives']    = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_n_past']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_n_past'] : null;
+		$conjugations['nouns']['present']['interrogatives'] = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_n_present']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_n_present'] : null;
+		$conjugations['nouns']['future']['interrogatives']  = isset(
+			$meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_n_future']
+		) ? $meta['special']['interrogatives'][0]['k2k_grammar_meta_interrogative_n_future'] : null;
+	}
+
+	// Get the Propositions (Suggestions).
+	if ( array_key_exists( 'propositives', $meta['special'] ) ) {
+		// Find Proposition Verbs.
+		$conjugations['verbs']['propositives']['pos'] = isset(
+			$meta['special']['propositives'][0]['k2k_grammar_meta_propositive_pos']
+		) ? $meta['special']['propositives'][0]['k2k_grammar_meta_propositive_pos'] : null;
+		$conjugations['verbs']['propositives']['neg'] = isset(
+			$meta['special']['propositives'][0]['k2k_grammar_meta_propositive_neg']
+		) ? $meta['special']['propositives'][0]['k2k_grammar_meta_propositive_neg'] : null;
+	}
+
+	// Get Imperatives (Commands).
+	if ( array_key_exists( 'imperatives', $meta['special'] ) ) {
+		// Find Imperatives Verbs.
+		$conjugations['verbs']['imperatives']['pos'] = isset(
+			$meta['special']['imperatives'][0]['k2k_grammar_meta_imperative_pos']
+		) ? $meta['special']['imperatives'][0]['k2k_grammar_meta_imperative_pos'] : null;
+		$conjugations['verbs']['imperatives']['neg'] = isset(
+			$meta['special']['imperatives'][0]['k2k_grammar_meta_imperative_neg']
+		) ? $meta['special']['imperatives'][0]['k2k_grammar_meta_imperative_neg'] : null;
+	}
+
+	if ( empty( $conjugations ) ) {
+		return;
+	}
+
+	// Remove null values - with custom function (defined above).
+	$conjugations = array_filter_recursive( $conjugations );
+
+	echo '<h3 class="conjugations-title">' . esc_html__( 'Conjugation Table for Sentence Types', 'k2k' ) . '</h3>';
+
 	// Add Conjugation Note if one exists.
-	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position', true ) ) {
-		add_grammar_note( $meta, 'conjugation_note' );
+	if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position_special', true ) ) {
+		add_grammar_note( $meta, 'conjugation_note_special', 'top' );
+	}
+
+	echo '<table class="grammar-conjugations special-conjugations">';
+	$ps_keys = array_keys( $conjugations );
+
+	echo '<tr class="sentence-type-titles">';
+	echo '<th></th><th></th>'; // Blank first two columns.
+
+	// Output the title for each sentence type.
+	foreach ( $conjugations['titles'] as $title ) {
+		echo '<td><strong>' . esc_html( ucwords( $title ) ) . '</strong></td>';
+	}
+
+	echo '</tr>';
+
+	$count = 0;
+	foreach ( $conjugations as $part_of_speech ) :
+		if ( 0 === $count ) {
+			$count++;
+			continue; // Skip the first one, which is titles.
+		}
+		$classname = 's' === substr( $ps_keys[ $count ], -1 ) ? substr( $ps_keys[ $count ], 0, -1 ) : $ps_keys[ $count ];
+		?>
+
+		<tr class="part-of-speech-conjugation">
+			<th rowspan="<?php echo count( $part_of_speech ); ?>" class="<?php echo esc_attr( $ps_keys[ $count ] ); ?>">
+				<span class="part-of-speech <?php echo esc_attr( $classname ); ?>" title="<?php echo esc_html( ucwords( $ps_keys[ $count ] ) ); ?>">
+					<?php echo esc_html( ucwords( substr( $ps_keys[ $count ], 0, 1 ) ) ); ?>
+				</span>
+			</th>
+
+		<?php
+
+		$round = 1;
+		$size  = count( $part_of_speech );
+
+		// For each Round (sentence type).
+		foreach ( $part_of_speech as $tense => $arr ) :
+			if ( 'propositives' === $tense || 'imperatives' === $tense ) {
+				$easy_name = 'propositives' === $tense ? 'suggestions [~]' : 'commands [!]';
+				echo '<td class="special"><strong>' . esc_html( ucwords( $easy_name ) ) . '</strong></td>';
+			} else {
+				echo '<td>' . esc_html( ucwords( $tense ) ) . '</td>';
+			}
+
+			// For each Item in the sentence type.
+			foreach ( $arr as $key => $value ) :
+				$special_class = '';
+				if ( 'pos' === $key || 'neg' === $key || 'propositives' === $tense || 'imperatives' === $tense ) {
+					$special_class  = 'special';
+					$special_class .= 'pos' === $key ? ' positive' : ( 'neg' === $key ? ' negative' : '' );
+				}
+				if ( null !== $value ) {
+					echo '<td class="' . esc_html( $special_class ) . '">' . esc_html( $value ) . '</td>';
+				} else {
+					echo '<td></td>';
+				}
+			endforeach;
+
+			if ( $round !== $size ) {
+				echo '</tr><tr class="part-of-speech-conjugation">';
+			}
+
+			$round++;
+		endforeach;
+
+		echo '</tr>';
+
+		$count++;
+	endforeach;
+
+	echo '</table>';
+
+	// Add Conjugation Note if one exists.
+	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_conjugation_note_position_special', true ) ) {
+		add_grammar_note( $meta, 'conjugation_note_special', 'bottom' );
 	}
 
 }
@@ -382,7 +609,7 @@ function display_grammar_sentences( $meta ) {
 	<?php
 	// Check where the Note is (if it exists).
 	if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_note_position', true ) ) {
-		add_grammar_note( $meta, 'sentences_note' );
+		add_grammar_note( $meta, 'sentences_note', 'top' );
 	}
 
 	// Will this be a dialogue?
@@ -480,7 +707,7 @@ function display_grammar_sentences( $meta ) {
 
 	// Add Sentence Note if one exists.
 	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_note_position', true ) ) {
-		add_grammar_note( $meta, 'sentences_note' );
+		add_grammar_note( $meta, 'sentences_note', 'bottom' );
 	}
 }
 
@@ -499,7 +726,7 @@ function display_grammar_exercises( $meta ) {
 		<?php
 		// Check where the Note is (if it exists).
 		if ( '' !== get_post_meta( get_the_ID(), 'k2k_grammar_meta_exercises_note_position', true ) ) {
-			add_grammar_note( $meta, 'exercises_note' );
+			add_grammar_note( $meta, 'exercises_note', 'top' );
 		}
 		?>
 
@@ -529,7 +756,7 @@ function display_grammar_exercises( $meta ) {
 	<?php
 	// Add Exercises Note if one exists.
 	if ( '' === get_post_meta( get_the_ID(), 'k2k_grammar_meta_exercises_note_position', true ) ) {
-		add_grammar_note( $meta, 'exercises_note' );
+		add_grammar_note( $meta, 'exercises_note', 'bottom' );
 	}
 }
 

@@ -37,7 +37,6 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'subtitle',
 						$prefix . 'level',
 						$prefix . 'wysiwyg',
-						$prefix . 'unlinked_related_grammar',
 						$prefix . 'video',
 						$prefix . 'expression',
 						$prefix . 'usage',
@@ -74,13 +73,21 @@ function k2k_register_metabox_grammar() {
 					),
 				),
 				array(
-					'id'     => 'tab-more',
-					'icon'   => 'dashicons-nametag',
-					'title'  => esc_html__( 'More', 'k2k' ),
+					'id'     => 'tab-exercises',
+					'icon'   => 'dashicons-welcome-write-blog',
+					'title'  => esc_html__( 'Exercises', 'k2k' ),
 					'fields' => array(
 						$prefix . 'exercises',
 						$prefix . 'exercises_note',
 						$prefix . 'exercises_note_position',
+					),
+				),
+				array(
+					'id'     => 'tab-related',
+					'icon'   => 'dashicons-admin-links',
+					'title'  => esc_html__( 'Related', 'k2k' ),
+					'fields' => array(
+						$prefix . 'unlinked_related_grammar',
 						$prefix . 'related_grammar',
 					),
 				),
@@ -89,7 +96,13 @@ function k2k_register_metabox_grammar() {
 					'icon'   => 'dashicons-warning',
 					'title'  => esc_html__( 'Special', 'k2k' ),
 					'fields' => array(
+						$prefix . 'declaratives',
+						$prefix . 'interrogatives',
+						$prefix . 'propositives',
+						$prefix . 'imperatives',
 						$prefix . 'special_conjugations',
+						$prefix . 'conjugation_note_special',
+						$prefix . 'conjugation_note_position_special',
 						$prefix . 'special_dialogue',
 					),
 				),
@@ -372,7 +385,7 @@ function k2k_register_metabox_grammar() {
 		)
 	);
 
-		/**
+	/**
 	 * Grouping for nouns.
 	 */
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
@@ -754,12 +767,294 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
+	 * Grouping for Declarative (Sentence) conjugations.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$declarative_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'declaratives',
+			'type'        => 'group',
+			'repeatable'  => false,
+			'name'        => __( 'Declarative SENTENCES (.)', 'k2k' ),
+			// 'description' => __( 'Declaratives are the same as SENTENCES.', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Declaratives Conjugation', 'k2k' ),
+				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
+				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
+				'sortable'      => true,
+				'closed'        => true,
+			),
+		)
+	);
+	/** Conjugations - Declaratives ADJ Past */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html_x( 'Adjs Past', 'Adjs is the abbreviation for Adjectives', 'k2k' ),
+			'id'   => $prefix . 'declarative_a_past',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives ADJ Present */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html_x( 'Adjs Present', 'Adjs is the abbreviation for Adjectives', 'k2k' ),
+			'id'   => $prefix . 'declarative_a_present',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives ADJ Future */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html_x( 'Adjs Future', 'Adjs is the abbreviation for Adjectives', 'k2k' ),
+			'id'   => $prefix . 'declarative_a_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives V Past */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html__( 'Vbs Past', 'k2k' ),
+			'id'   => $prefix . 'declarative_v_past',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives V Present */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html__( 'Vbs Present', 'k2k' ),
+			'id'   => $prefix . 'declarative_v_present',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives V Future */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html__( 'Vbs Future', 'k2k' ),
+			'id'   => $prefix . 'declarative_v_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives N Past */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html__( 'Ns Past', 'k2k' ),
+			'id'   => $prefix . 'declarative_n_past',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives N Present */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html__( 'Ns Present', 'k2k' ),
+			'id'   => $prefix . 'declarative_n_present',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Declaratives N Future */
+	$k2k_metabox->add_group_field(
+		$declarative_group,
+		array(
+			'name' => esc_html__( 'Ns Future', 'k2k' ),
+			'id'   => $prefix . 'declarative_n_future',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Grouping for Interrogative (Question) conjugations.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$interrogative_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'interrogatives',
+			'type'        => 'group',
+			'repeatable'  => false,
+			'name'        => __( 'Interrogative QUESTIONS (?)', 'k2k' ),
+			// 'description' => __( 'Interrogatives are the same as QUESTIONS.', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Interrogatives Conjugation', 'k2k' ),
+				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
+				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
+				'sortable'      => true,
+				'closed'        => true,
+			),
+		)
+	);
+	/** Conjugations - Interrogative A Past */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Adjs Past', 'k2k' ),
+			'id'   => $prefix . 'interrogative_a_past',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative A Present */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Adjs Present', 'k2k' ),
+			'id'   => $prefix . 'interrogative_a_present',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative A Future */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Adjs Future', 'k2k' ),
+			'id'   => $prefix . 'interrogative_a_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative V Past */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Vbs Past', 'k2k' ),
+			'id'   => $prefix . 'interrogative_v_past',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative V Present */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Vbs Present', 'k2k' ),
+			'id'   => $prefix . 'interrogative_v_present',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative AV Future */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Vbs Future', 'k2k' ),
+			'id'   => $prefix . 'interrogative_v_future',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative N Past */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Ns Past', 'k2k' ),
+			'id'   => $prefix . 'interrogative_n_past',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative N Present */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Ns Present', 'k2k' ),
+			'id'   => $prefix . 'interrogative_n_present',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Interrogative N Future */
+	$k2k_metabox->add_group_field(
+		$interrogative_group,
+		array(
+			'name' => esc_html__( 'Ns Future', 'k2k' ),
+			'id'   => $prefix . 'interrogative_n_future',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Grouping for Propositive (Suggestion) conjugations.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$propositive_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'propositives',
+			'type'        => 'group',
+			'repeatable'  => false,
+			'name'        => __( 'Propositive SUGGESTIONS (~)', 'k2k' ),
+			// 'description' => __( 'Propositives are the same as SUGGESTIONS.', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Propositives Conjugation', 'k2k' ),
+				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
+				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
+				'sortable'      => true,
+				'closed'        => true,
+			),
+		)
+	);
+	/** Conjugations - Propositive Positives */
+	$k2k_metabox->add_group_field(
+		$propositive_group,
+		array(
+			'name' => esc_html__( 'Positive (+) Verbs', 'k2k' ),
+			'id'   => $prefix . 'propositive_pos',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Propositive Negatives */
+	$k2k_metabox->add_group_field(
+		$propositive_group,
+		array(
+			'name' => esc_html__( 'Negative (-) Verbs', 'k2k' ),
+			'id'   => $prefix . 'propositive_neg',
+			'type' => 'text',
+		)
+	);
+
+	/**
+	 * Grouping for Imperative (Command) conjugations.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$imperative_group = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'imperatives',
+			'type'        => 'group',
+			'repeatable'  => false,
+			'name'        => __( 'Imperative COMMANDS (!)', 'k2k' ),
+			// 'description' => __( 'Imperatives are the same as COMMANDS.', 'k2k' ),
+			'options'     => array(
+				'group_title'   => __( 'Imperatives Conjugation', 'k2k' ),
+				'add_button'    => __( 'Add Another Conjugation', 'k2k' ),
+				'remove_button' => __( 'Remove Conjugation', 'k2k' ),
+				'sortable'      => true,
+				'closed'        => true,
+			),
+		)
+	);
+	/** Conjugations - Imperative Positives */
+	$k2k_metabox->add_group_field(
+		$imperative_group,
+		array(
+			'name' => esc_html__( 'Positive (+) Verbs', 'k2k' ),
+			'id'   => $prefix . 'imperative_pos',
+			'type' => 'text',
+		)
+	);
+	/** Conjugations - Imperative Negatives */
+	$k2k_metabox->add_group_field(
+		$imperative_group,
+		array(
+			'name' => esc_html__( 'Negative (-) Verbs', 'k2k' ),
+			'id'   => $prefix . 'imperative_neg',
+			'type' => 'text',
+		)
+	);
+
+	/**
 	 * Special - Wysiwyg Special Conjugations
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'    => esc_html__( 'Special Conjugations', 'k2k' ),
-			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'name'    => esc_html__( 'Extra Conjugations', 'k2k' ),
+			'desc'    => esc_html__( 'Special Conjugations or Conjugation Notes.', 'k2k' ),
 			'id'      => $prefix . 'special_conjugations',
 			'type'    => 'wysiwyg',
 			'options' => array(
@@ -771,12 +1066,32 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
+	 * Conjugations - Note
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Special Conjugation Note', 'k2k' ),
+			'desc' => esc_html__( 'Anything special to remember? Leave a note here. Allowed tags: &lt;b&gt;, &lt;strong&gt;, &lt;em&gt;, &lt;span&gt;. You can also wrap a word or phrase in * or _ to make it bold.', 'k2k' ),
+			'id'   => $prefix . 'conjugation_note_special',
+			'type' => 'text',
+		)
+	);
+
+	$k2k_metabox->add_field(
+		array(
+			'id'   => $prefix . 'conjugation_note_position_special',
+			'name' => __( 'Show note at the Top?', 'k2k' ),
+			'type' => 'checkbox',
+		)
+	);
+
+	/**
 	 * Special - Wysiwyg Special Dialogue
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name'    => esc_html__( 'Special Dialogue', 'k2k' ),
-			// 'desc'    => esc_html__( 'Leave fields blank if no conjugations.', 'k2k' ),
+			'name'    => esc_html__( 'Extra Dialogue', 'k2k' ),
+			'desc'    => esc_html__( 'Special Dialogue or additional Practice Sentences.', 'k2k' ),
 			'id'      => $prefix . 'special_dialogue',
 			'type'    => 'wysiwyg',
 			'options' => array(

@@ -90,8 +90,14 @@
   border-top: 1px solid rgba(0, 0, 0, 0.32);
 }
 
+.conjugation-note.bottom {
+  margin-top: -2.5rem !important;
+  margin-bottom: 2.5rem;
+}
+
 .grammar-conjugations {
   border-top: 1px solid rgba(0, 0, 0, 0.12);
+  margin-bottom: 3rem;
 }
 
 .grammar-conjugations .part-of-speech {
@@ -140,6 +146,24 @@
   background: grey;
   font-size: 80%;
   opacity: 0.7;
+}
+
+td.special {
+  background: rgba(135, 149, 161, 0.1);
+}
+
+td.special:before {
+  font-size: 0.7rem;
+  opacity: 0.8;
+  margin-right: 0.5rem;
+}
+
+td.positive:before {
+  content: "DO: ";
+}
+
+td.negative:before {
+  content: "DON'T: ";
 }
 
 .en .part-of-speech {

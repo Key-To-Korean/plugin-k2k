@@ -124,19 +124,41 @@ function jkl_grammar_get_meta_data() {
 	// Get post meta data.
 	$meta_prefix = 'k2k_grammar_meta_';
 
-	$meta['subtitle']         = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );         // Subtitle (translation).
-	$meta['video']            = get_post_meta( get_the_ID(), $meta_prefix . 'video', true );            // YouTube video lesson.
-	$meta['wysiwyg']          = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );          // Explanation (html).
-	$meta['adjectives']       = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );       // Adjective Conjugations (array).
-	$meta['verbs']            = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );            // Verb Conjugations (array).
-	$meta['nouns']            = get_post_meta( get_the_ID(), $meta_prefix . 'nouns', true );            // Noun Conjugations (array).
-	$meta['exercises']        = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );        // Exercises (array).
-	$meta['related_grammar']  = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true );  // Related Grammar Points (array).
-	$meta['conjugation_note'] = get_post_meta( get_the_ID(), $meta_prefix . 'conjugation_note', true ); // Conjugation Note.
-	$meta['sentences_note']   = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_note', true );   // Sentences Note.
-	$meta['exercises_note']   = get_post_meta( get_the_ID(), $meta_prefix . 'exercises_note', true );   // Exercises Note.
+	$meta['subtitle']                   = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );                 // Subtitle (translation).
+	$meta['video']                      = get_post_meta( get_the_ID(), $meta_prefix . 'video', true );                    // YouTube video lesson.
+	$meta['wysiwyg']                    = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );                  // Explanation (html).
+	$meta['adjectives']                 = get_post_meta( get_the_ID(), $meta_prefix . 'adjectives', true );               // Adjective Conjugations (array).
+	$meta['verbs']                      = get_post_meta( get_the_ID(), $meta_prefix . 'verbs', true );                    // Verb Conjugations (array).
+	$meta['nouns']                      = get_post_meta( get_the_ID(), $meta_prefix . 'nouns', true );                    // Noun Conjugations (array).
+	$meta['exercises']                  = get_post_meta( get_the_ID(), $meta_prefix . 'exercises', true );                // Exercises (array).
+	$meta['related_grammar']            = get_post_meta( get_the_ID(), $meta_prefix . 'related_grammar', true );          // Related Grammar Points (array).
+	$meta['conjugation_note']           = get_post_meta( get_the_ID(), $meta_prefix . 'conjugation_note', true );         // Conjugation Note.
+	$meta['sentences_note']             = get_post_meta( get_the_ID(), $meta_prefix . 'sentences_note', true );           // Sentences Note.
+	$meta['exercises_note']             = get_post_meta( get_the_ID(), $meta_prefix . 'exercises_note', true );           // Exercises Note.
+	$meta['conjugation_note_special']   = get_post_meta( get_the_ID(), $meta_prefix . 'conjugation_note_special', true ); // Conjugation Note Special.
 
 	// Special stuff.
+	// Get any special conjugation rules.
+	$declaratives     = get_post_meta( get_the_ID(), $meta_prefix . 'declaratives', true );         // Sentences (array).
+	$interrogatives   = get_post_meta( get_the_ID(), $meta_prefix . 'interrogatives', true );       // Questions (array).
+	$propositives     = get_post_meta( get_the_ID(), $meta_prefix . 'propositives', true );         // Suggestions (array).
+	$imperatives      = get_post_meta( get_the_ID(), $meta_prefix . 'imperatives', true );          // Commands (array).
+	$special_wysiwyg  = get_post_meta( get_the_ID(), $meta_prefix . 'special_conjugations', true ); // Special Conjugations (Wysiwyg).
+	$special_dialogue = get_post_meta( get_the_ID(), $meta_prefix . 'special_dialogue', true );     // Special Dialogue (Wysiwyg).
+
+	if ( '' !== $declaratives ) {
+		$meta['special']['declaratives'] = $declaratives;
+	}
+	if ( '' !== $interrogatives ) {
+		$meta['special']['interrogatives'] = $interrogatives;
+	}
+	if ( '' !== $propositives ) {
+		$meta['special']['propositives'] = $propositives;
+	}
+	if ( '' !== $imperatives ) {
+		$meta['special']['imperatives'] = $imperatives;
+	}
+
 	$meta['special_conjugations'] = get_post_meta( get_the_ID(), $meta_prefix . 'special_conjugations', true ); // Special Conjugations (Wysiwyg).
 	$meta['special_dialogue']     = get_post_meta( get_the_ID(), $meta_prefix . 'special_dialogue', true );     // Special Dialogue (Wysiwyg).
 
