@@ -73,8 +73,9 @@ function display_grammar_thumbnail() {
  * Function to embed and display the post video, if it exists.
  *
  * @param string $url The URL of the video link.
+ * @param int    $height The desired max-height of the video. Defaults to 600px.
  */
-function display_grammar_video( $url ) {
+function display_grammar_video( $url, $height = 600 ) {
 
 	if ( '' === $url ) {
 		return;
@@ -84,7 +85,7 @@ function display_grammar_video( $url ) {
 		$url,
 		array(
 			'width'  => 1000,
-			'height' => 600,
+			'height' => $height,
 		)
 	);
 	?>
@@ -590,7 +591,9 @@ function display_grammar_usage_rules( $meta ) {
 function display_grammar_sentences( $meta ) {
 	$image = wp_get_attachment_image( get_post_meta( get_the_ID(), 'k2k_grammar_meta_sentences_image_id', 1 ), 'full' );
 
-	if ( $image ) {
+	if ( array_key_exists( 'sentences_video', $meta ) ) {
+		display_grammar_video( $meta['sentences_video'], 460 );
+	} elseif ( $image ) {
 		echo '<figure class="sentences-image">' . wp_kses_post( $image ) . '</figure>';
 	}
 	?>
@@ -647,7 +650,7 @@ function display_grammar_sentences( $meta ) {
 			$prefix = 'k2k_grammar_meta_sentences_titles_';
 
 			// If we have new titles, and have chosen to replace the originals.
-			if ( '' !== $titles[ $prefix . $key ] && '' !== $titles[ $prefix . 'replace' ] ) :
+			if ( '' !== $titles[ $prefix . $key ] && isset( $titles[ $prefix . 'replace' ] ) ) :
 				?>
 				<h4 class="sentence-tense-title">
 					<?php echo esc_attr( $titles[ $prefix . $key ] ); ?>
@@ -657,7 +660,7 @@ function display_grammar_sentences( $meta ) {
 				?>
 				<h4 class="sentence-tense-title">
 					<?php
-					echo esc_html( ucwords( $key ) ) . esc_html__( ' Tense', 'k2k' );
+					echo 'other' === $key ? 'Propositions &amp; Imperatives' : ( esc_html( ucwords( $key ) ) . esc_html__( ' Tense', 'k2k' ) );
 					if ( '' !== $titles[ $prefix . $key ] ) {
 						echo '<span>&mdash; ' . esc_attr( $titles[ $prefix . $key ] ) . '</span>';
 					}

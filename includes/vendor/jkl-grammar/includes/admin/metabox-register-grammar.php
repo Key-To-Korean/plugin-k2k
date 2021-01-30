@@ -66,8 +66,10 @@ function k2k_register_metabox_grammar() {
 						$prefix . 'sentences_past',
 						$prefix . 'sentences_present',
 						$prefix . 'sentences_future',
+						$prefix . 'sentences_other',
 						$prefix . 'sentences_titles',
 						$prefix . 'sentences_image',
+						$prefix . 'sentences_video',
 						$prefix . 'sentences_note',
 						$prefix . 'sentences_note_position',
 					),
@@ -461,13 +463,103 @@ function k2k_register_metabox_grammar() {
 		)
 	);
 
+	/**
+	 * Optional sentences titles.
+	 */
+	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
+	$sentences_setup = $k2k_metabox->add_field(
+		array(
+			'id'          => $prefix . 'sentences_titles',
+			'type'        => 'group',
+			// 'name'        => __( 'Sentences Setup', 'k2k' ),
+			// 'description' => __( 'The following options add additional text to the Sentence Headings. Or you can choose to replace them entirely by checking the box below.', 'k2k' ),
+			'repeatable'  => false,
+			'options'     => array(
+				'group_title' => __( 'Sentences Setup', 'k2k' ),
+				'closed'      => true,
+			),
+		)
+	);
+	/** Sentence Titles - PAST */
+	$k2k_metabox->add_group_field(
+		$sentences_setup,
+		array(
+			'name' => esc_html__( 'Past Tense title extras', 'k2k' ),
+			'desc' => esc_html__( 'Default title: Past Tense', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_past',
+			'type' => 'text',
+		)
+	);
+	/** Sentence Titles - PRESENT */
+	$k2k_metabox->add_group_field(
+		$sentences_setup,
+		array(
+			'name' => esc_html__( 'Present Tense title extras', 'k2k' ),
+			'desc' => esc_html__( 'Default title: Present Tense', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_present',
+			'type' => 'text',
+		)
+	);
+	/** Sentence Titles - FUTURE */
+	$k2k_metabox->add_group_field(
+		$sentences_setup,
+		array(
+			'name' => esc_html__( 'Future Tense title extras', 'k2k' ),
+			'desc' => esc_html__( 'Default title: Future Tense', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_future',
+			'type' => 'text',
+		)
+	);
+	/** Sentence Titles - OTHER */
+	$k2k_metabox->add_group_field(
+		$sentences_setup,
+		array(
+			'name' => esc_html__( 'Other title extras', 'k2k' ),
+			'desc' => esc_html__( 'Default title: Propositions &amp; Imperatives', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_other',
+			'type' => 'text',
+		)
+	);
+	/** Replace Titles */
+	$k2k_metabox->add_group_field(
+		$sentences_setup,
+		array(
+			'name' => esc_html__( 'Replace original titles?', 'k2k' ),
+			'desc' => esc_html__( 'If unchecked, the text entered above will be added after the Default titles.', 'k2k' ),
+			'id'   => $prefix . 'sentences_titles_replace',
+			'type' => 'checkbox',
+		)
+	);
+
 	/** Create Sentences Dialogue */
-	$k2k_metabox->add_field(
+	$k2k_metabox->add_group_field(
+		$sentences_setup,
 		array(
 			'name' => esc_html__( 'Create dialogue?', 'k2k' ),
 			'desc' => esc_html__( 'Change Sentence Headings below, and check the box to "Replace original titles" if so.', 'k2k' ),
 			'id'   => $prefix . 'sentences_dialogue',
 			'type' => 'checkbox',
+		)
+	);
+
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Sentences Image (optional)', 'k2k' ),
+			'desc' => esc_html__( 'Add an extra image to highlight the sentences if you want.', 'k2k' ),
+			'id'   => $prefix . 'sentences_image',
+			'type' => 'file',
+		)
+	);
+
+	/**
+	 * Sentences - Video (YouTube)
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Sentences Video (optional)', 'k2k' ),
+			'desc' => esc_html__( 'If present, it will override any image selected.', 'k2k' ),
+			'id'   => $prefix . 'sentences_video',
+			'type' => 'text',
 		)
 	);
 
@@ -587,64 +679,41 @@ function k2k_register_metabox_grammar() {
 	);
 
 	/**
-	 * Optional sentences titles.
+	 * Repeating text field for OTHER sentences.
 	 */
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'
-	$sentences_titles = $k2k_metabox->add_field(
+	$sentence_other_group = $k2k_metabox->add_field(
 		array(
-			'id'          => $prefix . 'sentences_titles',
+			'id'          => $prefix . 'sentences_other',
 			'type'        => 'group',
-			'name'        => __( 'Sentences Headings', 'k2k' ),
-			'description' => __( 'The following options add additional text to the Sentence Headings. Or you can choose to replace them entirely by checking the box below.', 'k2k' ),
-			'repeatable'  => false,
+			'name'        => __( 'Other Sentences.', 'k2k' ),
+			'description' => __( 'Propositives or Imperatives? Add them here.', 'k2k' ),
 			'options'     => array(
-				'group_title' => __( 'Sentences Headings', 'k2k' ),
+				'group_title'   => __( 'Other Sentence', 'k2k' ),
+				'add_button'    => __( 'Add Another Sentence', 'k2k' ),
+				'remove_button' => __( 'Remove Sentence', 'k2k' ),
+				'sortable'      => true,
 			),
 		)
 	);
-	/** Sentence Titles - PAST */
+
 	$k2k_metabox->add_group_field(
-		$sentences_titles,
+		$sentence_other_group,
 		array(
-			'name' => esc_html__( 'Past Tense title extras', 'k2k' ),
-			'id'   => $prefix . 'sentences_titles_past',
-			'type' => 'text',
-		)
-	);
-	/** Sentence Titles - PRESENT */
-	$k2k_metabox->add_group_field(
-		$sentences_titles,
-		array(
-			'name' => esc_html__( 'Present Tense title extras', 'k2k' ),
-			'id'   => $prefix . 'sentences_titles_present',
-			'type' => 'text',
-		)
-	);
-	/** Sentence Titles - FUTURE */
-	$k2k_metabox->add_group_field(
-		$sentences_titles,
-		array(
-			'name' => esc_html__( 'Future Tense title extras', 'k2k' ),
-			'id'   => $prefix . 'sentences_titles_future',
-			'type' => 'text',
-		)
-	);
-	/** Replace Titles */
-	$k2k_metabox->add_group_field(
-		$sentences_titles,
-		array(
-			'name' => esc_html__( 'Replace original titles?', 'k2k' ),
-			'id'   => $prefix . 'sentences_titles_replace',
-			'type' => 'checkbox',
+			'id'              => $prefix . 'sentences_1',
+			'name'            => __( 'Original (KO)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
 		)
 	);
 
-	$k2k_metabox->add_field(
+	$k2k_metabox->add_group_field(
+		$sentence_other_group,
 		array(
-			'name' => esc_html__( 'Sentences Image (optional)', 'k2k' ),
-			'desc' => esc_html__( 'Add an extra image to highlight the sentences if you want.', 'k2k' ),
-			'id'   => $prefix . 'sentences_image',
-			'type' => 'file',
+			'id'              => $prefix . 'sentences_2',
+			'name'            => __( 'Translation (EN)', 'k2k' ),
+			'type'            => 'text',
+			'sanitization_cb' => 'k2k_sanitize_sentence_callback',
 		)
 	);
 
