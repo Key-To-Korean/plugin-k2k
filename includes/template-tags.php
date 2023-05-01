@@ -72,6 +72,10 @@ function k2k_index_header() {
 
 		$archive_page_title = $tax_term;
 
+	} elseif ( is_archive() && 'k2k-vocab-list' === get_post_type() ) {
+		
+		$archive_page_title = __( 'Vocab Lists', 'k2k' );
+		
 	} elseif ( is_archive() && 'k2k-vocabulary' === get_post_type() ) {
 
 		$archive_page_title = __( 'Vocabulary', 'k2k' );
@@ -228,10 +232,10 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 	// If there is only one item.
 	if ( $single || count( $meta[ $taxonomy ] ) === 1 ) {
 
-		$classnames = 'button' === $type ? 'btn button'
-										: 'k2k-grammar-part-of-speech' === $taxonomy ? 'tag-button'
-										: 'k2k-vocab-part-of-speech' === $taxonomy ? 'tag-button'
-										: '';
+		// $classnames = ( 'button' === $type ? 'btn button'
+		// 								: ( 'k2k-grammar-part-of-speech' === $taxonomy ? 'tag-button'
+		// 								: ( 'k2k-vocab-part-of-speech' === $taxonomy ? 'tag-button'
+		// 								: '' )));
 		$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
 									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
 
@@ -257,7 +261,7 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 				continue;
 			}
 
-			$classnames = 'button' === $type ? 'btn button' : 'part-of-speech' === $taxonomy ? 'tag-button' : '';
+			// $classnames = 'button' === $type ? 'btn button' : 'part-of-speech' === $taxonomy ? 'tag-button' : '';
 			$style      = ( 'part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
 									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
 

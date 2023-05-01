@@ -1,0 +1,196 @@
+/* Archive Pages */
+ul.archive-posts-grid.vocabulary-posts-grid {
+  /* display: flex;
+  flex-wrap: wrap; */
+}
+
+.vocabulary-item article {
+  margin-right: 2rem;
+  margin-bottom: 0rem;
+  display: flex;
+  transition: all 0.3s;
+  padding: 1rem 0.25rem 0.25rem;
+  border-radius: 10px;
+}
+
+.vocabulary-item article:hover,
+.vocabulary-item article:focus,
+.vocabulary-item article:active {
+  background: #efefef;
+}
+
+.part-of-speech-circle {
+  width: 22px;
+  height: 22px;
+  color: white;
+  font-size: 0.7rem;
+  padding: 2px;
+  border-radius: 30px;
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-top: -2px;
+  text-align: center;
+}
+
+.part-of-speech-circle:hover,
+.part-of-speech-circle:active,
+.part-of-speech-circle:focus {
+  opacity: 0.7;
+}
+
+.part-of-speech-circle:visited {
+  color: white;
+}
+
+.archive .level-stars {
+  /* position: static; */
+  top: -1rem;
+  left: 0;
+}
+
+.archive .entry-header a {
+  position: relative;
+  display: flex;
+  transition: all 0.3s;
+}
+
+.archive .entry-title {
+  margin-top: 0;
+  font-size: 1.25rem !important;
+  margin-right: 0.5rem;
+  margin-bottom: 0;
+  margin-top: -5px;
+  word-break: keep-all !important;
+}
+
+.archive .entry-subtitle {
+  font-size: 0.8rem;
+  float: left;
+  color: #a9bac9;
+}
+
+.vocabulary-taxonomies-list {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  grid-gap: 2rem;
+}
+
+/* Single Pages */
+.k2k-vocabulary .entry-meta .level-stars {
+  position: static;
+  left: auto;
+  top: auto;
+  text-align: left;
+}
+
+.entry-header {
+  position: relative;
+}
+
+.entry-meta,
+.entry-content {
+  grid-column: span 2;
+}
+
+.entry-meta {
+  border-radius: 20px;
+  box-shadow: rgba(100, 108, 116, 0.2) 0px 1px 1px,
+    rgba(100, 108, 116, 0.2) 0px 1px 1px, rgba(100, 108, 116, 0.2) 0px 2px 2px,
+    rgba(100, 108, 116, 0.2) 0px 4px 4px, rgba(100, 108, 116, 0.2) 0px 8px 8px,
+    rgba(100, 108, 116, 0.2) 0px 16px 16px;
+  padding: 2rem;
+  text-align: center;
+  max-width: 25rem;
+  width: 25rem;
+  margin: 0 auto !important;
+  position: relative;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.entry-meta:hover {
+  transform: scale(1.05);
+  box-shadow: rgba(100, 108, 116, 0.2) 0px 2px 2px,
+    rgba(100, 108, 116, 0.2) 0px 4px 4px, rgba(100, 108, 116, 0.2) 0px 8px 8px,
+    rgba(100, 108, 116, 0.2) 0px 16px 16px,
+    rgba(100, 108, 116, 0.2) 0px 32px 32px,
+    rgba(100, 108, 116, 0.2) 0px 64px 64px;
+}
+
+.entry-meta img {
+  /* max-width: 300px; */
+  margin-top: -1rem !important;
+}
+
+.vocabulary-meta {
+  text-align: left;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.vocabulary-meta li {
+  display: inline-block;
+  margin-right: 1rem;
+}
+
+.entry-meta .post-thumbnail {
+  /* margin-top: 0; */
+}
+
+.post-subtitle {
+  font-size: 1.125rem;
+  line-height: 1.8;
+  opacity: 0.7;
+  margin-top: -1rem;
+}
+
+.entry-footer {
+  margin-top: 2.5rem !important;
+  padding-top: 0 !important;
+}
+
+.entry-footer .related-terms-container {
+  margin-bottom: 2rem;
+}
+
+.entry-footer .related-terms {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  list-style: none;
+  margin-bottom: 1rem;
+}
+
+.related-terms li {
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.related-terms li:not(.related-terms-title),
+.post-part-of-speech {
+  background: rgba(135, 149, 161, 0.2);
+  padding: 0 10px;
+  border-radius: 30px;
+  display: inline-block;
+}
+
+.related-terms li.linked {
+  padding: 0;
+  border: 1px solid #a9bac9;
+  /* background: white; */
+  opacity: 0.7;
+}
+
+.linked a {
+  padding: 0 10px;
+  border-bottom: none !important;
+  background: transparent;
+  color: #32373c;
+  color: var(--gaya-grey);
+}
+
+.linked a:visited {
+  color: #32373c;
+  color: var(--gaya-grey);
+}

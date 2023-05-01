@@ -331,7 +331,7 @@ function k2k_register_metabox_grammar() {
 		)
 	);
 
-		/**
+	/**
 	 * Grouping for Verbs.
 	 */
 	// $group_field_id is the field id string, so in this case: $prefix . 'demo'

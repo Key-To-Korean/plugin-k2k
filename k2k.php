@@ -7,9 +7,9 @@
 
 /*
  * Plugin Name: K2K
- * Plugin URI: https://github.com/jekkilekki/plugin-k2k
+ * Plugin URI: https://github.com/Key-To-Korean/plugin-k2k
  * Description: Custom plugin to manage KeyToKorean.com
- * Version: 1.0.0
+ * Version: 1.3.0
  * Author: jekkilekki
  * Author URI: https://aaron.kr
  * License: GPL v2 or later
@@ -39,17 +39,21 @@ if ( ! defined( 'ABSPATH' ) ) { // if ( ! defined( 'WPINC' ) ).
 }
 
 // Define plugin constants.
-define( 'K2K_VERSION', '1.0.0' );
+define( 'K2K_VERSION', '1.3.0' );
 define( 'K2K_DOMAIN', 'k2k' );
 define( 'K2K_PATH', plugin_dir_path( __FILE__ ) );
 define( 'K2K_MENU_POSITION', 50 );
-define( 'K2K_POST_TYPES', array( 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' ) ); // Used in functions.php.
+define( 'K2K_POST_TYPES', array( 'k2k-vocab-list', 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' ) ); // Used in functions.php.
 define(
 	'K2K_TAXES', // Used in /includes/shared/metaboxes/metabox-taxonomy-extras.php.
 	array(
 		// WordPress.
 		'category',
 		'post_tag',
+
+		// Vocab LISTS.
+		'k2k-vocab-list-level',
+		'k2k-vocab-list-book',
 
 		// Vocabulary.
 		'k2k-vocab-level',
@@ -159,6 +163,11 @@ if ( k2k_any_cpt_enabled() ) {
 
 }
 
+/** Vocab LISTS Post Type */
+if ( 'on' === k2k_get_option( 'k2k_enable_vocab_list' ) ) {
+	require_once K2K_PATH . 'includes/vendor/jkl-vocab-list/jkl-vocab-list.php';
+}
+
 /** Vocabulary Post Type */
 if ( 'on' === k2k_get_option( 'k2k_enable_vocab' ) ) {
 	require_once K2K_PATH . 'includes/vendor/jkl-vocabulary/jkl-vocabulary.php';
@@ -194,7 +203,8 @@ if ( 'on' === k2k_get_option( 'k2k_enable_writing' ) ) {
  */
 function k2k_any_cpt_enabled() {
 	return (
-		'on' === k2k_get_option( 'k2k_enable_vocab' )
+		'on' === k2k_get_option( 'k2k_enable_vocab_list' )
+		|| 'on' === k2k_get_option( 'k2k_enable_vocab' )
 		|| 'on' === k2k_get_option( 'k2k_enable_grammar' )
 		|| 'on' === k2k_get_option( 'k2k_enable_phrases' )
 		|| 'on' === k2k_get_option( 'k2k_enable_reading' )
@@ -214,7 +224,12 @@ function k2k_include_custom_post_types_in_main_query( $query ) {
 	// First, figure out which post types are enabled, and so which to include.
 	$post_types = array( 'post' ); // Start with the default.
 
-	// Add k2k-vocabulary if enabled. (Removed for now due to potential for too many posts).
+	// Add k2k-vocabulary if enabled. (Disable for now.)
+
+	// Add k2k-vocab-list if enabled. (Yes, add vocabulary _lists_ to the main query).
+	if ( 'on' === k2k_get_option( 'k2k_enable_vocab_list' ) ) {
+		$post_types[] = 'k2k-vocab-list';
+	}
 
 	// Add k2k-grammar if enabled.
 	if ( 'on' === k2k_get_option( 'k2k_enable_grammar' ) ) {
@@ -275,11 +290,18 @@ function k2k_register_everything() {
 function k2k_remove_everything() {
 
 	// Unregister Post Types.
+	unregister_post_type( 'k2k-vocab-list' );
 	unregister_post_type( 'k2k-vocabulary' );
 	unregister_post_type( 'k2k-grammar' );
 	unregister_post_type( 'k2k-phrases' );
+	unregister_post_type( 'k2k-reading' );
+	unregister_post_type( 'k2k-writing' );
 
 	// Unregister Taxonomies.
+	// Vocab Lists.
+	unregister_taxonomy( 'k2k-vocab-list-level' );
+	unregister_taxonomy( 'k2k-vocab-list-book' );
+
 	// Vocabulary.
 	unregister_taxonomy( 'k2k-vocab-level' );
 	unregister_taxonomy( 'k2k-vocab-part-of-speech' );

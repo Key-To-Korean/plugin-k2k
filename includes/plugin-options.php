@@ -142,6 +142,23 @@ function k2k_register_plugin_options_metabox() {
 	);
 
 	/*
+	 * Vocab LIST Post Type.
+	 */
+	$k2k_options->add_field(
+		array(
+			'name'    => __( 'Vocab List', 'k2k' ),
+			'desc'    => __( 'Enable Vocab List Post Type.', 'k2k' ),
+			'id'      => $prefix . 'enable_vocab_list',
+			'type'    => 'switch',
+			'default' => 0,
+			'label'   => array(
+				'on'  => __( 'Yes', 'k2k' ),
+				'off' => __( 'No', 'k2k' ),
+			),
+		)
+	);
+
+	/*
 	 * Vocabulary Post Type.
 	 */
 	$k2k_options->add_field(

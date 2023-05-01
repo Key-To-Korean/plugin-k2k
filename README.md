@@ -1,10 +1,10 @@
-![banner-1544x500](https://github.com/jekkilekki/plugin-k2k/blob/master/assets/banner-1544x500.png?raw=true)
+![banner-1544x500](https://github.com/Key-To-Korean/plugin-k2k/blob/main/assets/banner-1544x500.png?raw=true)
 
 # K2K
 
-`Version 1.2.0`
+`Version 1.3.0`
 
-- [Plugin Page](https://github.com/jekkilekki/plugin-k2k)
+- [Plugin Page](https://github.com/Key-To-Korean/plugin-k2k)
 - [Author Page](https://aaron.kr/)
 
 A complete Language Learning plugin that adds multiple new Custom Post Types, Taxonomies, and Page Templates for language learning blogs and sites.
@@ -16,19 +16,20 @@ Requires WordPress 3.5 and PHP 5.5 or later.
 This plugin was built for my own Korean language learning site (keytokorean.com) to
 enable me to better organize the grammar points I'm studying. It includes the following helper plugins:
 
-- <span style="display: inline-block; background: #22292f; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Daily Challenge](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-daily-challenge) (Coming)
-- <span style="display: inline-block; background: #ff8f00; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Vocabulary](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-vocabulary)
-- <span style="display: inline-block; background: #ff4081; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Grammar](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-grammar)
-- <span style="display: inline-block; background: #e040fb; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Phrases](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-phrases)
-- <span style="display: inline-block; background: #00b0ff; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Reading](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-reading)
-- <span style="display: inline-block; background: #00bfa5; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Writing](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-writing)
-- <span style="display: inline-block; background: #A9BAC9; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Speaking](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-speaking) (Coming)
+- <span style="display: inline-block; background: #22292f; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Daily Challenge](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-daily-challenge) (Coming)
+- <span style="display: inline-block; background: #ff8f00; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Vocab List](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-vocab-list)
+- <span style="display: inline-block; background: #ff8f00; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Vocabulary](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-vocabulary)
+- <span style="display: inline-block; background: #ff4081; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Grammar](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-grammar)
+- <span style="display: inline-block; background: #e040fb; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Phrases](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-phrases)
+- <span style="display: inline-block; background: #00b0ff; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Reading](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-reading)
+- <span style="display: inline-block; background: #00bfa5; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Writing](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-writing)
+- <span style="display: inline-block; background: #A9BAC9; width: 10px; height: 10px; border-radius: 10px;"></span> [JKL Speaking](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-speaking) (Coming)
 
 ## JKL Plugins
 
 <div style="display: flex;"><div style="background: #001628; width: 20px; height: 20px;"></div><div style="background: #22292f; width: 20px; height: 20px;"></div></div>
 
-### [JKL Daily Challenge](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-daily-challenge) (Coming)
+### [JKL Daily Challenge](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-daily-challenge) (Coming)
 
 **Purpose:** An addition to the homepage, to daily present visitors with new Korean language challenges including:
 
@@ -45,7 +46,16 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 <div style="display: flex;"><div style="background: #ff8f00; width: 20px; height: 20px;"></div><div style="background: #ffab00; width: 20px; height: 20px;"></div></div>
 
-### [JKL Vocabulary](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-vocabulary)
+### [JKL Vocab List](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-vocab-list)
+
+**Purpose:** A Custom Post Type to organize into vocab lists, arranged by level and book, able to be pulled via the REST API for review / practice apps. Taxonomies include:
+
+- Level
+- Book
+
+<div style="display: flex;"><div style="background: #ff8f00; width: 20px; height: 20px;"></div><div style="background: #ffab00; width: 20px; height: 20px;"></div></div>
+
+### [JKL Vocabulary](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-vocabulary)
 
 **Purpose:** A collection of individual words, organized into vocab groups (lists), arranged by topic, able to be pulled via the REST API for review / practice apps. Taxonomies include:
 
@@ -56,7 +66,7 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 <div style="display: flex;"><div style="background: #e91e63; width: 20px; height: 20px;"></div><div style="background: #ff4081; width: 20px; height: 20px;"></div></div>
 
-### [JKL Grammar](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-grammar)
+### [JKL Grammar](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-grammar)
 
 **Purpose:** A collection of Korean grammar rules, organized by level and usage, that includes related grammar points and practice exercises. To be used as a teaching tool, or quick reference guide. Taxonomies include:
 
@@ -69,7 +79,7 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 <div style="display: flex;"><div style="background: #9c27b0; width: 20px; height: 20px;"></div><div style="background: #e040fb; width: 20px; height: 20px;"></div></div>
 
-### [JKL Phrases](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-phrases)
+### [JKL Phrases](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-phrases)
 
 **Purpose:** A persona phrasebook that collects the best and most important phrases a user needs to concentrate on memorizing. Taxonomies include:
 
@@ -79,7 +89,7 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 <div style="display: flex;"><div style="background: #0277bd; width: 20px; height: 20px;"></div><div style="background: #00b0ff; width: 20px; height: 20px;"></div></div>
 
-### [JKL Reading](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-reading)
+### [JKL Reading](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-reading)
 
 **Purpose:** Short and long passages collected from previous TOPIK tests and copyright free or Creative Commons sources that users can practice reading with. Also includes a popup dictionary whenever an unknown term is clicked. Taxonomies include:
 
@@ -93,7 +103,7 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 <div style="display: flex;"><div style="background: #00897b; width: 20px; height: 20px;"></div><div style="background: #00bfa5; width: 20px; height: 20px;"></div></div>
 
-### [JKL Writing](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-writing)
+### [JKL Writing](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-writing)
 
 **Purpose:** Writing topics and journal writing prompts taken from previous TOPIK or TOEIC tests. Includes suggested grammar points and phrases to include in the writing. Taxonomies include:
 
@@ -105,7 +115,7 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 <div style="display: flex;"><div style="background: #8795A1; width: 20px; height: 20px;"></div><div style="background: #A9BAC9; width: 20px; height: 20px;"></div></div>
 
-### [JKL Speaking](https://github.com/jekkilekki/plugin-k2k/tree/master/includes/vendor/jkl-speaking) (Coming)
+### [JKL Speaking](https://github.com/Key-To-Korean/plugin-k2k/tree/main/includes/vendor/jkl-speaking) (Coming)
 
 **Purpose:** Speaking topics and tips. Taxonomies include:
 
@@ -119,11 +129,11 @@ Therefore, individual users are tracked with browser cookies on a daily basis. T
 
 **Developed for**
 
-- [Gaya Theme](https://wordpress.org/themes/twentysixteen/) on [KeyToKorean.com](https://keytokorean.com)
+- [Gaya Theme](https://github.com/Key-To-Korean/theme-gaya/) on [KeyToKorean.com](https://keytokorean.com)
 
 **Depends on**
 
-[CMB2](https://cmb2.io/) - Custom Meta Boxes 2 (and various add-ons) are used to build the Post Type Meta Boxes that gather data for each Vocabulary Word. See the [K2K plugin Readme](https://github.com/jekkilekki/plugin-k2k/blob/master/README.md) for more info.
+[CMB2](https://cmb2.io/) - Custom Meta Boxes 2 (and various add-ons) are used to build the Post Type Meta Boxes that gather data for each Custom Post Type. See the [K2K plugin Readme](https://github.com/Key-To-Korean/plugin-k2k/blob/main/README.md) for more info.
 
 - [CMB2 Tabs](https://github.com/rubengc/cmb2-tabs)
 - [CMB2 Switch Button](https://github.com/themevan/CMB2-Switch-Button)
@@ -170,7 +180,7 @@ button. You just need to "flush" the permalink rewrite rules in this way.
 **Can you ADD / REMOVE / CHANGE features of the plugin?**
 
 Sure, I'm always open to suggestions. Let me know what you're looking for. Feel
-free to open a GitHub Issue on the [plugin repository](https://github.com/jekkilekki/plugin-k2k/issues)
+free to open a GitHub Issue on the [plugin repository](https://github.com/Key-To-Korean/plugin-k2k/issues)
 to let me know the specific features or problems you're having.
 
 ## Contact Me
@@ -179,11 +189,13 @@ If you have questions about, problems with, or suggestions for improving this
 plugin, please let me know at the [WordPress.org support forums](http://wordpress.org/support/plugin/k2k)
 
 Want updates about my other WordPress plugins, themes, or tutorials? Follow me
-[@jekkilekki](http://twitter.com/jekkilekki)
+[@aaron.kr](https://aaron.kr)
 
 ## License
 
-K2K is free software; you can redistribute it and/or modify it under the terms of the GNU General Public License as published by the Free Software Foundation; either version 2 of the License, or (at your option) any later version.
+K2K is free software; you can redistribute it and/or modify it under the terms of 
+the GNU General Public License as published by the Free Software Foundation; 
+either version 2 of the License, or (at your option) any later version.
 
 K2K is distributed in the hope that it will be useful, but WITHOUT ANY
 WARRANTY; without even the implied warranty of MERCHANTABILITY or FITNESS FOR A
@@ -194,6 +206,10 @@ program; if not, write to the Free Software Foundation, Inc., 51 Franklin St, Fi
 Floor, Boston, MA 02110-1301 USA
 
 ## Changelog
+
+### 1.3.0 (May 1, 2023)
+
+- Added Vocab List Custom Post Type and related taxonomies
 
 ### 1.2.0 (Jan 16, 2021)
 
