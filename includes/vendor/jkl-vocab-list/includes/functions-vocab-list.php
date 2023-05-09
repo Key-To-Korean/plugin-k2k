@@ -118,11 +118,12 @@ function jkl_vocab_list_get_meta_data() {
 	// Get post meta data.
 	$meta_prefix = 'k2k_vocab_list_meta_';
 
-	$meta['subtitle']    = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );      // Subtitle (translation).
-	// $meta['definitions'] = get_post_meta( get_the_ID(), $meta_prefix . 'definitions', true );   // Definitions (array).
-	// $meta['sentences']   = get_post_meta( get_the_ID(), $meta_prefix . 'sentences', true );     // Sentences (array).
+	$meta['subtitle']      = get_post_meta( get_the_ID(), $meta_prefix . 'subtitle', true );      // Subtitle (translation).
+	$meta['public-files']  = get_post_meta( get_the_ID(), $meta_prefix . 'public-files', true );  // Public Files (URL string).
+	$meta['private-files'] = get_post_meta( get_the_ID(), $meta_prefix . 'private-files', true ); // Private Files (URL string).
+	$meta['wysiwyg']   	   = get_post_meta( get_the_ID(), $meta_prefix . 'wysiwyg', true );       // WYSIWYG (HTML string).
+	$meta['related']       = get_post_meta( get_the_ID(), $meta_prefix . 'related_group', true ); // Related LIST (array).
 	// $meta['usage']       = get_post_meta( get_the_ID(), $meta_prefix . 'common_usage', true );  // Common Usage (array).
-	$meta['related']     = get_post_meta( get_the_ID(), $meta_prefix . 'related_group', true ); // Related LIST (array).
 	// $meta['synonyms']    = get_post_meta( get_the_ID(), $meta_prefix . 'synonym_group', true ); // Synonyms (array).
 	// $meta['antonyms']    = get_post_meta( get_the_ID(), $meta_prefix . 'antonym_group', true ); // Antonyms (array).
 	// $meta['hanja']       = get_post_meta( get_the_ID(), $meta_prefix . 'hanja_group', true );   // Hanja (array).
@@ -175,8 +176,8 @@ function jkl_has_vocab_list_meta( $meta = [] ) {
 		$meta = jkl_vocab_list_get_meta_data();
 	}
 
-	return array_key_exists( 'level', $meta )
-		|| array_key_exists( 'book', $meta );
+	return array_key_exists( 'vocab-list-level', $meta )
+		|| array_key_exists( 'vocab-list-book', $meta );
 
 }
 

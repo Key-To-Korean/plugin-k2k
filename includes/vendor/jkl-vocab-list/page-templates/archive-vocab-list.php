@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Vocabulary archive pages.
+ * The template for displaying Vocab List archive pages.
  *
  * @link https://codex.wordpress.org/Template_Hierarchy
  *
@@ -17,9 +17,9 @@ get_header(); ?>
 		/* Display the appropriate header when required. */
 		k2k_index_header();
 
-		require_once 'sidebar-vocabulary.php';
+		require_once 'sidebar-vocab-list.php';
 
-		echo '<ul class="vocabulary-posts-grid archive-posts-grid">';
+		echo '<ul class="vocab-list-posts-grid archive-posts-grid">';
 
 		/* Start the "Official" Loop */
 		$count = 0;
@@ -39,29 +39,20 @@ get_header(); ?>
 			 * called content-___.php (where ___ is the Post Type name) and that will be used instead.
 			 */
 			?>
-			<li class="vocabulary-item" style="grid-columns: span 4;">
+			<li class="vocab-list-post">
 				<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
 
-					<?php
-					$part_of_speech = get_vocab_part_of_speech();
+				<?php gaya_archive_thumbnails(); ?>
 
-					if ( '' !== $part_of_speech ) {
+				<header class="entry-header">
+					<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
+						<?php
+							display_level_stars();
+							the_title( '<h2 class="entry-title">', '<span class="entry-subtitle">' . esc_html( get_vocab_list_subtitle() ) . '</span></h2>' );
 						?>
-						<a class="part-of-speech part-of-speech-circle <?php echo esc_attr( strtolower( $part_of_speech['name'] ) ); ?>"
-							href="/part-of-speech/<?php echo esc_attr( $part_of_speech['slug'] ); ?>">
-							<?php echo esc_attr( $part_of_speech['letter'] ); ?>
-						</a>
-					<?php } ?>
+					</a>
+				</header><!-- .entry-header -->
 
-					<header class="entry-header">
-						<a href="<?php echo esc_url( get_permalink() ); ?>" rel="bookmark">
-							<?php
-								display_level_stars( 'vocabulary' );
-								the_title( '<h2 class="entry-title">', '</h2>' );
-								echo '<span class="entry-subtitle">' . esc_html( get_vocab_subtitle() ) . '</span>';
-							?>
-						</a>
-					</header><!-- .entry-header -->
 				</article><!-- #post-<?php the_ID(); ?> -->
 			</li>
 			<?php
@@ -73,12 +64,10 @@ get_header(); ?>
 		</ul>
 
 		<hr />
-		<section class="page-section archive-taxonomies vocabulary-taxonomies-list">
+		<section class="page-section archive-taxonomies vocab-list-taxonomies-list">
 			<?php
 				display_taxonomy_list( 'k2k-level', __( 'All Levels', 'k2k' ) );
-				display_taxonomy_list( 'k2k-part-of-speech', __( 'All Parts of Speech', 'k2k' ) );
-				display_taxonomy_list( 'k2k-topic', __( 'All Topics', 'k2k' ) );
-				display_taxonomy_list( 'k2k-vocab-group', __( 'All Vocab Groups', 'k2k' ) );
+				display_taxonomy_list( 'k2k-book', __( 'All Books', 'k2k' ) );
 			?>
 		</section>
 

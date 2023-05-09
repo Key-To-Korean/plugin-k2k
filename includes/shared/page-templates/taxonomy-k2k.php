@@ -16,6 +16,10 @@ if ( isset( $_GET['tax-cpt'], $_POST['tax-filter-nonce'] )
 	$filter_post_type = array();
 	$filter_nonce     = wp_create_nonce( 'tax-filter-nonce' );
 
+	// Add the Vocab List CPT to the WP_Query.
+	if ( 'vocab-list' === $_GET['tax-cpt'] ) {
+		$filter_post_type[] = 'k2k-vocab-list';
+	}
 	// Add the Vocabulary CPT to the WP_Query.
 	if ( 'vocab' === $_GET['tax-cpt'] ) {
 		$filter_post_type[] = 'k2k-vocabulary';
@@ -50,6 +54,10 @@ endif;
 
 		<form class="page-section taxonomy-filter">
 			<!-- <input type="checkbox" name="tax-cpt" value="all" checked/>All -->
+			<span class="field-wrapper">
+				<input id="vocab-list-cpt" type="checkbox" name="tax-cpt" value="vocab-list" <?php echo ( isset( $_GET['tax-cpt'] ) && 'vocab-list' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
+				<label for="vocab-list-cpt"> Vocab List</label>
+			</span>
 			<span class="field-wrapper">
 				<input id="vocab-cpt" type="checkbox" name="tax-cpt" value="vocab" <?php echo ( isset( $_GET['tax-cpt'] ) && 'vocab' === $_GET['tax-cpt'] ) ? 'checked' : ''; ?> />
 				<label for="vocab-cpt"> Vocabulary</label>

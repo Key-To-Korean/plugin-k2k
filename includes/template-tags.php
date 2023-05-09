@@ -131,7 +131,8 @@ function display_level_stars( $cpt_type = 'vocab' ) {
 
 	$post_type = get_post_type( get_the_ID() );
 	$meta_key  = 'vocabulary' === substr( $post_type, 4 ) ? 'vocab' : substr( $post_type, 4 );
-	$level     = get_the_terms( get_the_ID(), 'k2k-' . $meta_key . '-level' )[0]; // Translation, Image.
+	$level     = get_the_terms( get_the_ID(), 'k2k-' . $meta_key . '-level' ) ?
+					get_the_terms( get_the_ID(), 'k2k-' . $meta_key . '-level' )[0] : null; // Translation, Image.
 
 	// Get out if this item doesn't have a level set.
 	if ( null === $level ) {
@@ -232,10 +233,12 @@ function display_meta_buttons( $meta, $taxonomy, $single = false, $type = 'link'
 	// If there is only one item.
 	if ( $single || count( $meta[ $taxonomy ] ) === 1 ) {
 
-		// $classnames = ( 'button' === $type ? 'btn button'
-		// 								: ( 'k2k-grammar-part-of-speech' === $taxonomy ? 'tag-button'
-		// 								: ( 'k2k-vocab-part-of-speech' === $taxonomy ? 'tag-button'
-		// 								: '' )));
+		// Update Syntax:
+		// condition1 ? condition2 ? Expression1 : Expression2 : Expression3
+		$classnames = 'button' === $type ? 
+						'k2k-grammar-part-of-speech' === $taxonomy ?
+						'k2k-vocab-part-of-speech' === $taxonomy ?
+						'btn button' : 'tag-button' : 'tag-button' : '';
 		$style      = ( 'k2k-part-of-speech' === $taxonomy && array_key_exists( 'term_color', $meta[ $taxonomy ] ) )
 									? 'background: ' . $meta[ $taxonomy ]['term_color'] : '';
 

@@ -35,7 +35,8 @@ function k2k_register_metabox_vocab_list() {
 					'title'  => esc_html__( 'Info', 'k2k' ),
 					'fields' => array(
 						$prefix . 'subtitle',
-						$prefix . 'file',
+						$prefix . 'public-files',
+						$prefix . 'private-files',
 						$prefix . 'wysiwyg',
 						$prefix . 'level',
 						$prefix . 'book',
@@ -67,23 +68,59 @@ function k2k_register_metabox_vocab_list() {
 	);
 
 	/**
-	 * Info - File Upload
+	 * Info - Public File Upload
 	 */
 	$k2k_metabox->add_field(
 		array(
-			'name' => esc_html__( 'Add File', 'k2k' ),
-			'desc' => esc_html__( 'Upload a file or enter a URL.', 'k2k' ),
-			'id'   => $prefix . 'file',
-			'type' => 'file',
+			'name' => esc_html__( 'Public Files', 'k2k' ),
+			'desc' => esc_html__( 'Enter a URL or upload files that will be publicly available.', 'k2k' ),
+			'id'   => $prefix . 'public-files',
+			'type' => 'file_list',
 			// Optional:
 			'options' => array(
 				'url' => false, // Hide the text input for the url.
 			),
 			'text'    => array(
-				'add_upload_file_text' => esc_html__( 'Add File', 'k2k' ), // Change upload button text. Default: "Add or Upload File"
+				'add_upload_files_text' => esc_html__( 'Add Public File(s)', 'k2k' ), // Change upload button text. Default: "Add or Upload File"
 			),
 			'query_args' => array(
 				'type' => 'application/pdf', // Make library only display PDFs.
+				// Or only allow gif, jpg, or png images
+				// 'type' => array(
+				// 	'image/gif',
+				// 	'image/jpeg',
+				// 	'image/png',
+				// ),
+			),
+			'preview_size' => 'large', // Image size to use when previewing in the admin.
+		)
+	);
+
+	/**
+	 * Info - Private File Upload
+	 */
+	$k2k_metabox->add_field(
+		array(
+			'name' => esc_html__( 'Private Files', 'k2k' ),
+			'desc' => esc_html__( 'Enter a URL or upload files that will be for Members Only.', 'k2k' ),
+			'id'   => $prefix . 'private-files',
+			'type' => 'file_list',
+			// Optional:
+			'options' => array(
+				'url' => false, // Hide the text input for the url.
+			),
+			'text'    => array(
+				'add_upload_files_text' => esc_html__( 'Add Private File(s)', 'k2k' ), // Change upload button text. Default: "Add or Upload File"
+			),
+			'query_args' => array(
+				'type' => array(
+					'application/pdf', // Make library only display PDFs.
+					'application/xls', 
+					'application/xlsx',
+					'application/csv',
+					'application/doc',
+					'application/docx',
+				),
 				// Or only allow gif, jpg, or png images
 				// 'type' => array(
 				// 	'image/gif',

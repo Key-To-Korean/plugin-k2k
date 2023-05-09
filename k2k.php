@@ -43,7 +43,17 @@ define( 'K2K_VERSION', '1.3.0' );
 define( 'K2K_DOMAIN', 'k2k' );
 define( 'K2K_PATH', plugin_dir_path( __FILE__ ) );
 define( 'K2K_MENU_POSITION', 50 );
-define( 'K2K_POST_TYPES', array( 'k2k-vocab-list', 'k2k-vocabulary', 'k2k-grammar', 'k2k-phrases', 'k2k-reading', 'k2k-writing' ) ); // Used in functions.php.
+define( 
+	'K2K_POST_TYPES',  // Used in functions.php.
+	array( 
+		'k2k-vocab-list', 
+		'k2k-vocabulary', 
+		'k2k-grammar', 
+		'k2k-phrases', 
+		'k2k-reading', 
+		'k2k-writing' 
+		) 
+	);
 define(
 	'K2K_TAXES', // Used in /includes/shared/metaboxes/metabox-taxonomy-extras.php.
 	array(

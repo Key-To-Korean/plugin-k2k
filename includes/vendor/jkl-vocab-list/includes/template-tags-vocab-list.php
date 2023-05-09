@@ -11,6 +11,100 @@ if ( ! defined( 'ABSPATH' ) ) {
 }
 
 /**
+ * Function to display a custom cropped thumbnail for Vocab List Posts.
+ */
+function display_vocab_list_thumbnail() {
+	if ( post_password_required() || is_attachment() || ! has_post_thumbnail() ) {
+		return;
+	}
+
+	if ( is_singular() ) :
+		?>
+
+		<div class="post-thumbnail vocab-list-thumbnail" style="background: url(<?php the_post_thumbnail_url(); ?>)">
+		</div><!-- .post-thumbnail -->
+
+		<?php
+	endif;
+}
+
+/**
+ * Function to display the Public Reference / Download files.
+ */
+function display_vocab_list_public_files() {
+	
+	$files = get_post_meta( get_the_ID(), 'k2k_vocab_list_meta_public-files', false );
+
+	if ( ! empty( $files ) ) {
+		?>
+
+		<h3><?php esc_html_e( 'Public Files', 'k2k' ); ?></h3>
+		<ul class="vocab-list-files">
+			<?php 
+			foreach( $files as $f ) : 
+				foreach( $f as $key => $url) :
+					$filext = substr( $url, strripos( $url, '.' ) ); // .pdf
+					$filename = trim( str_replace( 
+						array( '-', '_', $filext ), ' ', 
+						substr( $url, strripos( $url, '/' ) + 1 ) // ($string, $offset, $length)
+					) );
+			?>
+				<li class="vocab-list-file">
+					<a class="btn file-download" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer">
+						<span><?php echo esc_html_x( '⇩', 'Download', 'k2k' ); ?></span>
+						<?php echo $filename; ?>
+						<span class="filext"><?php echo $filext; ?></span>
+					</a>
+				</li>
+			<?php 
+				endforeach; 
+			endforeach;
+			?>
+		</ul>
+
+		<?php
+	}
+}
+
+/**
+ * Function to display the Private Reference / Download files.
+ */
+function display_vocab_list_private_files() {
+	
+	$files = get_post_meta( get_the_ID(), 'k2k_vocab_list_meta_private-files', false );
+
+	if ( ! empty( $files ) ) {
+		?>
+
+		<h3><?php esc_html_e( 'Members Only Files', 'k2k' ); ?></h3>
+		<ul class="vocab-list-files members-only">
+			<?php 
+			foreach( $files as $f ) : 
+				foreach( $f as $key => $url) :
+					$filext = substr( $url, strripos( $url, '.' ) ); // .pdf
+					$filename = trim( str_replace( 
+						array( '-', '_', $filext ), ' ', 
+						substr( $url, strripos( $url, '/' ) + 1 ) // ($string, $offset, $length)
+					) );
+			?>
+				<li class="vocab-list-file">
+					<a class="btn file-download" href="<?php echo esc_url( $url ); ?>" target="_blank" rel="noopener noreferrer">
+						<span><?php echo esc_html_x( '⇩', 'Download', 'k2k' ); ?></span>
+						<?php echo $filename; ?>
+						<span class="filext"><?php echo $filext; ?></span>
+					</a>
+				</li>
+			<?php 
+				endforeach; 
+			endforeach;
+			?>
+		</ul>
+
+		<?php
+	}
+}
+
+/**
  * Create a button (or link) for the custom meta value.
  *
  * @param array  $meta The array of data to create a button for.
@@ -82,11 +176,11 @@ function get_unlinked_list( $meta ) {
 }
 
 /**
- * Function to output the meta data at the top of the flashcard.
+ * Function to output the meta data.
  *
  * @param array $meta An array of vocab LISTS meta data.
  */
-function display_vocab_list_top_meta( $meta = [] ) {
+function display_vocab_list_entry_meta( $meta = [] ) {
 
 	if ( empty( $meta ) ) {
 		$meta = jkl_vocab_list_get_meta_data();
@@ -97,10 +191,10 @@ function display_vocab_list_top_meta( $meta = [] ) {
 		<ul class="vocab-list-meta">
 		<?php
 			echo array_key_exists( 'vocab-list-level', $meta )
-				? '<li>' . wp_kses_post( get_vocab_lists_meta_buttons( $meta['vocab-list-level'], 'vocab-list-level' ) ) . '</li>'
+				? '<li>' . wp_kses_post( get_vocab_list_meta_buttons( $meta['vocab-list-level'], 'vocab-list-level' ) ) . '</li>'
 				: '';
 			echo array_key_exists( 'vocab-list-book', $meta )
-				? '<li class="vocab-list-book">' . wp_kses_post( get_vocab_lists_meta_buttons( $meta['vocab-list-book'], 'vocab-list-book' ) ) . '</li>'
+				? '<li class="vocab-list-book">' . wp_kses_post( get_vocab_list_meta_buttons( $meta['vocab-list-book'], 'vocab-list-book' ) ) . '</li>'
 				: '';
 		?>
 		</ul>

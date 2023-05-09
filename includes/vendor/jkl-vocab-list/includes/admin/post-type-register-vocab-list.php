@@ -62,7 +62,7 @@ function k2k_register_post_type_vocab_list() {
 		'hierarchical'       => false,
 		'menu_position'      => K2K_MENU_POSITION + 1,
 		'menu_icon'          => 'dashicons-pdf',
-		'supports'           => array( 'title', 'excerpt', 'thumbnail', 'comments', 'revisions', 'custom-fields', 'page-attributes', 'post-formats' ),
+		'supports'           => array( 'title', 'excerpt', 'thumbnail', 'comments', 'revisions' ),
 		// 'taxonomies'         => array( 'post_tag' ),
 	);
 

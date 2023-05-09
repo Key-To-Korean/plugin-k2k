@@ -1,10 +1,10 @@
 /* Archive Pages */
-ul.archive-posts-grid.vocabulary-posts-grid {
+ul.archive-posts-grid.vocab-list-posts-grid {
   /* display: flex;
   flex-wrap: wrap; */
 }
 
-.vocabulary-item article {
+.vocab-list-item article {
   margin-right: 2rem;
   margin-bottom: 0rem;
   display: flex;
@@ -13,9 +13,9 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   border-radius: 10px;
 }
 
-.vocabulary-item article:hover,
-.vocabulary-item article:focus,
-.vocabulary-item article:active {
+.vocab-list-item article:hover,
+.vocab-list-item article:focus,
+.vocab-list-item article:active {
   background: #efefef;
 }
 
@@ -69,14 +69,21 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   color: #a9bac9;
 }
 
-.vocabulary-taxonomies-list {
+.vocab-list-taxonomies-list {
   display: grid;
   grid-template-columns: repeat(4, 1fr);
   grid-gap: 2rem;
 }
 
 /* Single Pages */
-.k2k-vocabulary .entry-meta .level-stars {
+.post-thumbnail.vocab-list-thumbnail {
+  height: 450px;
+  background-position: center !important;
+  background-size: cover !important;
+  margin-bottom: 0;
+}
+
+.k2k-vocab-list .entry-meta .level-stars {
   position: static;
   left: auto;
   top: auto;
@@ -87,7 +94,7 @@ ul.archive-posts-grid.vocabulary-posts-grid {
   position: relative;
 }
 
-.entry-meta,
+/* .entry-meta,
 .entry-content {
   grid-column: span 2;
 }
@@ -118,20 +125,58 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 }
 
 .entry-meta img {
-  /* max-width: 300px; */
+  /* max-width: 300px; 
   margin-top: -1rem !important;
 }
 
-.vocabulary-meta {
+.vocab-list-meta {
   text-align: left;
   list-style: none;
   margin: 0;
   padding: 0;
 }
 
-.vocabulary-meta li {
+.vocab-list-meta li {
   display: inline-block;
   margin-right: 1rem;
+} */
+
+.entry-meta .post-thumbnail {
+  margin-bottom: 2rem;
+  margin-top: 0;
+  height: 220px;
+  border: 1px solid #e5eaee;
+}
+
+.entry-meta .related-vocab-list,
+.entry-footer .usage-rules {
+  margin: 0;
+  padding-left: 0;
+  padding-right: 0;
+  list-style: none;
+  margin-bottom: 0.5rem;
+}
+
+.related-vocab-list li,
+.usage-rules li {
+  display: inline-block;
+  margin-right: 0.5rem;
+  margin-bottom: 0.5rem;
+}
+
+.related-vocab-list li:not(.related-vocab-list-title),
+.usage-rules li:not(.usage-rules-title) {
+  background: rgba(135, 149, 161, 0.2);
+  padding: 0 10px;
+  border-radius: 30px;
+  display: inline-block;
+  color: #32373c;
+}
+
+.related-vocab-list li a,
+.usage-rules li a {
+  border-bottom: none;
+  color: #32373c;
 }
 
 .entry-meta .post-thumbnail {
@@ -193,4 +238,35 @@ ul.archive-posts-grid.vocabulary-posts-grid {
 .linked a:visited {
   color: #32373c;
   color: var(--gaya-grey);
+}
+
+.entry-content .vocab-list-files {
+  list-style: none;
+  padding-left: 0;
+}
+
+.entry-content .vocab-list-files li {
+  margin-bottom: 0.5rem;
+}
+
+.entry-content .vocab-list-files a {
+  border-bottom: 2px solid #dcdcdc;
+}
+
+.btn.file-download {
+  text-transform: capitalize;
+  font-weight: initial;
+}
+
+.btn.file-download span {
+  margin-right: 0.5em;
+  /* text-transform: uppercase; */
+  font-weight: bolder;
+  font-weight: 900; 
+}
+
+.btn.file-download span.filext {
+  margin-left: -3px;
+  text-transform: lowercase;
+  font-weight: initial;
 }

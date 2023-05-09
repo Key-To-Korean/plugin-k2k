@@ -2,6 +2,10 @@
   cursor: help;
 }
 
+span.index-home {
+  cursor: pointer;
+}
+
 .single .hentry {
   /* display: block !important; */
 }

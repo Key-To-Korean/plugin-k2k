@@ -46,6 +46,7 @@ function k2k_template( $template_path ) {
 
 	$k2k_post_types = K2K_POST_TYPES; // defined in k2k.php - the main plugin file.
 	$post_type_here = get_post_type();
+// echo( $post_type_here );
 	$tax_slug       = is_tax() ? explode( '-', get_query_var( 'taxonomy' ) )[1] : '';
 
 	if ( ! $post_type_here || ( ! in_array( $post_type_here, $k2k_post_types, true ) ) ) {
@@ -53,7 +54,9 @@ function k2k_template( $template_path ) {
 	}
 
 	// Remove 'k2k-' from Post Type name.
-	$post_type_slug = explode( '-', $post_type_here )[1];
+	// $post_type_slug = explode( '-', $post_type_here )[1];
+	$post_type_slug = substr( $post_type_here, 4 );
+// echo($post_type_slug);
 
 	if ( is_single() ) {
 

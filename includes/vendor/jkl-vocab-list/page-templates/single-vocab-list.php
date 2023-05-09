@@ -1,6 +1,6 @@
 <?php
 /**
- * The template for displaying Single Vocabulary
+ * The template for displaying Single Vocab List
  *
  * @link https://developer.wordpress.org/themes/basics/template-hierarchy/#single-post
  *
@@ -9,157 +9,154 @@
 
 get_header(); ?>
 
-	<main id="primary" class="site-main">
+<main id="primary" class="site-main">
 
-		<?php
-		while ( have_posts() ) :
-			the_post();
+	<?php
+	while ( have_posts() ) :
+		the_post();
 
-			wp_print_styles( array( 'gaya-content' ) ); // Note: If this was already done it will be skipped.
-			wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
+		wp_print_styles( array( 'gaya-content' ) ); // Note: If this was already done it will be skipped.
+		wp_print_styles( array( 'gaya-post-formats' ) ); // Note: If this was already done it will be skipped.
 
-			$meta     = jkl_vocabulary_get_meta_data();
-			$this_tax = $wp_query->get_queried_object();
-
-			?>
+		$this_tax = $wp_query->get_queried_object();
+		$meta     = jkl_vocab_list_get_meta_data();
+		?>
 
 			<article id="post-<?php the_ID(); ?>" <?php post_class(); ?>>
-				<?php
-				if ( is_singular() ) :
-					?>
-					<div class="entry-header">
 
-						<?php require_once 'sidebar-vocabulary.php'; ?>
-						<?php display_vocabulary_navigation(); ?>
+				<!-- Vocab List Post Type Navigation -->
+				<header class="entry-header filter-nav-header">
 
+					<?php require_once 'sidebar-vocab-list.php'; ?>
+					<?php display_vocab_list_navigation(); ?>
+
+				</header>
+
+				<!-- Vocab List Post Content Header -->
+				<header class="entry-header content-header">
+
+					<div class="post-cats">
+						<?php display_level_stars(); ?>
 					</div>
 
-					<div class="entry-meta">
-
+					<hgroup class="entry-titles">
 						<?php
-						display_level_stars();
-						display_vocabulary_top_meta( $meta );
-
-						gaya_post_thumbnail();
-
-						if ( is_singular() ) :
-							the_title( '<h1 class="entry-title">', '</h1>' );
-						else :
-							the_title( '<h2 class="entry-title"><a href="' . esc_url( get_permalink() ) . '" rel="bookmark">', '</a></h2>' );
-						endif;
+						the_title( '<h1 class="entry-title">', '</h1>' );
 
 						if ( array_key_exists( 'subtitle', $meta ) ) {
-							?>
-							<p class="post-subtitle translation"><?php echo esc_html( $meta['subtitle'] ); ?></p>
-							<?php display_meta_buttons( $meta, 'k2k-part-of-speech', true ); ?>
-							<?php
+							echo '<h2 class="entry-subtitle translation">' . esc_html( $meta['subtitle'] ) . '</h2>';
 						}
-
-						gaya_edit_post_link();
 						?>
-					</div><!-- .entry-meta -->
+					</hgroup>
 
-					<?php
-					/* Ad Above Post */
-					if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
-						/* Print styles for adsense widgets */
-						wp_print_styles( array( 'gaya-adsense' ) ); // Note: If this was already done it will be skipped.
-						dynamic_sidebar( 'widget-ad-pre-post' );
-					endif;
+				</header><!-- .entry-header -->
+
+				<?php if ( is_singular() && has_excerpt() ) : ?>
+					<h3 class="section-title" title="<?php esc_attr_e( 'Reference', 'k2k' ); ?>">
+						<?php echo esc_attr_x( 'Reference', 'Reference or Source Material', 'k2k' ); ?>
+					</h3>
+					<div class="entry-excerpt">
+						<?php if ( has_excerpt() ) : ?>
+							<?php the_excerpt(); ?>
+						<?php endif; ?>
+					</div>
+				<?php endif; ?>
+
+				<?php
+				/* Ad Above Post */
+				if ( is_singular() && is_active_sidebar( 'widget-ad-pre-post' ) ) :
+					/* Print styles for adsense widgets */
+					wp_print_styles( array( 'gaya-adsense' ) ); // Note: If this was already done it will be skipped.
+					dynamic_sidebar( 'widget-ad-pre-post' );
+				endif;
+				?>
+
+				<!-- Vocab List Taxonomy Meta -->
+				<div class="entry-meta vocab-list-meta">
+					<?php display_vocab_list_thumbnail(); ?>
+					<?php display_vocab_list_entry_meta( $meta ); ?>
+
+					<?php foreach( $meta as $key => $val ) : ?>
+						<?php echo($key); ?>
+					<?php endforeach; ?>
+				</div><!-- .entry-meta -->
+
+				<!-- Vocab List Post Content -->
+				<div class="entry-content">
+
+				<?php
+				if ( array_key_exists( 'wysiwyg', $meta ) ) :
 					?>
+
+					<h2 class="post-content-title"><?php esc_html_e( 'Detailed Explanation', 'k2k' ); ?>
+						<?php // display_vocab_list_needs_link( $meta ); ?>
+					</h2>
+
+					<?php // display_vocab_list_related_points( $meta ); ?>
+
+					<!-- Detailed Explanation -->
+					<div class="detailed-explanation <?php echo array_key_exists( 'usage', $meta ) ? '' : 'no-usage'; ?>">
+						<?php echo wp_kses_post( wpautop( $meta['wysiwyg'] ) ); ?>
+					</div>
 
 					<?php
 				endif;
 				?>
 
-				<div class="entry-content">
+				<!-- Usage rules -->
+				<?php // display_grammar_usage_rules( $meta ); ?>
+
+				<!-- Conjugations -->
+				<?php // build_conjugation_table( $meta ); ?>
+
+				<?php
+				// if ( array_key_exists( 'sentences', $meta ) || array_key_exists( 'special_dialogue', $meta ) ) :
+				// 	display_grammar_sentences( $meta );
+				// endif;
+
+				// if ( array_key_exists( 'exercises', $meta ) ) :
+				// 	display_grammar_exercises( $meta );
+				// endif;
+
+				/**
+				 * If there's any "Post Content" like from Gutenberg - which there shouldn't be.
+				 */
+				the_content(
+					sprintf( /* translators: %s: Name of current post */
+						__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'k2k' ),
+						get_the_title()
+					)
+				);
+				wp_link_pages(
+					array(
+						'before'      => '<div class="page-links"><span class="page-links-title">' . __( 'Pages:', 'k2k' ) . '</span>',
+						'after'       => '</div>',
+						'link_before' => '<span>',
+						'link_after'  => '</span>',
+						'pagelink'    => '<span class="screen-reader-text">' . __( 'Page', 'k2k' ) . ' </span>%',
+						'separator'   => '<span class="screen-reader-text">, </span>',
+					)
+				);
+				?>
+
+				<footer class="entry-footer footer-edit-link">
+					
+					<?php if ( array_key_exists( 'public-files', $meta ) ) : ?>
+						<?php display_vocab_list_public_files(); ?>
+					<?php endif; ?>
+					<?php if ( array_key_exists( 'private-files', $meta ) ) : ?>
+						<?php display_vocab_list_private_files(); ?>
+					<?php endif; ?>
+					
 					<?php
-					the_content(
-						sprintf(
-							wp_kses(
-								/* translators: %s: Name of current post. Only visible to screen readers */
-								__( 'Continue reading<span class="screen-reader-text"> "%s"</span>', 'gaya' ),
-								array(
-									'span' => array(
-										'class' => array(),
-									),
-								)
-							),
-							get_the_title()
-						)
-					);
+					if ( array_key_exists( 'related_vocab_list', $meta ) ) {
+						display_vocab_list_related( $meta );
+					}
 					?>
 
-					<?php
-					if ( is_singular() ) :
-						?>
+					<?php gaya_edit_post_link(); ?>
+				</footer>
 
-						<h3><?php esc_html_e( 'Definitions', 'k2k' ); ?></h3>
-						<ol class="definitions-list">
-							<?php
-							if ( array_key_exists( 'definitions', $meta ) ) {
-								foreach ( $meta['definitions'] as $definition ) {
-									echo '<li>' . esc_html( $definition ) . '</li>';
-								}
-							} elseif ( array_key_exists( 'subtitle', $meta ) ) {
-								echo '<li>' . esc_html( $meta['subtitle'] ) . '</li>';
-							}
-							?>
-						</ol>
-
-						<?php
-						if ( array_key_exists( 'sentences', $meta ) ) :
-							?>
-
-							<div class="sentences-header">
-								<h3><?php esc_html_e( 'Sentences', 'k2k' ); ?></h3>
-								<div class="sentence-buttons">
-									<button class="expand-all" title="<?php esc_html_e( 'Show all English sentences', 'k2k' ); ?>"><i class="fas fa-caret-down"></i></button>
-								</div>
-							</div>
-
-							<ol class="sentences">
-								<?php
-								$italic_pattern     = '/\*\*(.*?)\*\*/';
-								$italic_replacement = '<em>$1</em>';
-								$bold_pattern       = '/[*_](.*?)[*_]/';
-								$bold_replacement   = '<strong>$1</strong>';
-								foreach ( $meta['sentences'] as $sentence ) {
-									$italicize_ko = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_vocab_meta_sentences_1'] );
-									$italicize_en = preg_replace( $italic_pattern, $italic_replacement, $sentence['k2k_vocab_meta_sentences_2'] );
-									?>
-
-									<li class="sentence">
-										<button class="expand" title="<?php esc_html_e( 'Show English sentence', 'k2k' ); ?>"><i class="fas fa-caret-down"></i></button>
-										<p class="ko"><?php echo wp_kses_post( preg_replace( $bold_pattern, $bold_replacement, $italicize_ko ) ); ?></p>
-										<p class="en"><?php echo wp_kses_post( preg_replace( $bold_pattern, $bold_replacement, $italicize_en ) ); ?></p>
-									</li>
-
-									<?php
-								}
-								?>
-							</ol>
-
-							<?php
-						endif;
-						?>
-
-						<footer class="entry-footer">
-
-							<div class="related-terms-container">
-								<?php
-								if ( jkl_has_related_vocabulary_meta( $meta ) ) {
-									?>
-									<h3><?php esc_html_e( 'Related', 'k2k' ); ?></h3>
-									<?php
-									display_vocabulary_related_meta( $meta );
-								}
-								?>
-							</div>
-
-							<?php gaya_edit_post_link(); ?>
-						</footer><!-- .entry-footer -->
-					<?php endif; ?>
 				</div><!-- .entry-content -->
 
 				<?php
@@ -171,14 +168,13 @@ get_header(); ?>
 						wp_print_styles( array( 'gaya-adsense' ) ); // Note: If this was already done it will be skipped.
 						dynamic_sidebar( 'widget-ad-post-post' );
 					endif;
-					?>
 
-					<?php
 				endif;
 
 				if ( function_exists( 'gaya_jp_related_posts' ) ) {
 					gaya_jp_related_posts();
 				}
+
 				?>
 			</article><!-- #post-<?php the_ID(); ?> -->
 

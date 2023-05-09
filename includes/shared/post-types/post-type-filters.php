@@ -1,6 +1,6 @@
 <?php
 /**
- * K2K - Register Grammar Post Type.
+ * K2K - Post Type Filters.
  *
  * @package K2K
  */
@@ -22,6 +22,7 @@ function k2k_filters( $post_type, $which ) {
 
 	// Apply this only on a specific post type.
 	if ( ! ( 'k2k-grammar' === $post_type
+				|| 'k2k-vocab-list' === $post_type
 				|| 'k2k-vocabulary' === $post_type
 				|| 'k2k-phrases' === $post_type )
 				|| 'k2k-reading' === $post_type
